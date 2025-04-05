@@ -24,7 +24,8 @@ public class FuncionarioService {
 
     public Optional<Funcionario> autenticar(String cpf, String senha) {
         Optional<Funcionario> funcionarioOpt = funcionarioRepository.buscarPorCpf(cpf);
-        if (funcionarioOpt.isPresent() && passwordEncoder.matches(senha, funcionarioOpt.get().getSenha())) {
+        if (funcionarioOpt.isPresent() &&
+                passwordEncoder.matches(senha, funcionarioOpt.get().getSenha())) {
             return funcionarioOpt;
         }
         return Optional.empty();

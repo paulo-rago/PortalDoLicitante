@@ -31,4 +31,14 @@ public class AuthController {
             return ResponseEntity.status(401).body("CPF ou senha inválidos");
         }
     }
+
+    @PostMapping("/registrar")
+    public ResponseEntity<?> registrar(@RequestBody Funcionario funcionario) {
+        try {
+            funcionarioService.cadastrar(funcionario);
+            return ResponseEntity.ok("Funcionário cadastrado com sucesso ✅");
+        } catch (Exception e) {
+            return ResponseEntity.status(400).body("Erro ao cadastrar: " + e.getMessage());
+        }
+    }
 }
