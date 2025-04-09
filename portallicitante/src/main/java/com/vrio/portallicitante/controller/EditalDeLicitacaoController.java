@@ -22,4 +22,18 @@ public class EditalDeLicitacaoController {
             return ResponseEntity.status(500).body("Erro ao cadastrar edital: " + e.getMessage());
         }
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> atualizar(@PathVariable int id, @RequestBody EditalDeLicitacao edital) {
+        edital.setId(id);
+        service.atualizar(edital);
+        return ResponseEntity.ok("Edital atualizado com sucesso.");
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deletar(@PathVariable int id) {
+        service.deletar(id);
+        return ResponseEntity.ok("Edital deletado com sucesso.");
+    }
+
 }

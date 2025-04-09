@@ -22,6 +22,14 @@ public class FuncionarioService {
         funcionarioRepository.salvar(funcionario);
     }
 
+    public void atualizar(Funcionario funcionario) {
+        funcionarioRepository.atualizar(funcionario);
+    }
+
+    public void deletar(int id) {
+        funcionarioRepository.deletar(id);
+    }
+
     public Optional<Funcionario> autenticar(String cpf, String senha) {
         Optional<Funcionario> funcionarioOpt = funcionarioRepository.buscarPorCpf(cpf);
         if (funcionarioOpt.isPresent() &&
@@ -30,4 +38,5 @@ public class FuncionarioService {
         }
         return Optional.empty();
     }
+
 }

@@ -14,4 +14,14 @@ public class EditalDeLicitacaoService {
     public void cadastrar(EditalDeLicitacao edital) {
         repository.salvar(edital);
     }
+
+    public void atualizar(EditalDeLicitacao edital) {
+        repository.atualizar(edital);
+    }
+
+    public void deletar(int id) {
+        repository.deletar(id);
+    }
+
 }
+

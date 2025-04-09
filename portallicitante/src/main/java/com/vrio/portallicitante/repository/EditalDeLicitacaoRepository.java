@@ -36,15 +36,59 @@ public class EditalDeLicitacaoRepository {
 
             stmt.setString(1, edital.getNumeroLicitacao());
             stmt.setString(2, edital.getOrgaoResponsavel());
-            stmt.setDate(3, edital.getDataDeAbertura()); // ← corrigido
-            stmt.setDate(4, edital.getPrazoEntrega());   // ← corrigido
+            stmt.setDate(3, edital.getDataDeAbertura());
+            stmt.setDate(4, edital.getPrazoEntrega());
             stmt.setString(5, edital.getExigenciaTecnicas());
             stmt.setString(6, edital.getDocumentacaoObrigatoria());
             stmt.setDouble(7, edital.getValorEstimado());
             stmt.setInt(8, edital.getFkOrgaoPublicoId());
 
             stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
+    public void atualizar(EditalDeLicitacao edital) {
+        String sql = """
+            UPDATE Edital_de_Licitacao
+            SET numero_licitacao = ?, 
+                orgao_responsavel = ?, 
+                data_de_abertura = ?, 
+                prazo_entrega = ?,
+                exigencia_tecnicas = ?, 
+                documentacao_obrigatoria = ?, 
+                valor_estimado = ?, 
+                fk_Orgao_Publico_id_orgao_publico = ?
+            WHERE id_licitacao = ?
+        """;
+
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, edital.getNumeroLicitacao());
+            stmt.setString(2, edital.getOrgaoResponsavel());
+            stmt.setDate(3, edital.getDataDeAbertura());
+            stmt.setDate(4, edital.getPrazoEntrega());
+            stmt.setString(5, edital.getExigenciaTecnicas());
+            stmt.setString(6, edital.getDocumentacaoObrigatoria());
+            stmt.setDouble(7, edital.getValorEstimado());
+            stmt.setInt(8, edital.getFkOrgaoPublicoId());
+            stmt.setInt(9, edital.getId());
+
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deletar(int id) {
+        String sql = "DELETE FROM Edital_de_Licitacao WHERE id_licitacao = ?";
+
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }

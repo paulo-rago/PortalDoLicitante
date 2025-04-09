@@ -56,7 +56,38 @@ public class FuncionarioRepository {
             stmt.setString(5, funcionario.getSenha());
 
             stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
+    public void atualizar(Funcionario funcionario) {
+        String sql = "UPDATE Funcionario SET nome_funcionario = ?, cpf = ?, email_corporativo = ?, status = ?, senha = ? WHERE id_funcionario = ?";
+
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, funcionario.getNomeFuncionario());
+            stmt.setString(2, funcionario.getCpf());
+            stmt.setString(3, funcionario.getEmailCorporativo());
+            stmt.setString(4, funcionario.getStatus());
+            stmt.setString(5, funcionario.getSenha());
+            stmt.setInt(6, funcionario.getIdFuncionario());
+
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deletar(int idFuncionario) {
+        String sql = "DELETE FROM Funcionario WHERE id_funcionario = ?";
+
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, idFuncionario);
+            stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
