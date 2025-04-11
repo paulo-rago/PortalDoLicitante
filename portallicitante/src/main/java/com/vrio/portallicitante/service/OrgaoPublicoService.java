@@ -16,4 +16,12 @@ public class OrgaoPublicoService {
     public void cadastrar(OrgaoPublico orgao) {
         repository.salvar(orgao);
     }
+
+    public void atualizar(OrgaoPublico orgao) {
+        repository.atualizar(orgao);
+    }
+
+    public void deletar(int id) {
+        repository.deletar(id);
+    }
 }

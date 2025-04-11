@@ -18,10 +18,7 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/**").permitAll()
-                        .requestMatchers("/editais").permitAll()
-                        .requestMatchers("/orgaos").permitAll()
-                        .anyRequest().authenticated()
+                        .anyRequest().permitAll()  // LIBERA TUDO TEMPORARIAMENTE
                 )
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
