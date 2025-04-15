@@ -6,22 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class EditalDeLicitacaoService {
+public interface EditalDeLicitacaoService {
 
-    @Autowired
-    private EditalDeLicitacaoRepository repository;
 
-    public void cadastrar(EditalDeLicitacao edital) {
-        repository.salvar(edital);
-    }
+    void cadastrar(EditalDeLicitacao edital);
 
-    public void atualizar(EditalDeLicitacao edital) {
-        repository.atualizar(edital);
-    }
+    void atualizar(EditalDeLicitacao edital);
 
-    public void deletar(int id) {
-        repository.deletar(id);
-    }
-
+     void deletar(int id);
 }
 
