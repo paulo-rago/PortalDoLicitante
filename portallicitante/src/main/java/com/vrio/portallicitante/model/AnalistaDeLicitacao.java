@@ -10,6 +10,6 @@ import java.sql.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AnalistaDeLicitacao {
-    private int fkFuncionarioId;
+    private Funcionario funcionario; // herança por composição
     private String supervisor;
 }
