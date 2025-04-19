@@ -21,8 +21,8 @@ public class TelefoneRepository {
         String sql = """
             INSERT INTO Telefone (
                 id_telefone,
-                numero_telefone,
-                fk_id_funcionario
+                numero,
+                fk_Funcionario_id_funcionario
             ) VALUES (?, ?, ?)
         """;
 
@@ -42,8 +42,8 @@ public class TelefoneRepository {
     public void atualizar(Telefone telefone) {
         String sql = """
             UPDATE Telefone SET 
-                numero_telefone = ?, 
-                fk_id_funcionario = ?
+                numero = ?, 
+                fk_Funcionario_id_funcionario = ?
             WHERE id_telefone = ?
         """;
 
