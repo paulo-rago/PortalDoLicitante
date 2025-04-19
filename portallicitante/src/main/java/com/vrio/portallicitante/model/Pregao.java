@@ -14,4 +14,5 @@ public class Pregao {
     private String numeroPregao;
     private String statusPregao;
     private String modeloPregao;
+    private String modalidade;
 }

@@ -23,8 +23,9 @@ public class PregaoRepository {
                 id_pregao,
                 numero_pregao,
                 status_pregao,
-                modelo_pregao
-            ) VALUES (?, ?, ?, ?)
+                modelo_pregao,
+                modalidade
+            ) VALUES (?, ?, ?, ?, ?)
         """;
 
         try (Connection conn = dataSource.getConnection();
@@ -34,6 +35,7 @@ public class PregaoRepository {
             stmt.setString(2, pregao.getNumeroPregao());
             stmt.setString(3, pregao.getStatusPregao());
             stmt.setString(4, pregao.getModeloPregao());
+            stmt.setString(5, pregao.getModalidade());
 
             stmt.executeUpdate();
         } catch (SQLException e) {
@@ -46,7 +48,8 @@ public class PregaoRepository {
             UPDATE Pregao SET
                 numero_pregao = ?,
                 status_pregao = ?,
-                modelo_pregao = ?
+                modelo_pregao = ?,
+                modalidade = ?
             WHERE id_pregao = ?
         """;
 
@@ -56,7 +59,8 @@ public class PregaoRepository {
             stmt.setString(1, pregao.getNumeroPregao());
             stmt.setString(2, pregao.getStatusPregao());
             stmt.setString(3, pregao.getModeloPregao());
-            stmt.setInt(4, pregao.getIdPregao());
+            stmt.setString(4, pregao.getModalidade());
+            stmt.setInt(5, pregao.getIdPregao());
 
             stmt.executeUpdate();
         } catch (SQLException e) {
