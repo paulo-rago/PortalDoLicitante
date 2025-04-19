@@ -22,9 +22,9 @@ public class LoteRepository {
             INSERT INTO Lote (
                 id_lote,
                 numero_lote,
-                objeto_do_lote,
+                objeto,
                 quantidade,
-                fk_id_empresa
+                fk_Empresa_id_empresa
             ) VALUES (?, ?, ?, ?, ?)
         """;
 
@@ -36,7 +36,6 @@ public class LoteRepository {
             stmt.setString(3, lote.getObjetoDoLote());
             stmt.setString(4, lote.getQuantidade());
 
-            // fk pode ser nulo
             if (lote.getFkIdEmpresa() == 0) {
                 stmt.setNull(5, java.sql.Types.INTEGER);
             } else {
@@ -53,9 +52,9 @@ public class LoteRepository {
         String sql = """
             UPDATE Lote SET
                 numero_lote = ?,
-                objeto_do_lote = ?,
+                objeto = ?,
                 quantidade = ?,
-                fk_id_empresa = ?
+                fk_Empresa_id_empresa = ?
             WHERE id_lote = ?
         """;
 
