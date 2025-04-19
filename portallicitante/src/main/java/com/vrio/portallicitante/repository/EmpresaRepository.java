@@ -19,19 +19,24 @@ public class EmpresaRepository {
 
     public void salvar(Empresa empresa) {
         String sql = """
-            INSERT INTO Empresa (
-                CNPJ_empresa, telefone_empresa, cep, rua, bairro, numero, estado
-            ) VALUES (?, ?, ?, ?, ?, ?, ?)
-        """;
+        INSERT INTO Empresa (
+            CNPJ_empresa, telefone_empresa, cep, rua, bairro, numero, estado, nome
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    """;
 
         try (Connection conn = dataSource.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setString(1, empresa.getCNPJ());
-            stmt.setString(3, empresa.getCEP());
+            stmt.setString(1, empresa.getCnpj());
+            stmt.setString(2, empresa.getTelefone());
+            stmt.setString(3, empresa.getCep());
             stmt.setString(4, empresa.getRua());
+            stmt.setString(5, empresa.getBairro());
             stmt.setString(6, empresa.getNumero());
             stmt.setString(7, empresa.getEstado());
+            stmt.setString(8, empresa.getNome());
+            System.out.println("CNPJ: " + empresa.getCnpj());
+            System.out.println("CEP: " + empresa.getCep());
 
             stmt.executeUpdate();
         } catch (SQLException e) {
@@ -41,26 +46,30 @@ public class EmpresaRepository {
 
     public void atualizar(Empresa empresa) {
         String sql = """
-            UPDATE Empresa SET 
-                CNPJ_empresa = ?, 
-                telefone_empresa = ?, 
-                cep = ?, 
-                rua = ?, 
-                bairro = ?, 
-                numero = ?, 
-                estado = ?
-            WHERE id_empresa = ?
-        """;
+        UPDATE Empresa SET 
+            CNPJ_empresa = ?, 
+            telefone_empresa = ?, 
+            cep = ?, 
+            rua = ?, 
+            bairro = ?, 
+            numero = ?, 
+            estado = ?, 
+            nome = ?
+        WHERE id_empresa = ?
+    """;
 
         try (Connection conn = dataSource.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setString(1, empresa.getCNPJ());
-            stmt.setString(3, empresa.getCEP());
+            stmt.setString(1, empresa.getCnpj());
+            stmt.setString(2, empresa.getTelefone());
+            stmt.setString(3, empresa.getCep());
             stmt.setString(4, empresa.getRua());
+            stmt.setString(5, empresa.getBairro());
             stmt.setString(6, empresa.getNumero());
             stmt.setString(7, empresa.getEstado());
-            stmt.setInt(8, empresa.getIdEmpresa());
+            stmt.setString(8, empresa.getNome());
+            stmt.setInt(9, empresa.getIdEmpresa());
 
             stmt.executeUpdate();
         } catch (SQLException e) {

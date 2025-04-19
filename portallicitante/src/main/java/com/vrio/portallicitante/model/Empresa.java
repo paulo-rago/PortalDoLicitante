@@ -9,11 +9,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Empresa {
     private int idEmpresa;
-    private String CNPJ;
-    // criar tabela no banco para armazenar nome
-    private String nome;
-    private String CEP;
+    private String cnpj;
+    private String telefone;
+    private String cep;
     private String rua;
+    private String bairro;
     private String numero;
     private String estado;
+    private String nome;
 }
+
