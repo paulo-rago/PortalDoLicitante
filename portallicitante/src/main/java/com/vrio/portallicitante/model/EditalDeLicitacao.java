@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.time.LocalDate;
 
 @Data
 @AllArgsConstructor
@@ -13,8 +14,8 @@ public class EditalDeLicitacao {
     private int id;
     private String numeroLicitacao;
     private String orgaoResponsavel;
-    private Date dataDeAbertura;
-    private Date prazoEntrega;
+    private LocalDate dataDeAbertura;
+    private LocalDate  prazoEntrega;
     private String exigenciaTecnicas;
     private String documentacaoObrigatoria;
     private BigDecimal  valorEstimado;

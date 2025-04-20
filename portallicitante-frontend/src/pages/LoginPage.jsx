@@ -1,9 +1,12 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function LoginPage() {
   const [cpf, setCpf] = useState("");
   const [senha, setSenha] = useState("");
   const [mensagem, setMensagem] = useState("");
+
+  const navigate = useNavigate();
 
   const fazerLogin = async (e) => {
     e.preventDefault();
@@ -25,7 +28,9 @@ function LoginPage() {
       localStorage.setItem("token", data.token);
       setMensagem("Login realizado com sucesso ✅");
 
-      // Redirecionar ou carregar dados após login...
+      // Redireciona para a página de menu
+      navigate("/menu");
+
     } catch (error) {
       setMensagem(error.message);
     }

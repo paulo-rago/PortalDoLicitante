@@ -6,7 +6,10 @@ import org.springframework.stereotype.Repository;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Repository
 public class OrgaoPublicoRepository {
@@ -86,5 +89,34 @@ public class OrgaoPublicoRepository {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public List<OrgaoPublico> listarTodos() {
+        List<OrgaoPublico> lista = new ArrayList<>();
+        String sql = "SELECT * FROM Orgao_Publico";
+
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                OrgaoPublico o = new OrgaoPublico();
+                o.setIdOrgaoPublico(rs.getInt("id_orgao_publico"));
+                o.setCnpj(rs.getString("CNPJ"));
+                o.setNomeOrgao(rs.getString("nome_orgao"));
+                o.setRua(rs.getString("rua"));
+                o.setBairro(rs.getString("bairro"));
+                o.setCep(rs.getString("cep"));
+                o.setNumero(rs.getString("numero"));
+                o.setEstado(rs.getString("estado"));
+                o.setMunicipio(rs.getString("municipio"));
+                lista.add(o);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return lista;
     }
 }

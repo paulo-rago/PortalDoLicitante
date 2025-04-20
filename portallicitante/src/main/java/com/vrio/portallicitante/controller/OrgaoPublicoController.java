@@ -5,6 +5,8 @@ import com.vrio.portallicitante.service.OrgaoPublicoService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/orgaos")
 public class OrgaoPublicoController {
@@ -26,6 +28,12 @@ public class OrgaoPublicoController {
         orgao.setIdOrgaoPublico(id);
         service.atualizar(orgao);
         return ResponseEntity.ok("Órgão público atualizado com sucesso.");
+    }
+
+    @GetMapping
+    public ResponseEntity<List<OrgaoPublico>> listarTodos() {
+        List<OrgaoPublico> lista = service.listarTodos();
+        return ResponseEntity.ok(lista);
     }
 
     @DeleteMapping("/{id}")
