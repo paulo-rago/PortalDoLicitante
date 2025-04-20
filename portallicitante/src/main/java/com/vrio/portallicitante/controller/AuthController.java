@@ -37,9 +37,11 @@ public class AuthController {
     public ResponseEntity<?> registrar(@RequestBody AuthRequestDTO request) {
         try {
             Funcionario f = new Funcionario();
+            f.setNomeFuncionario(request.getNomeFuncionario());
             f.setCpf(request.getCpf());
+            f.setEmailCorporativo(request.getEmailCorporativo());
             f.setSenha(request.getSenha());
-            f.setStatus("ATIVO"); // opcional, default
+            f.setStatus(request.getStatus() != null ? request.getStatus() : "ATIVO");
             funcionarioService.cadastrar(f);
             return ResponseEntity.ok("Funcionário cadastrado com sucesso ✅");
         } catch (Exception e) {

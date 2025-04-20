@@ -44,7 +44,15 @@ public class FuncionarioRepository {
     }
 
     public void salvar(Funcionario funcionario) {
-        String sql = "INSERT INTO Funcionario (nome_funcionario, cpf, email_corporativo, status, senha) VALUES (?, ?, ?, ?, ?)";
+        String sql = """
+        INSERT INTO Funcionario (
+            nome_funcionario,
+            cpf,
+            email_corporativo,
+            status,
+            senha
+        ) VALUES (?, ?, ?, ?, ?)
+    """;
 
         try (Connection conn = dataSource.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -56,10 +64,12 @@ public class FuncionarioRepository {
             stmt.setString(5, funcionario.getSenha());
 
             stmt.executeUpdate();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
 
     public void atualizar(Funcionario funcionario) {
         String sql = "UPDATE Funcionario SET nome_funcionario = ?, cpf = ?, email_corporativo = ?, status = ?, senha = ? WHERE id_funcionario = ?";
