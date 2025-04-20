@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/editais")
 public class EditalDeLicitacaoController {
@@ -35,5 +37,12 @@ public class EditalDeLicitacaoController {
         service.deletar(id);
         return ResponseEntity.ok("Edital deletado com sucesso.");
     }
+
+    @GetMapping
+    public ResponseEntity<List<EditalDeLicitacao>> listarTodos() {
+        List<EditalDeLicitacao> lista = service.listarTodos();
+        return ResponseEntity.ok(lista);
+    }
+
 
 }

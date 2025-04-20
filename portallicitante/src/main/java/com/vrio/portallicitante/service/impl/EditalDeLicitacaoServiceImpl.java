@@ -9,6 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 public class EditalDeLicitacaoServiceImpl implements EditalDeLicitacaoService {
 
@@ -37,4 +39,10 @@ public class EditalDeLicitacaoServiceImpl implements EditalDeLicitacaoService {
         logger.info("Deletando edital de licitação com ID: {}", id);
         repository.deletar(id);
     }
+    @Override
+    @Transactional(readOnly = true)
+    public List<EditalDeLicitacao> listarTodos() {
+        return repository.listarTodos();
+    }
+
 }

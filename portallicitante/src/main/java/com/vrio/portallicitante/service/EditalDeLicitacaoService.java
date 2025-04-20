@@ -5,6 +5,8 @@ import com.vrio.portallicitante.repository.EditalDeLicitacaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public interface EditalDeLicitacaoService {
 
@@ -14,5 +16,7 @@ public interface EditalDeLicitacaoService {
     void atualizar(EditalDeLicitacao edital);
 
      void deletar(int id);
+
+    List<EditalDeLicitacao> listarTodos();
 }
 

@@ -6,7 +6,10 @@ import org.springframework.stereotype.Repository;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Repository
 public class EditalDeLicitacaoRepository {
@@ -93,4 +96,44 @@ public class EditalDeLicitacaoRepository {
             e.printStackTrace();
         }
     }
+
+    public List<EditalDeLicitacao> listarTodos() {
+        List<EditalDeLicitacao> lista = new ArrayList<>();
+        String sql = "SELECT * FROM Edital_de_Licitacao";
+
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                EditalDeLicitacao edital = new EditalDeLicitacao();
+                edital.setId(rs.getInt("id_licitacao"));
+                edital.setNumeroLicitacao(rs.getString("numero_licitacao"));
+                edital.setOrgaoResponsavel(rs.getString("orgao_responsavel"));
+
+                java.sql.Date dataAbertura = rs.getDate("data_de_abertura");
+                if (dataAbertura != null) {
+                    edital.setDataDeAbertura(dataAbertura.toLocalDate());
+                }
+
+                java.sql.Date prazoEntrega = rs.getDate("prazo_entrega");
+                if (prazoEntrega != null) {
+                    edital.setPrazoEntrega(prazoEntrega.toLocalDate());
+                }
+
+                edital.setExigenciaTecnicas(rs.getString("exigencia_tecnicas"));
+                edital.setDocumentacaoObrigatoria(rs.getString("documentacao_obrigatoria"));
+                edital.setValorEstimado(rs.getBigDecimal("valor_estimado"));
+                edital.setFkOrgaoPublicoId(rs.getInt("fk_Orgao_Publico_id_orgao_publico"));
+                lista.add(edital);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return lista;
+    }
+
+
 }
