@@ -2,9 +2,7 @@ package com.vrio.portallicitante.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-
 import java.math.BigDecimal;
 import java.sql.Date;
 
@@ -19,6 +17,6 @@ public class EditalDeLicitacao {
     private Date prazoEntrega;
     private String exigenciaTecnicas;
     private String documentacaoObrigatoria;
-    private double valorEstimado;
+    private BigDecimal  valorEstimado;
     private int fkOrgaoPublicoId;
 }
