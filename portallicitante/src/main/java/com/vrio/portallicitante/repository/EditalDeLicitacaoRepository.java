@@ -40,7 +40,7 @@ public class EditalDeLicitacaoRepository {
             stmt.setDate(4, edital.getPrazoEntrega());
             stmt.setString(5, edital.getExigenciaTecnicas());
             stmt.setString(6, edital.getDocumentacaoObrigatoria());
-            stmt.setDouble(7, edital.getValorEstimado());
+            stmt.setBigDecimal(7, edital.getValorEstimado());
             stmt.setInt(8, edital.getFkOrgaoPublicoId());
 
             stmt.executeUpdate();
@@ -72,7 +72,7 @@ public class EditalDeLicitacaoRepository {
             stmt.setDate(4, edital.getPrazoEntrega());
             stmt.setString(5, edital.getExigenciaTecnicas());
             stmt.setString(6, edital.getDocumentacaoObrigatoria());
-            stmt.setDouble(7, edital.getValorEstimado());
+            stmt.setBigDecimal(7, edital.getValorEstimado());
             stmt.setInt(8, edital.getFkOrgaoPublicoId());
             stmt.setInt(9, edital.getId());
 
