@@ -8,6 +8,8 @@ import ListarEditais from "./pages/ListarEditais";
 import ListarPregoes from "./pages/ListarPregoes";
 import EditarEdital from "./pages/EditarEdital"; 
 import ExcluirEdital from "./pages/ExcluirEdital"; 
+import EditarPregao from "./pages/EditarPregao";
+import ExcluirPregao from "./pages/ExcluirPregao";
 
 function App() {
   return (
@@ -22,6 +24,8 @@ function App() {
         <Route path="/listar-pregoes" element={<ListarPregoes/>} /> {/* rota para listar pregões */}
         <Route path="/editar-edital/:id" element={<EditarEdital />} /> {/* rota para editar edital */}
         <Route path="/excluir-edital/:id" element={<ExcluirEdital />} /> {/* rota para excluir edital */}
+        <Route path="/editar-pregao/:id" element={<EditarPregao />} /> {/* rota para editar pregão */}
+        <Route path="/excluir-pregao/:id" element={<ExcluirPregao />} /> {/* rota para excluir pregão */}
       </Routes>
     </Router>
   );

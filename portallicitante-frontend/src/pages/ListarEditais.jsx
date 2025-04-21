@@ -61,7 +61,12 @@ function ListarEditais() {
                   >
                     Editar
                   </button>
-                  <button>Excluir</button>
+                  <button
+                  style={{ marginRight: 10 }}
+                    onClick={() => navigate(`/excluir-edital/${edital.id}`)}
+                  >
+                    Excluir
+                  </button>
                 </td>
               </tr>
             ))
