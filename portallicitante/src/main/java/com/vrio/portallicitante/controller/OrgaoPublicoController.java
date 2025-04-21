@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/orgaos")
@@ -20,14 +21,14 @@ public class OrgaoPublicoController {
     @PostMapping
     public ResponseEntity<?> cadastrar(@RequestBody OrgaoPublico orgao) {
         service.cadastrar(orgao);
-        return ResponseEntity.ok("Órgão público cadastrado com sucesso.");
+        return ResponseEntity.ok(Map.of("mensagem", "Órgão público cadastrado com sucesso."));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<?> atualizar(@PathVariable int id, @RequestBody OrgaoPublico orgao) {
         orgao.setIdOrgaoPublico(id);
         service.atualizar(orgao);
-        return ResponseEntity.ok("Órgão público atualizado com sucesso.");
+        return ResponseEntity.ok(Map.of("mensagem", "Órgão público atualizado com sucesso."));
     }
 
     @GetMapping
@@ -39,6 +40,6 @@ public class OrgaoPublicoController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deletar(@PathVariable int id) {
         service.deletar(id);
-        return ResponseEntity.ok("Órgão público deletado com sucesso.");
+        return ResponseEntity.ok(Map.of("mensagem", "Órgão público deletado com sucesso."));
     }
 }

@@ -17,9 +17,9 @@ function CadastrarEdital() {
   const [form, setForm] = useState({
     numeroLicitacao: "",
     orgaoResponsavel: "",
-    dataAbertura: "",
+    dataDeAbertura: "",
     prazoEntrega: "",
-    exigenciasTecnicas: "",
+    exigenciaTecnicas: "",
     documentacaoObrigatoria: "",
     valorEstimado: "",
   });
@@ -187,8 +187,8 @@ function CadastrarEdital() {
         <label>Data de Abertura:</label>
         <input
           type="date"
-          value={form.dataAbertura}
-          onChange={(e) => setForm({ ...form, dataAbertura: e.target.value })}
+          value={form.dataDeAbertura}
+          onChange={(e) => setForm({ ...form, dataDeAbertura: e.target.value })}
         />
         <br />
         <br />
@@ -203,9 +203,9 @@ function CadastrarEdital() {
         <label>Exigências Técnicas:</label>
         <textarea
           placeholder="Descreva as exigências técnicas"
-          value={form.exigenciasTecnicas}
+          value={form.exigenciaTecnicas}
           onChange={(e) =>
-            setForm({ ...form, exigenciasTecnicas: e.target.value })
+            setForm({ ...form, exigenciaTecnicas: e.target.value })
           }
         />
         <br />

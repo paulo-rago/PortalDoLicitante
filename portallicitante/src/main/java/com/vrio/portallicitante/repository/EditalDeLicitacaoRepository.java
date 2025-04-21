@@ -39,8 +39,8 @@ public class EditalDeLicitacaoRepository {
 
             stmt.setString(1, edital.getNumeroLicitacao());
             stmt.setString(2, edital.getOrgaoResponsavel());
-            stmt.setDate(3, java.sql.Date.valueOf(edital.getDataDeAbertura()));
-            stmt.setDate(4, java.sql.Date.valueOf(edital.getPrazoEntrega()));
+            stmt.setDate(3, edital.getDataDeAbertura() != null ? java.sql.Date.valueOf(edital.getDataDeAbertura()) : null);
+            stmt.setDate(4, edital.getPrazoEntrega() != null ? java.sql.Date.valueOf(edital.getPrazoEntrega()) : null);
             stmt.setString(5, edital.getExigenciaTecnicas());
             stmt.setString(6, edital.getDocumentacaoObrigatoria());
             stmt.setBigDecimal(7, edital.getValorEstimado());
@@ -71,8 +71,8 @@ public class EditalDeLicitacaoRepository {
 
             stmt.setString(1, edital.getNumeroLicitacao());
             stmt.setString(2, edital.getOrgaoResponsavel());
-            stmt.setDate(3, java.sql.Date.valueOf(edital.getDataDeAbertura()));
-            stmt.setDate(4, java.sql.Date.valueOf(edital.getPrazoEntrega()));
+            stmt.setDate(3, edital.getDataDeAbertura() != null ? java.sql.Date.valueOf(edital.getDataDeAbertura()) : null);
+            stmt.setDate(4, edital.getPrazoEntrega() != null ? java.sql.Date.valueOf(edital.getPrazoEntrega()) : null);
             stmt.setString(5, edital.getExigenciaTecnicas());
             stmt.setString(6, edital.getDocumentacaoObrigatoria());
             stmt.setBigDecimal(7, edital.getValorEstimado());
@@ -125,6 +125,7 @@ public class EditalDeLicitacaoRepository {
                 edital.setDocumentacaoObrigatoria(rs.getString("documentacao_obrigatoria"));
                 edital.setValorEstimado(rs.getBigDecimal("valor_estimado"));
                 edital.setFkOrgaoPublicoId(rs.getInt("fk_Orgao_Publico_id_orgao_publico"));
+
                 lista.add(edital);
             }
 
@@ -134,6 +135,4 @@ public class EditalDeLicitacaoRepository {
 
         return lista;
     }
-
-
 }
