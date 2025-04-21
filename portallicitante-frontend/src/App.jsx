@@ -6,6 +6,7 @@ import CadastrarEdital from "./pages/CadastrarEdital";
 import CadastrarPregao from "./pages/CadastrarPregao"; 
 import ListarEditais from "./pages/ListarEditais";
 import ListarPregoes from "./pages/ListarPregoes";
+import EditarEdital from "./pages/EditarEdital"; // Importar o componente EditarEdital
 
 function App() {
   return (
@@ -18,7 +19,7 @@ function App() {
         <Route path="/listar-editais" element={<ListarEditais />} /> {/* rota para listar editais */}
         <Route path="/cadastrar-pregao" element={<CadastrarPregao />} /> {/* rota para cadastrar pregão */}
         <Route path="/listar-pregoes" element={<ListarPregoes/>} /> {/* rota para listar pregões */}
-        {/* outras rotas podem ser adicionadas aqui */}
+        <Route path="/editar-edital/:id" element={<EditarEdital />} /> {/* rota para editar edital */}
       </Routes>
     </Router>
   );

@@ -1,15 +1,17 @@
 // src/pages/ListarEditais.jsx
 
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function ListarEditais() {
   const [editais, setEditais] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch("http://localhost:8080/editais")
       .then(res => res.json())
       .then(data => {
-        console.log("Editais recebidos:", data); // <-- Adicione isso
+        console.log("Editais recebidos:", data);
         if (Array.isArray(data)) {
           setEditais(data);
         } else {
@@ -18,8 +20,7 @@ function ListarEditais() {
       })
       .catch(err => console.error("Erro ao buscar editais:", err));
   }, []);
-  
-  
+
   return (
     <div style={{ maxWidth: "90%", margin: "0 auto", padding: "20px" }}>
       <h2>Editais Cadastrados</h2>
@@ -54,8 +55,12 @@ function ListarEditais() {
                 <td>{edital.documentacaoObrigatoria}</td>
                 <td>{edital.valorEstimado}</td>
                 <td>
-                  {/* Botões de editar/excluir podem ser adicionados aqui */}
-                  <button style={{ marginRight: 10 }}>Editar</button>
+                  <button
+                    style={{ marginRight: 10 }}
+                    onClick={() => navigate(`/editar-edital/${edital.id}`)}
+                  >
+                    Editar
+                  </button>
                   <button>Excluir</button>
                 </td>
               </tr>
