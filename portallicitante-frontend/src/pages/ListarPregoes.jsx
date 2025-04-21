@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function ListarPregoes() {
   const [pregoes, setPregoes] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch("http://localhost:8080/pregao", {
@@ -33,6 +35,7 @@ function ListarPregoes() {
             <th>Status</th>
             <th>Modelo</th>
             <th>Modalidade</th>
+            <th>Ações</th>
           </tr>
         </thead>
         <tbody>
@@ -43,6 +46,19 @@ function ListarPregoes() {
               <td>{p.statusPregao}</td>
               <td>{p.modeloPregao}</td>
               <td>{p.modalidade}</td>
+              <td>
+                <button
+                  style={{ marginRight: 10 }}
+                  onClick={() => navigate(`/editar-pregao/${p.idPregao}`)}
+                >
+                  Editar
+                </button>
+                <button
+                  onClick={() => navigate(`/excluir-pregao/${p.idPregao}`)}
+                >
+                  Excluir
+                </button>
+              </td>
             </tr>
           ))}
         </tbody>
