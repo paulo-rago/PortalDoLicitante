@@ -1,10 +1,14 @@
 package com.vrio.portallicitante.controller;
 
+import com.vrio.portallicitante.model.EditalDeLicitacao;
 import com.vrio.portallicitante.model.Pregao;
+import com.vrio.portallicitante.service.EditalDeLicitacaoService;
 import com.vrio.portallicitante.service.PregaoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/pregao")
@@ -31,4 +35,11 @@ public class PregaoController {
         pregaoService.deletar(id);
         return ResponseEntity.ok("Pregão deletado com sucesso");
     }
+
+    @GetMapping
+    public ResponseEntity<List<Pregao>> listarTodos() {
+        List<Pregao> lista = pregaoService.listarTodos();
+        return ResponseEntity.ok(lista);
+    }
+
 }

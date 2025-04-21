@@ -6,7 +6,10 @@ import org.springframework.stereotype.Repository;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Repository
 public class PregaoRepository {
@@ -80,4 +83,30 @@ public class PregaoRepository {
             e.printStackTrace();
         }
     }
+
+    public List<Pregao> listarTodos() {
+        List<Pregao> lista = new ArrayList<>();
+        String sql = "SELECT * FROM Pregao";
+
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                Pregao pregao = new Pregao();
+                pregao.setIdPregao(rs.getInt("id_pregao"));
+                pregao.setNumeroPregao(rs.getString("numero_pregao"));
+                pregao.setStatusPregao(rs.getString("status_pregao"));
+                pregao.setModeloPregao(rs.getString("modelo_pregao"));
+                pregao.setModalidade(rs.getString("modalidade"));
+                lista.add(pregao);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return lista;
+    }
+
 }
