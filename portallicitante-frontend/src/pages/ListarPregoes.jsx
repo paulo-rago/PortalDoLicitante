@@ -47,16 +47,36 @@ function ListarPregoes() {
               <td>{p.modeloPregao}</td>
               <td>{p.modalidade}</td>
               <td>
-                <button
-                  style={{ marginRight: 10 }}
-                  onClick={() => navigate(`/editar-pregao/${p.idPregao}`)}
-                >
+                <button style={{ marginRight: 10 }} onClick={() => navigate(`/editar-pregao/${p.idPregao}`)}>
                   Editar
                 </button>
-                <button
-                  onClick={() => navigate(`/excluir-pregao/${p.idPregao}`)}
-                >
+                <button style={{ marginRight: 10 }} onClick={() => navigate(`/excluir-pregao/${p.idPregao}`)}>
                   Excluir
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      <h2 style={{ marginTop: 40 }}>Gerenciar Lotes</h2>
+      <table border="1" cellPadding="8" cellSpacing="0">
+        <thead>
+          <tr>
+            <th>ID do Pregão</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          {pregoes.map((p) => (
+            <tr key={p.idPregao + "-lotes"}>
+              <td>{p.idPregao}</td>
+              <td>
+                <button style={{ marginRight: 10 }} onClick={() => navigate(`/cadastrar-lote/${p.idPregao}`)}>
+                  Cadastrar Lote
+                </button>
+                <button onClick={() => navigate(`/visualizar-lotes/${p.idPregao}`)}>
+                  Visualizar Lotes
                 </button>
               </td>
             </tr>
