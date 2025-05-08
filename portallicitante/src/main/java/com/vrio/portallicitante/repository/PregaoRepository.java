@@ -4,10 +4,7 @@ import com.vrio.portallicitante.model.Pregao;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,8 +24,12 @@ public class PregaoRepository {
                 numero_pregao,
                 status_pregao,
                 modelo_pregao,
-                modalidade
-            ) VALUES (?, ?, ?, ?, ?)
+                modalidade,
+                horario_abertura,
+                data_encerramento,
+                fk_Edital_de_Licitacao_id_licitacao,
+                fk_analista_de_licitacao_id_funcionario
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
         """;
 
         try (Connection conn = dataSource.getConnection();
@@ -39,6 +40,10 @@ public class PregaoRepository {
             stmt.setString(3, pregao.getStatusPregao());
             stmt.setString(4, pregao.getModeloPregao());
             stmt.setString(5, pregao.getModalidade());
+            stmt.setTime(6, pregao.getHorarioAbertura());
+            stmt.setDate(7, new java.sql.Date(pregao.getDataEncerramento().getTime()));
+            stmt.setInt(8, pregao.getFkEditalDeLicitacao());
+            stmt.setInt(9, pregao.getFkAnalistaDeLicitacao());
 
             stmt.executeUpdate();
         } catch (SQLException e) {
@@ -52,7 +57,11 @@ public class PregaoRepository {
                 numero_pregao = ?,
                 status_pregao = ?,
                 modelo_pregao = ?,
-                modalidade = ?
+                modalidade = ?,
+                horario_abertura = ?,
+                data_encerramento = ?,
+                fk_Edital_de_Licitacao_id_licitacao = ?,
+                fk_analista_de_licitacao_id_funcionario = ?
             WHERE id_pregao = ?
         """;
 
@@ -63,7 +72,11 @@ public class PregaoRepository {
             stmt.setString(2, pregao.getStatusPregao());
             stmt.setString(3, pregao.getModeloPregao());
             stmt.setString(4, pregao.getModalidade());
-            stmt.setInt(5, pregao.getIdPregao());
+            stmt.setTime(5, pregao.getHorarioAbertura());
+            stmt.setDate(6, new java.sql.Date(pregao.getDataEncerramento().getTime()));
+            stmt.setInt(7, pregao.getFkEditalDeLicitacao());
+            stmt.setInt(8, pregao.getFkAnalistaDeLicitacao());
+            stmt.setInt(9, pregao.getIdPregao());
 
             stmt.executeUpdate();
         } catch (SQLException e) {
@@ -99,6 +112,10 @@ public class PregaoRepository {
                 pregao.setStatusPregao(rs.getString("status_pregao"));
                 pregao.setModeloPregao(rs.getString("modelo_pregao"));
                 pregao.setModalidade(rs.getString("modalidade"));
+                pregao.setHorarioAbertura(rs.getTime("horario_abertura"));
+                pregao.setDataEncerramento(rs.getDate("data_encerramento"));
+                pregao.setFkEditalDeLicitacao(rs.getInt("fk_Edital_de_Licitacao_id_licitacao"));
+                pregao.setFkAnalistaDeLicitacao(rs.getInt("fk_analista_de_licitacao_id_funcionario"));
                 lista.add(pregao);
             }
 
@@ -108,5 +125,4 @@ public class PregaoRepository {
 
         return lista;
     }
-
 }

@@ -9,5 +9,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AnalistaDeLicitacao {
     private Funcionario funcionario; // herança por composição
-    private String supervisor;
+    private Integer supervisor;
 }

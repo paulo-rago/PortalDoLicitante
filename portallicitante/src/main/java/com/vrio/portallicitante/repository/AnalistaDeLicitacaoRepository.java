@@ -1,12 +1,13 @@
 package com.vrio.portallicitante.repository;
 
 import com.vrio.portallicitante.model.AnalistaDeLicitacao;
+import com.vrio.portallicitante.model.Funcionario;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Repository
 public class AnalistaDeLicitacaoRepository {
@@ -24,7 +25,12 @@ public class AnalistaDeLicitacaoRepository {
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, analista.getFuncionario().getIdFuncionario());
-            stmt.setString(2, analista.getSupervisor());
+
+            if (analista.getSupervisor() == null || analista.getSupervisor() == 0) {
+                stmt.setNull(2, Types.INTEGER);
+            } else {
+                stmt.setInt(2, analista.getSupervisor());
+            }
 
             stmt.executeUpdate();
         } catch (SQLException e) {
@@ -32,32 +38,28 @@ public class AnalistaDeLicitacaoRepository {
         }
     }
 
-    public void atualizar(AnalistaDeLicitacao analista) {
-        String sql = "UPDATE Analista_de_Licitacao SET supervisor = ? WHERE fk_Funcionario_id_funcionario = ?";
+    public List<AnalistaDeLicitacao> listarTodos() {
+        List<AnalistaDeLicitacao> lista = new ArrayList<>();
+        String sql = "SELECT * FROM Analista_de_Licitacao";
 
         try (Connection conn = dataSource.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
 
-            stmt.setString(1, analista.getSupervisor());
-            stmt.setInt(2, analista.getFuncionario().getIdFuncionario());
+            while (rs.next()) {
+                Funcionario funcionario = new Funcionario();
+                funcionario.setIdFuncionario(rs.getInt("fk_Funcionario_id_funcionario"));
 
-            stmt.executeUpdate();
+                AnalistaDeLicitacao analista = new AnalistaDeLicitacao();
+                analista.setFuncionario(funcionario);
+                analista.setSupervisor(rs.getInt("supervisor"));
+
+                lista.add(analista);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
 
-    public void deletar(int idFuncionario) {
-        String sql = "DELETE FROM Analista_de_Licitacao WHERE fk_Funcionario_id_funcionario = ?";
-
-        try (Connection conn = dataSource.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            stmt.setInt(1, idFuncionario);
-            stmt.executeUpdate();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        return lista;
     }
 }

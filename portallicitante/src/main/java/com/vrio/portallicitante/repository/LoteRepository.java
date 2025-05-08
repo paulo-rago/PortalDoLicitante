@@ -24,8 +24,14 @@ public class LoteRepository {
                 numero_lote,
                 objeto,
                 quantidade,
-                fk_Empresa_id_empresa
-            ) VALUES (?, ?, ?, ?, ?)
+                modelo_veiculo,
+                ano_fabricacao_veiculo,
+                tipo_veiculo,
+                valorArremate,
+                fk_Empresa_id_empresa,
+                fk_Pregao_id_pregao,
+                fk_Edital_de_Licitacao_id_licitacao
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """;
 
         try (Connection conn = dataSource.getConnection();
@@ -35,12 +41,24 @@ public class LoteRepository {
             stmt.setString(2, lote.getNumeroLote());
             stmt.setString(3, lote.getObjetoDoLote());
             stmt.setString(4, lote.getQuantidade());
+            stmt.setString(5, lote.getModelo_veiculo());
+            stmt.setString(6, lote.getAno_fabricacao());
+            stmt.setString(7, lote.getTipo_veiculo());
+
+            if (lote.getValorArremate() == 0.0) {
+                stmt.setNull(8, java.sql.Types.DOUBLE);
+            } else {
+                stmt.setDouble(8, lote.getValorArremate());
+            }
 
             if (lote.getFkIdEmpresa() == 0) {
-                stmt.setNull(5, java.sql.Types.INTEGER);
+                stmt.setNull(9, java.sql.Types.INTEGER);
             } else {
-                stmt.setInt(5, lote.getFkIdEmpresa());
+                stmt.setInt(9, lote.getFkIdEmpresa());
             }
+
+            stmt.setInt(10, lote.getFkIdPregao());
+            stmt.setInt(11, lote.getFkIdEditalDeLicitacao());
 
             stmt.executeUpdate();
         } catch (SQLException e) {
@@ -54,7 +72,13 @@ public class LoteRepository {
                 numero_lote = ?,
                 objeto = ?,
                 quantidade = ?,
-                fk_Empresa_id_empresa = ?
+                modelo_veiculo = ?,
+                ano_fabricacao_veiculo = ?,
+                tipo_veiculo = ?,
+                valorArremate = ?,
+                fk_Empresa_id_empresa = ?,
+                fk_Pregao_id_pregao = ?,
+                fk_Edital_de_Licitacao_id_licitacao = ?
             WHERE id_lote = ?
         """;
 
@@ -64,14 +88,25 @@ public class LoteRepository {
             stmt.setString(1, lote.getNumeroLote());
             stmt.setString(2, lote.getObjetoDoLote());
             stmt.setString(3, lote.getQuantidade());
+            stmt.setString(4, lote.getModelo_veiculo());
+            stmt.setString(5, lote.getAno_fabricacao());
+            stmt.setString(6, lote.getTipo_veiculo());
 
-            if (lote.getFkIdEmpresa() == 0) {
-                stmt.setNull(4, java.sql.Types.INTEGER);
+            if (lote.getValorArremate() == 0.0) {
+                stmt.setNull(7, java.sql.Types.DOUBLE);
             } else {
-                stmt.setInt(4, lote.getFkIdEmpresa());
+                stmt.setDouble(7, lote.getValorArremate());
             }
 
-            stmt.setInt(5, lote.getIdLote());
+            if (lote.getFkIdEmpresa() == 0) {
+                stmt.setNull(8, java.sql.Types.INTEGER);
+            } else {
+                stmt.setInt(8, lote.getFkIdEmpresa());
+            }
+
+            stmt.setInt(9, lote.getFkIdPregao());
+            stmt.setInt(10, lote.getFkIdEditalDeLicitacao());
+            stmt.setInt(11, lote.getIdLote());
 
             stmt.executeUpdate();
         } catch (SQLException e) {
