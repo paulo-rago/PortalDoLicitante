@@ -4,6 +4,7 @@ import com.vrio.portallicitante.dto.AuthRequestDTO;
 import com.vrio.portallicitante.dto.AuthResponseDTO;
 import com.vrio.portallicitante.model.Funcionario;
 import com.vrio.portallicitante.security.JwtUtil;
+import com.vrio.portallicitante.service.AnalistaDeLicitacaoService;
 import com.vrio.portallicitante.service.FuncionarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -21,31 +22,50 @@ public class AuthController {
     @Autowired
     private JwtUtil jwtUtil;
 
+    @Autowired
+    private AnalistaDeLicitacaoService analistaDeLicitacaoService;
+
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody AuthRequestDTO request) {
         Optional<Funcionario> usuario = funcionarioService.autenticar(request.getCpf(), request.getSenha());
 
         if (usuario.isPresent()) {
-            String token = jwtUtil.gerarToken(usuario.get().getCpf());
+            Funcionario f = usuario.get();
+            String token = jwtUtil.gerarToken(f.getCpf(), f.getIdFuncionario());
             return ResponseEntity.ok(new AuthResponseDTO(token));
         } else {
             return ResponseEntity.status(401).body("CPF ou senha inválidos");
         }
     }
 
+
     @PostMapping("/registrar")
-    public ResponseEntity<?> registrar(@RequestBody AuthRequestDTO request) {
+    public ResponseEntity<?> registrar(@RequestBody AuthRequestDTO request,
+                                       @RequestHeader("Authorization") String token) {
         try {
+            // Extrai o ID do funcionário logado a partir do token JWT
+            int idLogado = jwtUtil.getFuncionarioIdFromToken(token);
+
+            // Verifica se o funcionário logado é supervisor
+            if (!analistaDeLicitacaoService.isSupervisor(idLogado)) {
+                return ResponseEntity.status(403).body("Apenas supervisores podem cadastrar novos usuários.");
+            }
+
+            // Se for supervisor, continua o cadastro
             Funcionario f = new Funcionario();
             f.setNomeFuncionario(request.getNomeFuncionario());
             f.setCpf(request.getCpf());
             f.setEmailCorporativo(request.getEmailCorporativo());
             f.setSenha(request.getSenha());
             f.setStatus(request.getStatus() != null ? request.getStatus() : "ATIVO");
+
             funcionarioService.cadastrar(f);
             return ResponseEntity.ok("Funcionário cadastrado com sucesso ✅");
+
         } catch (Exception e) {
             return ResponseEntity.status(400).body("Erro ao cadastrar: " + e.getMessage());
         }
     }
+
+
 }

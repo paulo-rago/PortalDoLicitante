@@ -20,12 +20,10 @@ public class AnalistaDeLicitacaoRepository {
 
     public void salvar(AnalistaDeLicitacao analista) {
         String sql = "INSERT INTO Analista_de_Licitacao (fk_Funcionario_id_funcionario, supervisor) VALUES (?, ?)";
-
         try (Connection conn = dataSource.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, analista.getFuncionario().getIdFuncionario());
-
             if (analista.getSupervisor() == null || analista.getSupervisor() == 0) {
                 stmt.setNull(2, Types.INTEGER);
             } else {
@@ -41,7 +39,6 @@ public class AnalistaDeLicitacaoRepository {
     public List<AnalistaDeLicitacao> listarTodos() {
         List<AnalistaDeLicitacao> lista = new ArrayList<>();
         String sql = "SELECT * FROM Analista_de_Licitacao";
-
         try (Connection conn = dataSource.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
@@ -53,13 +50,53 @@ public class AnalistaDeLicitacaoRepository {
                 AnalistaDeLicitacao analista = new AnalistaDeLicitacao();
                 analista.setFuncionario(funcionario);
                 analista.setSupervisor(rs.getInt("supervisor"));
-
                 lista.add(analista);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return lista;
+    }
+
+    public boolean isSupervisor(int idFuncionario) {
+        String sql = "SELECT COUNT(*) FROM Analista_de_Licitacao WHERE supervisor = ?";
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, idFuncionario);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public void atualizar(AnalistaDeLicitacao analista) {
+        String sql = "UPDATE Analista_de_Licitacao SET supervisor = ? WHERE fk_Funcionario_id_funcionario = ?";
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            if (analista.getSupervisor() == null || analista.getSupervisor() == 0) {
+                stmt.setNull(1, Types.INTEGER);
+            } else {
+                stmt.setInt(1, analista.getSupervisor());
+            }
+            stmt.setInt(2, analista.getFuncionario().getIdFuncionario());
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deletar(int idFuncionario) {
+        String sql = "DELETE FROM Analista_de_Licitacao WHERE fk_Funcionario_id_funcionario = ?";
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, idFuncionario);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

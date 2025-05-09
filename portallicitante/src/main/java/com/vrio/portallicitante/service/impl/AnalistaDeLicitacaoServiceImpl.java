@@ -22,6 +22,21 @@ public class AnalistaDeLicitacaoServiceImpl implements AnalistaDeLicitacaoServic
     }
 
     @Override
+    public void atualizar(AnalistaDeLicitacao analista) {
+        repository.atualizar(analista);
+    }
+
+    @Override
+    public void deletar(int idFuncionario) {
+        repository.deletar(idFuncionario);
+    }
+
+    @Override
+    public boolean isSupervisor(int idFuncionario) {
+        return repository.isSupervisor(idFuncionario);
+    }
+
+    @Override
     public List<AnalistaDeLicitacao> listarTodos() {
         return repository.listarTodos();
     }
