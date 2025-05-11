@@ -1,0 +1,75 @@
+.login-background {
+    position: relative;
+    background-image: url('../assets/login.png');
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+.logo {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
+  
+.login-container {
+    box-sizing: border-box;
+    position: absolute;
+    width: 509px;
+    height: 431px;
+    left: calc(50% - 509px/2 + 0.5px);
+    top: calc(50% - 431px/2 + 0.5px);
+    background: rgba(217, 217, 217, 0.2);
+    backdrop-filter: blur(10px);
+    border-radius: 30px;
+    color: white;
+    text-align: center;
+}
+  
+  
+  .login-container h2 {
+    margin-top: 45px;
+    font-size: 30px;
+    margin-bottom: 20px;
+    font-weight: 700;
+  }
+  
+  .login-container input {
+    width: 400px;
+    height: 35px;
+    margin-bottom: 53px;
+    padding: 12px;
+    border: none;
+    border-radius: 15px;
+    font-size: 20px;
+    outline: none;
+  }
+  
+  .login-container button {
+    width: 265px;
+    height: 50px;
+    margin-bottom: 53px;
+    background-color: #1a1a1a;
+    color: white;
+    font-size: 30px;
+    font-weight: 700;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .login-container button:hover {
+    background-color: #333333;
+  }
+  
+  .mensagem {
+    margin-top: 10px;
+    color: #ffd700;
+    font-size: 14px;
+  }
+  

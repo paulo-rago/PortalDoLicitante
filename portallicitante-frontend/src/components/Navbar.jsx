@@ -48,7 +48,7 @@ const Navbar = () => {
           <button
             onClick={() => {
               handleLogout();
-              navigate("/auth/login");
+              navigate("/login");
             }}
             style={styles.logoutButton}
           >

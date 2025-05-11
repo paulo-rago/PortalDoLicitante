@@ -1,13 +1,20 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: 'KumbhSans', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+input, button, textarea, select{
+  font-family: 'KumbhSans', sans-serif;
 }
+
+code {
+  font-family: 'KumbhSans', sans-serif;
+}
+
+@font-face {
+  font-family: 'KumbhSans';
+  src: url('./assets/KumbhSans.ttf') format('truetype');
+}
+
