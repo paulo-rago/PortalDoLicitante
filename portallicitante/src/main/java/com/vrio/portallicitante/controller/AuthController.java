@@ -32,11 +32,13 @@ public class AuthController {
         if (usuario.isPresent()) {
             Funcionario f = usuario.get();
             String token = jwtUtil.gerarToken(f.getCpf(), f.getIdFuncionario());
-            return ResponseEntity.ok(new AuthResponseDTO(token));
+
+            return ResponseEntity.ok(new AuthResponseDTO(token, f.getNomeFuncionario())); // ✅ nome incluído aqui
         } else {
             return ResponseEntity.status(401).body("CPF ou senha inválidos");
         }
     }
+
 
 
     @PostMapping("/registrar")

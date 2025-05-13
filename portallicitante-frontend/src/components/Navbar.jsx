@@ -1,14 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import "../styles/Navbar.css";
-import logo from "../assets/logovrio.png"; // Import the logo image
+import logo from "../assets/logovrio.png"; // imagem do logotipo
 
 const Navbar = () => {
   const [isSupervisor, setIsSupervisor] = useState(false);
+  const [nomeFuncionario, setNomeFuncionario] = useState("Funcionário");
   const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem("token");
+    const nome = localStorage.getItem("nomeFuncionario");
+
+    if (nome) {
+      setNomeFuncionario(nome);
+    }
+
     if (!token) return;
 
     fetch("http://localhost:8080/analistas/verificar-supervisor", {
@@ -23,6 +30,7 @@ const Navbar = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("nomeFuncionario");
     navigate("/login");
   };
 
@@ -31,7 +39,7 @@ const Navbar = () => {
       <ul className="navbar-links">
         <li>
           <Link to="/menu" className="navbar-logo">
-            <img src={logo} alt="Logo" className="navbar-logo-image" />
+            <img src={logo} alt="Logo VRIO" className="navbar-logo-image" />
           </Link>
         </li>
         <li><Link to="/menu" className="navbar-link">Dashboards</Link></li>
@@ -42,7 +50,7 @@ const Navbar = () => {
         )}
       </ul>
       <div className="navbar-username">
-        {localStorage.getItem("username") || "Usuário"}
+        {nomeFuncionario}
       </div>
       <button onClick={handleLogout} className="navbar-logout">Logout</button>
     </nav>

@@ -28,6 +28,7 @@ function LoginPage() {
 
       const data = await response.json();
       localStorage.setItem("token", data.token);
+      localStorage.setItem("nomeFuncionario", data.nomeFuncionario); // 👈 Adicione esta linha
       setMensagem("Login realizado com sucesso ✅");
       navigate("/menu");
 
