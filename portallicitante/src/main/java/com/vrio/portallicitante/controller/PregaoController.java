@@ -19,9 +19,15 @@ public class PregaoController {
 
     @PostMapping
     public ResponseEntity<?> salvar(@RequestBody Pregao pregao) {
-        pregaoService.salvar(pregao);
-        return ResponseEntity.ok("Pregão cadastrado com sucesso");
+        try {
+            int id = pregaoService.salvar(pregao);
+            pregao.setIdPregao(id);
+            return ResponseEntity.ok(pregao); // Retorna objeto completo com ID
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Erro ao cadastrar pregão: " + e.getMessage());
+        }
     }
+
 
     @PutMapping("/{id}")
     public ResponseEntity<?> atualizar(@PathVariable int id, @RequestBody Pregao pregao) {

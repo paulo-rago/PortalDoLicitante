@@ -21,10 +21,11 @@ public class EditalDeLicitacaoServiceImpl implements EditalDeLicitacaoService {
 
     @Override
     @Transactional
-    public void cadastrar(EditalDeLicitacao edital) {
+    public int cadastrar(EditalDeLicitacao edital) {
         logger.info("Cadastrando edital de licitação: {}", edital);
-        repository.salvar(edital);
+        return repository.salvar(edital); // Aqui você retorna o ID gerado
     }
+
 
     @Override
     @Transactional

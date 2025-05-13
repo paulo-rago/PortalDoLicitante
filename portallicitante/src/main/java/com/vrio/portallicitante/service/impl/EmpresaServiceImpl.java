@@ -14,10 +14,10 @@ public class EmpresaServiceImpl implements EmpresaService {
         this.repository = repository;
     }
 
-    @Override
-    public void salvar(Empresa empresa) {
-        repository.salvar(empresa);
+    public int salvar(Empresa empresa) {
+        return repository.salvar(empresa);
     }
+
 
     @Override
     public void atualizar(Empresa empresa) {

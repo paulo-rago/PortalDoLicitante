@@ -1,32 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import "../styles/Navbar.css";
+import logo from "../assets/logovrio.png"; // Import the logo image
 
 const Navbar = () => {
   const [isSupervisor, setIsSupervisor] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
-    async function verificarSupervisor() {
-      const token = localStorage.getItem("token");
-      if (!token) return;
+    const token = localStorage.getItem("token");
+    if (!token) return;
 
-      try {
-        const response = await fetch("http://localhost:8080/analistas/verificar-supervisor", {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        });
-
-        if (response.ok) {
-          const resultado = await response.json(); // true ou false
-          setIsSupervisor(resultado);
-        }
-      } catch (error) {
-        console.error("Erro ao verificar supervisor:", error);
+    fetch("http://localhost:8080/analistas/verificar-supervisor", {
+      headers: {
+        Authorization: `Bearer ${token}`
       }
-    }
-
-    verificarSupervisor();
+    })
+      .then(response => response.ok ? response.json() : false)
+      .then(data => setIsSupervisor(data))
+      .catch(error => console.error("Erro ao verificar supervisor:", error));
   }, []);
 
   const handleLogout = () => {
@@ -35,63 +27,26 @@ const Navbar = () => {
   };
 
   return (
-    <nav style={styles.nav}>
-      <h1 style={styles.logo}>Portal do Licitante</h1>
-      <ul style={styles.navLinks}>
-        <li><Link to="/menu" style={styles.link}>Dashboards</Link></li>
-        <li><Link to="/cadastrar-edital" style={styles.link}>Cadastro de Processo</Link></li>
-        <li><Link to="/listar-editais" style={styles.link}>Visualização de Processos</Link></li>
-        {isSupervisor && (
-          <li><Link to="/cadastrar-usuario" style={styles.link}>Cadastrar Usuário</Link></li>
-        )}
+    <nav className="navbar">
+      <ul className="navbar-links">
         <li>
-          <button
-            onClick={() => {
-              handleLogout();
-              navigate("/login");
-            }}
-            style={styles.logoutButton}
-          >
-            Logout
-          </button>
+          <Link to="/menu" className="navbar-logo">
+            <img src={logo} alt="Logo" className="navbar-logo-image" />
+          </Link>
         </li>
+        <li><Link to="/menu" className="navbar-link">Dashboards</Link></li>
+        <li><Link to="/cadastrar-edital" className="navbar-link">Cadastro de Processo</Link></li>
+        <li><Link to="/listar-editais" className="navbar-link">Visualização de Processos</Link></li>
+        {isSupervisor && (
+          <li><Link to="/cadastrar-usuario" className="navbar-link">Cadastrar Usuário</Link></li>
+        )}
       </ul>
+      <div className="navbar-username">
+        {localStorage.getItem("username") || "Usuário"}
+      </div>
+      <button onClick={handleLogout} className="navbar-logout">Logout</button>
     </nav>
   );
-};
-
-const styles = {
-  nav: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: '1rem',
-    backgroundColor: '#282c34',
-    color: 'white',
-  },
-  logo: {
-    margin: 0,
-  },
-  navLinks: {
-    listStyle: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    gap: '1rem',
-    margin: 0,
-    padding: 0,
-  },
-  link: {
-    color: 'white',
-    textDecoration: 'none',
-  },
-  logoutButton: {
-    backgroundColor: 'transparent',
-    border: '1px solid white',
-    color: 'white',
-    padding: '0.5rem 1rem',
-    borderRadius: '5px',
-    cursor: 'pointer',
-  }
 };
 
 export default Navbar;

@@ -4,6 +4,7 @@ import com.vrio.portallicitante.model.Lote;
 import com.vrio.portallicitante.repository.LoteRepository;
 import com.vrio.portallicitante.service.LoteService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class LoteServiceImpl implements LoteService {
@@ -15,9 +16,11 @@ public class LoteServiceImpl implements LoteService {
     }
 
     @Override
-    public void salvar(Lote lote) {
-        repository.salvar(lote);
+    @Transactional
+    public int salvar(Lote lote) {
+        return repository.salvar(lote);
     }
+
 
     @Override
     public void atualizar(Lote lote) {

@@ -18,12 +18,14 @@ public class EditalDeLicitacaoController {
     @PostMapping
     public ResponseEntity<?> cadastrar(@RequestBody EditalDeLicitacao edital) {
         try {
-            service.cadastrar(edital);
-            return ResponseEntity.ok("Edital cadastrado com sucesso ✅");
+            int id = service.cadastrar(edital); // precisa retornar o ID
+            edital.setId(id);
+            return ResponseEntity.ok(edital); // envia o edital com ID para o frontend
         } catch (Exception e) {
             return ResponseEntity.status(500).body("Erro ao cadastrar edital: " + e.getMessage());
         }
     }
+
 
     @PutMapping("/{id}")
     public ResponseEntity<?> atualizar(@PathVariable int id, @RequestBody EditalDeLicitacao edital) {

@@ -14,14 +14,17 @@ public class EmpresaController {
     private EmpresaService empresaService;
 
     @PostMapping
-    public ResponseEntity<?> salvar(@RequestBody Empresa empresa) {
+    public ResponseEntity<?> cadastrar(@RequestBody Empresa empresa) {
         try {
-            empresaService.salvar(empresa);
-            return ResponseEntity.ok("Empresa cadastrada com sucesso ✅");
+            int id = empresaService.salvar(empresa);
+            empresa.setIdEmpresa(id);
+            return ResponseEntity.ok(empresa);
         } catch (Exception e) {
-            return ResponseEntity.status(400).body("Erro ao cadastrar empresa: " + e.getMessage());
+            return ResponseEntity.status(500).body("Erro ao salvar empresa: " + e.getMessage());
         }
     }
+
+
 
     @PutMapping("/{id}")
     public ResponseEntity<?> atualizar(@PathVariable int id, @RequestBody Empresa empresa) {

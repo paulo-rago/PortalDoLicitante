@@ -17,10 +17,9 @@ public class PregaoRepository {
         this.dataSource = dataSource;
     }
 
-    public void salvar(Pregao pregao) {
+    public int salvar(Pregao pregao) {
         String sql = """
             INSERT INTO Pregao (
-                id_pregao,
                 numero_pregao,
                 status_pregao,
                 modelo_pregao,
@@ -29,25 +28,37 @@ public class PregaoRepository {
                 data_encerramento,
                 fk_Edital_de_Licitacao_id_licitacao,
                 fk_analista_de_licitacao_id_funcionario
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
         """;
 
+
         try (Connection conn = dataSource.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
-            stmt.setInt(1, pregao.getIdPregao());
-            stmt.setString(2, pregao.getNumeroPregao());
-            stmt.setString(3, pregao.getStatusPregao());
-            stmt.setString(4, pregao.getModeloPregao());
-            stmt.setString(5, pregao.getModalidade());
-            stmt.setTime(6, pregao.getHorarioAbertura());
-            stmt.setDate(7, new java.sql.Date(pregao.getDataEncerramento().getTime()));
-            stmt.setInt(8, pregao.getFkEditalDeLicitacao());
-            stmt.setInt(9, pregao.getFkAnalistaDeLicitacao());
+            stmt.setString(1, pregao.getNumeroPregao());
+            stmt.setString(2, pregao.getStatusPregao());
+            stmt.setString(3, pregao.getModeloPregao());
+            stmt.setString(4, pregao.getModalidade());
+            stmt.setTime(5, pregao.getHorarioAbertura());
+            stmt.setDate(6, new java.sql.Date(pregao.getDataEncerramento().getTime()));
+            stmt.setInt(7, pregao.getFkEditalDeLicitacao());
+            stmt.setInt(8, pregao.getFkAnalistaDeLicitacao());
 
-            stmt.executeUpdate();
+            int linhasAfetadas = stmt.executeUpdate();
+            if (linhasAfetadas == 0) {
+                throw new SQLException("Erro ao inserir o pregão, nenhuma linha afetada.");
+            }
+
+            try (ResultSet rs = stmt.getGeneratedKeys()) {
+                if (rs.next()) {
+                    return rs.getInt(1);
+                } else {
+                    throw new SQLException("Erro ao obter ID do pregão gerado.");
+                }
+            }
+
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Erro ao salvar pregão: " + e.getMessage(), e);
         }
     }
 

@@ -6,6 +6,7 @@ import com.vrio.portallicitante.repository.PregaoRepository;
 import com.vrio.portallicitante.service.PregaoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -16,8 +17,9 @@ public class PregaoServiceImpl implements PregaoService {
     private PregaoRepository repository;
 
     @Override
-    public void salvar(Pregao pregao) {
-        repository.salvar(pregao);
+    @Transactional
+    public int salvar(Pregao pregao) {
+        return repository.salvar(pregao);
     }
 
     @Override

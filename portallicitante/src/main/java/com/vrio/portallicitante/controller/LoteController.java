@@ -15,8 +15,13 @@ public class LoteController {
 
     @PostMapping
     public ResponseEntity<?> cadastrar(@RequestBody Lote lote) {
-        loteService.salvar(lote);
-        return ResponseEntity.ok("Lote cadastrado com sucesso.");
+        try {
+            int id = loteService.salvar(lote);
+            lote.setIdLote(id);
+            return ResponseEntity.ok(lote); // retorna o objeto com idLote gerado
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Erro ao cadastrar lote: " + e.getMessage());
+        }
     }
 
     @PutMapping("/{id}")

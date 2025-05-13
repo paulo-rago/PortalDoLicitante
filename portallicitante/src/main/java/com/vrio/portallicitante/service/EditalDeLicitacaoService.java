@@ -11,7 +11,7 @@ import java.util.List;
 public interface EditalDeLicitacaoService {
 
 
-    void cadastrar(EditalDeLicitacao edital);
+    int cadastrar(EditalDeLicitacao edital);
 
     void atualizar(EditalDeLicitacao edital);
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-function FormularioEdital() {
+function FormularioEdital({ onSubmitSuccess }) {
   const [orgaos, setOrgaos] = useState([]);
   const [novoOrgao, setNovoOrgao] = useState({
     nomeOrgao: "",
@@ -53,18 +53,33 @@ function FormularioEdital() {
       });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
     const payload = {
       ...form,
       fkOrgaoPublicoId: form.orgaoResponsavel
     };
 
-    fetch("http://localhost:8080/editais", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload)
-    }).then(() => alert("Edital cadastrado com sucesso ✅"));
+    try {
+      const response = await fetch("http://localhost:8080/editais", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+
+      if (!response.ok) throw new Error("Erro ao cadastrar edital");
+
+      const data = await response.json();
+      alert("Edital cadastrado com sucesso ✅");
+
+      if (onSubmitSuccess) {
+        onSubmitSuccess(data.id); // <- Importante! Chama o avanço de etapa com o ID
+      }
+
+    } catch (err) {
+      alert("Erro: " + err.message);
+    }
   };
 
   return (
@@ -77,6 +92,7 @@ function FormularioEdital() {
         onChange={(e) =>
           setForm({ ...form, numeroLicitacao: e.target.value })
         }
+        required
       /><br /><br />
 
       <label>Órgão Responsável:</label><br />
@@ -85,6 +101,7 @@ function FormularioEdital() {
         onChange={(e) =>
           setForm({ ...form, orgaoResponsavel: e.target.value })
         }
+        required
       >
         <option value="">Selecione um órgão</option>
         {orgaos.map((orgao) => (
@@ -162,6 +179,7 @@ function FormularioEdital() {
         onChange={(e) =>
           setForm({ ...form, dataDeAbertura: e.target.value })
         }
+        required
       /><br /><br />
 
       <label>Prazo de Entrega:</label><br />
@@ -171,6 +189,7 @@ function FormularioEdital() {
         onChange={(e) =>
           setForm({ ...form, prazoEntrega: e.target.value })
         }
+        required
       /><br /><br />
 
       <textarea
@@ -179,6 +198,7 @@ function FormularioEdital() {
         onChange={(e) =>
           setForm({ ...form, exigenciaTecnicas: e.target.value })
         }
+        required
       /><br /><br />
 
       <textarea
@@ -187,6 +207,7 @@ function FormularioEdital() {
         onChange={(e) =>
           setForm({ ...form, documentacaoObrigatoria: e.target.value })
         }
+        required
       /><br /><br />
 
       <input
@@ -196,6 +217,7 @@ function FormularioEdital() {
         onChange={(e) =>
           setForm({ ...form, valorEstimado: e.target.value })
         }
+        required
       /><br /><br />
 
       <button type="submit">Cadastrar Edital</button>

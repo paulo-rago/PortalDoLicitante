@@ -4,10 +4,7 @@ import com.vrio.portallicitante.model.EditalDeLicitacao;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,22 +17,22 @@ public class EditalDeLicitacaoRepository {
         this.dataSource = dataSource;
     }
 
-    public void salvar(EditalDeLicitacao edital) {
+    public int salvar(EditalDeLicitacao edital) {
         String sql = """
-            INSERT INTO Edital_de_Licitacao (
-                numero_licitacao,
-                orgao_responsavel,
-                data_de_abertura,
-                prazo_entrega,
-                exigencia_tecnicas,
-                documentacao_obrigatoria,
-                valor_estimado,
-                fk_Orgao_Publico_id_orgao_publico
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-        """;
+        INSERT INTO Edital_de_Licitacao (
+            numero_licitacao,
+            orgao_responsavel,
+            data_de_abertura,
+            prazo_entrega,
+            exigencia_tecnicas,
+            documentacao_obrigatoria,
+            valor_estimado,
+            fk_Orgao_Publico_id_orgao_publico
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    """;
 
         try (Connection conn = dataSource.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             stmt.setString(1, edital.getNumeroLicitacao());
             stmt.setString(2, edital.getOrgaoResponsavel());
@@ -46,11 +43,24 @@ public class EditalDeLicitacaoRepository {
             stmt.setBigDecimal(7, edital.getValorEstimado());
             stmt.setInt(8, edital.getFkOrgaoPublicoId());
 
-            stmt.executeUpdate();
+            int linhasAfetadas = stmt.executeUpdate();
+            if (linhasAfetadas == 0) {
+                throw new SQLException("Erro ao inserir edital, nenhuma linha afetada.");
+            }
+
+            try (ResultSet rs = stmt.getGeneratedKeys()) {
+                if (rs.next()) {
+                    return rs.getInt(1); // retorna o ID gerado
+                } else {
+                    throw new SQLException("Erro ao obter ID do edital gerado.");
+                }
+            }
+
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Erro ao salvar edital: " + e.getMessage(), e);
         }
     }
+
 
     public void atualizar(EditalDeLicitacao edital) {
         String sql = """

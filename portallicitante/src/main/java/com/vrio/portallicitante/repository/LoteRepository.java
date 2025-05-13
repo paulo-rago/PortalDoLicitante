@@ -4,9 +4,7 @@ import com.vrio.portallicitante.model.Lote;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 
 @Repository
 public class LoteRepository {
@@ -17,100 +15,111 @@ public class LoteRepository {
         this.dataSource = dataSource;
     }
 
-    public void salvar(Lote lote) {
+    public int salvar(Lote lote) {
         String sql = """
             INSERT INTO Lote (
-                id_lote,
+                quantidade,
                 numero_lote,
                 objeto,
-                quantidade,
                 modelo_veiculo,
                 ano_fabricacao_veiculo,
                 tipo_veiculo,
-                valorArremate,
+                valor_arremate,
                 fk_Empresa_id_empresa,
-                fk_Pregao_id_pregao,
-                fk_Edital_de_Licitacao_id_licitacao
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                fk_Edital_de_Licitacao_id_licitacao,
+                fk_Pregao_id_pregao
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """;
 
         try (Connection conn = dataSource.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
-            stmt.setInt(1, lote.getIdLote());
+            stmt.setString(1, lote.getQuantidade());
             stmt.setString(2, lote.getNumeroLote());
             stmt.setString(3, lote.getObjetoDoLote());
-            stmt.setString(4, lote.getQuantidade());
-            stmt.setString(5, lote.getModelo_veiculo());
-            stmt.setString(6, lote.getAno_fabricacao());
-            stmt.setString(7, lote.getTipo_veiculo());
+            stmt.setString(4, lote.getModelo_veiculo());
+            stmt.setString(5, lote.getAno_fabricacao());
+            stmt.setString(6, lote.getTipo_veiculo());
 
             if (lote.getValorArremate() == 0.0) {
-                stmt.setNull(8, java.sql.Types.DOUBLE);
+                stmt.setNull(7, Types.DOUBLE);
             } else {
-                stmt.setDouble(8, lote.getValorArremate());
+                stmt.setDouble(7, lote.getValorArremate());
             }
 
             if (lote.getFkIdEmpresa() == 0) {
-                stmt.setNull(9, java.sql.Types.INTEGER);
+                stmt.setNull(8, Types.INTEGER);
             } else {
-                stmt.setInt(9, lote.getFkIdEmpresa());
+                stmt.setInt(8, lote.getFkIdEmpresa());
             }
 
+            stmt.setInt(9, lote.getFkIdEditalDeLicitacao());
             stmt.setInt(10, lote.getFkIdPregao());
-            stmt.setInt(11, lote.getFkIdEditalDeLicitacao());
 
-            stmt.executeUpdate();
+            int linhasAfetadas = stmt.executeUpdate();
+            if (linhasAfetadas == 0) {
+                throw new SQLException("Erro ao inserir o lote, nenhuma linha afetada.");
+            }
+
+            try (ResultSet rs = stmt.getGeneratedKeys()) {
+                if (rs.next()) {
+                    return rs.getInt(1);
+                } else {
+                    throw new SQLException("Erro ao obter ID do lote gerado.");
+                }
+            }
+
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Erro ao salvar lote: " + e.getMessage(), e);
         }
     }
 
     public void atualizar(Lote lote) {
         String sql = """
             UPDATE Lote SET
+                quantidade = ?,
                 numero_lote = ?,
                 objeto = ?,
-                quantidade = ?,
                 modelo_veiculo = ?,
                 ano_fabricacao_veiculo = ?,
                 tipo_veiculo = ?,
-                valorArremate = ?,
+                valor_arremate = ?,
                 fk_Empresa_id_empresa = ?,
-                fk_Pregao_id_pregao = ?,
-                fk_Edital_de_Licitacao_id_licitacao = ?
+                fk_Edital_de_Licitacao_id_licitacao = ?,
+                fk_Pregao_id_pregao = ?
             WHERE id_lote = ?
         """;
 
         try (Connection conn = dataSource.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setString(1, lote.getNumeroLote());
-            stmt.setString(2, lote.getObjetoDoLote());
-            stmt.setString(3, lote.getQuantidade());
+            stmt.setString(1, lote.getQuantidade());
+            stmt.setString(2, lote.getNumeroLote());
+            stmt.setString(3, lote.getObjetoDoLote());
             stmt.setString(4, lote.getModelo_veiculo());
             stmt.setString(5, lote.getAno_fabricacao());
             stmt.setString(6, lote.getTipo_veiculo());
 
             if (lote.getValorArremate() == 0.0) {
-                stmt.setNull(7, java.sql.Types.DOUBLE);
+                stmt.setNull(7, Types.DOUBLE);
             } else {
                 stmt.setDouble(7, lote.getValorArremate());
             }
 
             if (lote.getFkIdEmpresa() == 0) {
-                stmt.setNull(8, java.sql.Types.INTEGER);
+                stmt.setNull(8, Types.INTEGER);
             } else {
                 stmt.setInt(8, lote.getFkIdEmpresa());
             }
 
-            stmt.setInt(9, lote.getFkIdPregao());
-            stmt.setInt(10, lote.getFkIdEditalDeLicitacao());
+            stmt.setInt(9, lote.getFkIdEditalDeLicitacao());
+            stmt.setInt(10, lote.getFkIdPregao());
             stmt.setInt(11, lote.getIdLote());
 
             stmt.executeUpdate();
+
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Erro ao atualizar lote: " + e.getMessage(), e);
         }
     }
 
@@ -122,8 +131,9 @@ public class LoteRepository {
 
             stmt.setInt(1, idLote);
             stmt.executeUpdate();
+
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Erro ao deletar lote: " + e.getMessage(), e);
         }
     }
 }
