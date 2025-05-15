@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/funcionarios")
 public class FuncionarioController {
@@ -13,6 +16,25 @@ public class FuncionarioController {
     @Autowired
     private FuncionarioService funcionarioService;
 
+    // ✅ CADASTRAR FUNCIONÁRIO
+    @PostMapping
+    public ResponseEntity<?> cadastrar(@RequestBody Funcionario funcionario) {
+        try {
+            funcionarioService.cadastrar(funcionario);
+            return ResponseEntity.ok("Funcionário cadastrado com sucesso.");
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Erro ao cadastrar funcionário: " + e.getMessage());
+        }
+    }
+
+    // ✅ LISTAR TODOS
+    @GetMapping
+    public ResponseEntity<List<Funcionario>> listarTodos() {
+        List<Funcionario> lista = funcionarioService.listarTodos();
+        return ResponseEntity.ok(lista);
+    }
+
+    // ✅ ATUALIZAR
     @PutMapping("/{id}")
     public ResponseEntity<?> atualizar(@PathVariable int id, @RequestBody Funcionario funcionario) {
         funcionario.setIdFuncionario(id);
@@ -20,6 +42,7 @@ public class FuncionarioController {
         return ResponseEntity.ok("Funcionário atualizado com sucesso.");
     }
 
+    // ✅ DELETAR
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deletar(@PathVariable int id) {
         funcionarioService.deletar(id);

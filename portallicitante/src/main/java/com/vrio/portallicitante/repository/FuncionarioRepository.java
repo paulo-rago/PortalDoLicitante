@@ -5,6 +5,8 @@ import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -101,5 +103,31 @@ public class FuncionarioRepository {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public List<Funcionario> listarTodos() {
+        List<Funcionario> funcionarios = new ArrayList<>();
+        String sql = "SELECT * FROM funcionario";
+
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                Funcionario f = new Funcionario();
+                f.setIdFuncionario(rs.getInt("id_funcionario"));
+                f.setNomeFuncionario(rs.getString("nome_funcionario"));
+                f.setCpf(rs.getString("CPF"));
+                f.setEmailCorporativo(rs.getString("email_corporativo"));
+                f.setStatus(rs.getString("status"));
+                f.setSenha(rs.getString("senha"));
+                funcionarios.add(f);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao listar funcionários: " + e.getMessage(), e);
+        }
+
+        return funcionarios;
     }
 }

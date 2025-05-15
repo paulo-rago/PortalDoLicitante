@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-function Menu() {
+function Dashboards() {
   const navigate = useNavigate();
 
   const sair = () => {
@@ -11,7 +11,7 @@ function Menu() {
 
   return (
     <div style={{ maxWidth: 400, margin: "0 auto", textAlign: "center" }}>
-      <h2>Menu Principal</h2>
+      <h2>Dashboards Principal</h2>
       <button onClick={() => navigate("/cadastrar-edital")}>Cadastrar Edital</button><br /><br />
       <button onClick={() => navigate("/listar-editais")}>Visualizar Editais</button><br /><br />
       <button onClick={() => navigate("/cadastrar-pregao")}>Cadastrar Pregão</button><br /><br />
@@ -21,4 +21,4 @@ function Menu() {
   );
 }
 
-export default Menu;
+export default Dashboards;

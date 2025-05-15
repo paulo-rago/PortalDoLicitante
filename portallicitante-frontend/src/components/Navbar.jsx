@@ -38,15 +38,35 @@ const Navbar = () => {
     <nav className="navbar">
       <ul className="navbar-links">
         <li>
-          <Link to="/menu" className="navbar-logo">
+          <button
+            className="navbar-logo"
+            onClick={() => navigate("/Dashboards")}
+            style={{ background: "none", border: "none", padding: 0, cursor: "pointer" }}
+          >
             <img src={logo} alt="Logo VRIO" className="navbar-logo-image" />
-          </Link>
+          </button>
         </li>
-        <li><Link to="/menu" className="navbar-link">Dashboards</Link></li>
-        <li><Link to="/cadastrar-edital" className="navbar-link">Cadastro de Processo</Link></li>
-        <li><Link to="/listar-editais" className="navbar-link">Visualização de Processos</Link></li>
+        <li>
+          <button className="navbar-link" onClick={() => navigate("/Dashboards")}>
+            Dashboards
+          </button>
+        </li>
+        <li>
+          <button className="navbar-link" onClick={() => navigate("/cadastro-completo")}>
+            Cadastro de Processo
+          </button>
+        </li>
+        <li>
+          <button className="navbar-link" onClick={() => navigate("/listar-editais")}>
+            Processos
+          </button>
+        </li>
         {isSupervisor && (
-          <li><Link to="/cadastrar-usuario" className="navbar-link">Cadastrar Usuário</Link></li>
+          <li>
+            <button className="navbar-link" onClick={() => navigate("/funcionarios")}>
+              Funcionários
+            </button>
+          </li>
         )}
       </ul>
       <div className="navbar-username">

@@ -10,9 +10,21 @@
   
   .navbar-logo {
     margin: 0;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
   }
   
-.navbar-links {
+  .navbar-logo-image {
+    height: 45px;
+    width: auto;
+    display: block;
+  }
+  
+  .navbar-links {
     list-style: none;
     display: flex;
     align-items: center;
@@ -26,6 +38,17 @@
   .navbar-link {
     color: white;
     text-decoration: none;
+    background: none;
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: background 0.2s;
+  }
+  
+  .navbar-link:hover {
+    background: rgba(255,255,255,0.1);
   }
   
 .navbar-logout {
@@ -35,11 +58,20 @@
     padding: 0.5rem 1rem;
     border-radius: 5px;
     cursor: pointer;
-    margin-left: auto;
+    margin-left: 1rem;
+    transition: background 0.2s, color 0.2s;
+}
+
+.navbar-logout:hover {
+    background: white;
+    color: #110D09;
 }
 
 .navbar-username {
-    margin-right: 1rem;
+    margin-right: 0.5rem;
     font-size: 1.2rem;
+    font-weight: 500;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
 }
-  

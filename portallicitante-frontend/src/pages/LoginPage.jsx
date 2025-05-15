@@ -30,7 +30,7 @@ function LoginPage() {
       localStorage.setItem("token", data.token);
       localStorage.setItem("nomeFuncionario", data.nomeFuncionario); // 👈 Adicione esta linha
       setMensagem("Login realizado com sucesso ✅");
-      navigate("/menu");
+      navigate("/Dashboards"); // Redireciona para a página de dashboards após o login
 
     } catch (error) {
       setMensagem(error.message);
