@@ -1,0 +1,31 @@
+.pagina-funcionarios {
+  padding-left: 62px;
+  padding-right: 62px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  box-sizing: border-box;
+}
+
+.botao-cadastrar-funcionario {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 20px;
+  width: 336px;
+  height: 52px;
+  background-color: #0087C1;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 25px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}	
+
+.lista-funcionarios {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px; /* espaçamento entre os cards */
+  justify-content: flex-start;
+}

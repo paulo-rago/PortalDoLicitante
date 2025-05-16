@@ -1,27 +1,34 @@
 import React, { useEffect, useState } from "react";
-import "../styles/Funcionarios.css"; // Opcional: para estilos personalizados
+import { useNavigate } from "react-router-dom";
+import FuncionarioCard from "../components/FuncionarioCard";
+import "../styles/Funcionarios.css"; // Importando o CSS para estilização
 
 function Funcionarios() {
   const [funcionarios, setFuncionarios] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch("http://localhost:8080/funcionarios")
-      .then((res) => res.json())
-      .then((data) => setFuncionarios(Array.isArray(data) ? data : []))
-      .catch((err) => console.error("Erro ao carregar funcionários:", err));
+      .then(res => res.json())
+      .then(data => setFuncionarios(Array.isArray(data) ? data : []))
+      .catch(err => console.error("Erro ao carregar funcionários", err));
   }, []);
 
   return (
-    <div className="funcionarios-container">
-      <h1>Funcionários Cadastrados</h1>
-      <div className="funcionarios-lista">
-        {funcionarios.map((func) => (
-          <div key={func.idFuncionario} className="funcionario-card">
-            <h3>{func.nome}</h3>
-            <p><strong>CPF:</strong> {func.cpf}</p>
-            <p><strong>Email:</strong> {func.emailCorporativo}</p>
-            <p><strong>Status:</strong> {func.status}</p>
-          </div>
+    <div className="pagina-funcionarios">
+      <button className="botao-cadastrar-funcionario" onClick={() => navigate('/cadastro-funcionario')}>
+        Cadastrar Funcionário
+      </button>
+      <div className="lista-funcionarios">
+        {funcionarios.map((f) => (
+          <FuncionarioCard
+            key={f.idFuncionario}
+            nome={f.nomeFuncionario}
+            cpf={f.cpf}
+            status={f.status}
+            email={f.emailCorporativo}
+            onEditar={() => console.log("Editar", f.idFuncionario)}
+          />
         ))}
       </div>
     </div>

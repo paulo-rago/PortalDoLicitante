@@ -49,3 +49,4 @@ public class FuncionarioController {
         return ResponseEntity.ok("Funcionário deletado com sucesso.");
     }
 }
+ 
