@@ -17,4 +17,5 @@ public interface FuncionarioService {
 
     Optional<Funcionario> autenticar(String cpf, String senha);
 
+    Funcionario buscarPorId(int id);
 }

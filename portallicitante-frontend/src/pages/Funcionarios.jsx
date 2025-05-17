@@ -27,7 +27,7 @@ function Funcionarios() {
             cpf={f.cpf}
             status={f.status}
             email={f.emailCorporativo}
-            onEditar={() => console.log("Editar", f.idFuncionario)}
+            onEditar={() => navigate(`/funcionarios/editar/${f.idFuncionario}`)} // ✅
           />
         ))}
       </div>

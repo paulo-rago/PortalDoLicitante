@@ -24,6 +24,9 @@ function ListarEditais() {
   return (
     <div style={{ maxWidth: "90%", margin: "0 auto", padding: "20px" }}>
       <h2>Editais Cadastrados</h2>
+      <button className="botao-cadastrar-completo" onClick={() => navigate('/cadastro-funcionario')}>
+        Cadastrar Funcionário
+      </button>
       <table border="1" cellPadding="10" cellSpacing="0" style={{ width: "100%", borderCollapse: "collapse" }}>
         <thead>
           <tr>

@@ -13,6 +13,7 @@ import Navbar from "./components/Navbar";
 import CadastroCompleto from "./pages/CadastroCompleto";
 import Funcionarios from "./pages/Funcionarios";
 import CadastroDeFuncionario from "./pages/CadastroDeFuncionario";
+import EditarInformacoesFunc from "./pages/EditarInformacoesFunc";
 
 
 function LayoutComNavbar() {
@@ -36,6 +37,7 @@ function LayoutComNavbar() {
         <Route path="/cadastro-completo" element={<CadastroCompleto />} />
         <Route path="/funcionarios" element={<Funcionarios />} />
         <Route path="/cadastro-funcionario" element={<CadastroDeFuncionario />} />
+        <Route path="/funcionarios/editar/:id" element={<EditarInformacoesFunc />} />
       </Routes>
     </>
   );

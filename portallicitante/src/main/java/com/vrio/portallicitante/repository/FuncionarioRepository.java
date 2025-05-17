@@ -130,4 +130,33 @@ public class FuncionarioRepository {
 
         return funcionarios;
     }
+
+    public Funcionario buscarPorId(int id) {
+        String sql = "SELECT * FROM funcionario WHERE id_funcionario = ?";
+        Funcionario funcionario = null;
+
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                funcionario = new Funcionario();
+                funcionario.setIdFuncionario(rs.getInt("id_funcionario"));
+                funcionario.setNomeFuncionario(rs.getString("nome_funcionario"));
+                funcionario.setCpf(rs.getString("cpf"));
+                funcionario.setEmailCorporativo(rs.getString("email_corporativo"));
+                funcionario.setStatus(rs.getString("status"));
+                funcionario.setSenha(rs.getString("senha"));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return funcionario;
+    }
+
+
 }

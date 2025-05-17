@@ -52,4 +52,9 @@ public class FuncionarioServiceImpl implements FuncionarioService {
         }
         return Optional.empty();
     }
+
+    @Override
+    public Funcionario buscarPorId(int id) {
+        return funcionarioRepository.buscarPorId(id);
+    }
 }

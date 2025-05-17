@@ -48,5 +48,17 @@ public class FuncionarioController {
         funcionarioService.deletar(id);
         return ResponseEntity.ok("Funcionário deletado com sucesso.");
     }
+
+    // ✅ BUSCAR POR ID
+    @GetMapping("/{id}")
+    public ResponseEntity<Funcionario> buscarPorId(@PathVariable int id) {
+        Funcionario funcionario = funcionarioService.buscarPorId(id);
+        if (funcionario != null) {
+            return ResponseEntity.ok(funcionario);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 }
  
