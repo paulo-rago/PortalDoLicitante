@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import FormularioEdital from "../components/FormularioEdital";
 import FormularioPregao from "../components/FormularioPregao";
 import FormularioLote from "../components/FormularioLote";
+import "../styles/CadastroCompleto.css"; // Adicione o caminho correto para o CSS
 
 function CadastroCompleto() {
   const [etapa, setEtapa] = useState(1);
@@ -11,14 +12,9 @@ function CadastroCompleto() {
   const avancarEtapa = () => setEtapa(etapa + 1);
 
   return (
-    <div style={{ maxWidth: 900, margin: "0 auto" }}>
-      <h1>Cadastro Completo</h1>
-      <p>Etapa {etapa} de 3</p>
-      <hr />
-
+    <div className="cadastro-completo">
       {etapa === 1 && (
         <>
-          <h2>Etapa 1: Cadastro de Edital</h2>
           <FormularioEdital
             onSubmitSuccess={(idEdital) => {
               setEditalId(idEdital);
@@ -30,7 +26,7 @@ function CadastroCompleto() {
 
       {etapa === 2 && editalId && (
         <>
-          <h2>Etapa 2: Cadastro de Pregão</h2>
+          <h2>Cadastro de Pregão</h2>
           <FormularioPregao
             editalId={editalId}
             onSubmitSuccess={(idPregao) => {
@@ -43,7 +39,7 @@ function CadastroCompleto() {
 
       {etapa === 3 && editalId && pregaoId && (
         <>
-          <h2>Etapa 3: Cadastro de Lote</h2>
+          <h2>Cadastro de Lote</h2>
           <FormularioLote editalId={editalId} pregaoId={pregaoId} />
         </>
       )}
