@@ -57,7 +57,7 @@ const Navbar = () => {
           </button>
         </li>
         <li>
-          <button className="navbar-link" onClick={() => navigate("/listar-editais")}>
+          <button className="navbar-link" onClick={() => navigate("/listar-processos")}>
             Processos
           </button>
         </li>

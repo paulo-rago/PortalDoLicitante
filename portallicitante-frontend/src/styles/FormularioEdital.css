@@ -1,0 +1,107 @@
+.form-edital {
+  background-color: #a8a8a8;
+  border-radius: 20px;
+  padding: 40px;
+  width: 100%;
+  max-width: 1000px;
+  margin: 40px auto;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  font-family: 'Kumbh Sans', sans-serif;
+  color: black;
+}
+
+.form-edital h2 {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.form-edital label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px 30px;
+}
+
+.form-grid .linha-completa {
+  grid-column: 1 / -1;
+}
+
+.form-edital input,
+.form-edital select {
+  padding: 12px;
+  border: none;
+  border-radius: 30px;
+  font-size: 14px;
+  background-color: white;
+}
+
+.input-documentacao-obrigatoria {
+  width: 682px;
+}
+
+.input-exigencias-tecnicas {
+  width: 100%;
+}
+
+.input-orgao-responsavel {
+  width: calc(100% - 50px);
+}
+
+.bloco-novo-orgao {
+  background-color: #eeeeee;
+  border-radius: 12px;
+  padding: 30px;
+  width: 80%;
+  margin: 30px auto 0 auto;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.bloco-novo-orgao input {
+  width: 100%;
+  max-width: 500px;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: none;
+  border-radius: 25px;
+  font-size: 14px;
+  background-color: white;
+}
+
+.botao-salvar {
+  display: block;
+  margin: 30px auto 0;
+  padding: 12px 24px;
+  background-color: #0087C1;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+}
+
+.botao-mais-orgao {
+  width: 45px;
+  height: 45px;
+  background-color: #0087C1;
+  border: none;
+  border-radius: 50%;
+  font-size: 26px;
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
+  margin-left: 10px;
+  align-self: center;
+}
+
+.botao-mais-orgao:hover {
+  background-color: #0070a3;
+}

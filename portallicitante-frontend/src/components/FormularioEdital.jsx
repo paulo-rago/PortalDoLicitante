@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import "../styles/FormularioEdital.css";
 
 function FormularioEdital({ onSubmitSuccess }) {
   const [orgaos, setOrgaos] = useState([]);
@@ -12,7 +13,7 @@ function FormularioEdital({ onSubmitSuccess }) {
     estado: "",
     municipio: ""
   });
-  const [editandoOrgao, setEditandoOrgao] = useState(false);
+  const [mostrarNovoOrgao, setMostrarNovoOrgao] = useState(false);
 
   const [form, setForm] = useState({
     numeroLicitacao: "",
@@ -49,7 +50,7 @@ function FormularioEdital({ onSubmitSuccess }) {
           estado: "",
           municipio: ""
         });
-        setEditandoOrgao(false);
+        setMostrarNovoOrgao(false);
       });
   };
 
@@ -74,153 +75,143 @@ function FormularioEdital({ onSubmitSuccess }) {
       alert("Edital cadastrado com sucesso ✅");
 
       if (onSubmitSuccess) {
-        onSubmitSuccess(data.id); // <- Importante! Chama o avanço de etapa com o ID
+        onSubmitSuccess(data.id);
       }
-
     } catch (err) {
       alert("Erro: " + err.message);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className="form-edital" onSubmit={handleSubmit}>
       <h2>Cadastrar Edital</h2>
 
-      <input
-        placeholder="Número da Licitação"
-        value={form.numeroLicitacao}
-        onChange={(e) =>
-          setForm({ ...form, numeroLicitacao: e.target.value })
-        }
-        required
-      /><br /><br />
-
-      <label>Órgão Responsável:</label><br />
-      <select
-        value={form.orgaoResponsavel}
-        onChange={(e) =>
-          setForm({ ...form, orgaoResponsavel: e.target.value })
-        }
-        required
-      >
-        <option value="">Selecione um órgão</option>
-        {orgaos.map((orgao) => (
-          <option key={orgao.idOrgaoPublico} value={orgao.idOrgaoPublico}>
-            {orgao.nomeOrgao}
-          </option>
-        ))}
-      </select>
-      <button type="button" onClick={() => setEditandoOrgao(true)}>
-        + Novo órgão
-      </button>
-      <br /><br />
-
-      {editandoOrgao && (
-        <div style={{ border: "1px solid #ccc", padding: 10, marginBottom: 20 }}>
-          <h4>Novo Órgão Público</h4>
+      <div className="form-grid">
+        <div>
+          <label>Nº da Licitação:</label>
           <input
-            placeholder="Nome"
-            value={novoOrgao.nomeOrgao}
+            className="input-numero-licitacao"
+            value={form.numeroLicitacao}
             onChange={(e) =>
-              setNovoOrgao({ ...novoOrgao, nomeOrgao: e.target.value })
+              setForm({ ...form, numeroLicitacao: e.target.value })
             }
-          /><br />
-          <input
-            placeholder="CNPJ"
-            value={novoOrgao.cnpj}
-            onChange={(e) => setNovoOrgao({ ...novoOrgao, cnpj: e.target.value })}
-          /><br />
-          <input
-            placeholder="Rua"
-            value={novoOrgao.rua}
-            onChange={(e) => setNovoOrgao({ ...novoOrgao, rua: e.target.value })}
-          /><br />
-          <input
-            placeholder="Bairro"
-            value={novoOrgao.bairro}
-            onChange={(e) => setNovoOrgao({ ...novoOrgao, bairro: e.target.value })}
-          /><br />
-          <input
-            placeholder="CEP"
-            value={novoOrgao.cep}
-            onChange={(e) => setNovoOrgao({ ...novoOrgao, cep: e.target.value })}
-          /><br />
-          <input
-            placeholder="Número"
-            value={novoOrgao.numero}
-            onChange={(e) =>
-              setNovoOrgao({ ...novoOrgao, numero: e.target.value })
-            }
-          /><br />
-          <input
-            placeholder="Estado (UF)"
-            value={novoOrgao.estado}
-            onChange={(e) =>
-              setNovoOrgao({ ...novoOrgao, estado: e.target.value })
-            }
-          /><br />
-          <input
-            placeholder="Município"
-            value={novoOrgao.municipio}
-            onChange={(e) =>
-              setNovoOrgao({ ...novoOrgao, municipio: e.target.value })
-            }
-          /><br />
-          <button type="button" onClick={handleCadastroOrgao}>
-            Salvar órgão
-          </button>
+            required
+          />
         </div>
-      )}
 
-      <label>Data de Abertura:</label><br />
-      <input
-        type="date"
-        value={form.dataDeAbertura}
-        onChange={(e) =>
-          setForm({ ...form, dataDeAbertura: e.target.value })
-        }
-        required
-      /><br /><br />
+        <div>
+          <label>Órgão Responsável:</label>
+          <div style={{ display: "flex", gap: "10px" }}>
+            <select
+              className="input-orgao-responsavel"
+              value={form.orgaoResponsavel}
+              onChange={(e) =>
+                setForm({ ...form, orgaoResponsavel: e.target.value })
+              }
+              required
+            >
+              <option value="">Selecione um órgão</option>
+              {orgaos.map((orgao) => (
+                <option key={orgao.idOrgaoPublico} value={orgao.idOrgaoPublico}>
+                  {orgao.nomeOrgao}
+                </option>
+              ))}
+            </select>
+            <button
+              type="button"
+              className="botao-mais-orgao"
+              onClick={() => setMostrarNovoOrgao(!mostrarNovoOrgao)}
+              title="Adicionar novo órgão"
+            >
+              +
+            </button>
+          </div>
 
-      <label>Prazo de Entrega:</label><br />
-      <input
-        type="date"
-        value={form.prazoEntrega}
-        onChange={(e) =>
-          setForm({ ...form, prazoEntrega: e.target.value })
-        }
-        required
-      /><br /><br />
+          {mostrarNovoOrgao && (
+            <div className="bloco-novo-orgao">
+              <h4>Novo Órgão Público</h4>
+              <input className="input-nome-orgao" placeholder="Nome" value={novoOrgao.nomeOrgao} onChange={(e) => setNovoOrgao({ ...novoOrgao, nomeOrgao: e.target.value })} />
+              <input className="input-cnpj-orgao" placeholder="CNPJ" value={novoOrgao.cnpj} onChange={(e) => setNovoOrgao({ ...novoOrgao, cnpj: e.target.value })} />
+              <input className="input-rua-orgao" placeholder="Rua" value={novoOrgao.rua} onChange={(e) => setNovoOrgao({ ...novoOrgao, rua: e.target.value })} />
+              <input className="input-bairro-orgao" placeholder="Bairro" value={novoOrgao.bairro} onChange={(e) => setNovoOrgao({ ...novoOrgao, bairro: e.target.value })} />
+              <input className="input-cep-orgao" placeholder="CEP" value={novoOrgao.cep} onChange={(e) => setNovoOrgao({ ...novoOrgao, cep: e.target.value })} />
+              <input className="input-numero-orgao" placeholder="Número" value={novoOrgao.numero} onChange={(e) => setNovoOrgao({ ...novoOrgao, numero: e.target.value })} />
+              <input className="input-estado-orgao" placeholder="Estado (UF)" value={novoOrgao.estado} onChange={(e) => setNovoOrgao({ ...novoOrgao, estado: e.target.value })} />
+              <input className="input-municipio-orgao" placeholder="Município" value={novoOrgao.municipio} onChange={(e) => setNovoOrgao({ ...novoOrgao, municipio: e.target.value })} />
+              <button type="button" className="botao-salvar" onClick={handleCadastroOrgao}>
+                Salvar órgão
+              </button>
+            </div>
+          )}
+        </div>
 
-      <textarea
-        placeholder="Exigências Técnicas"
-        value={form.exigenciaTecnicas}
-        onChange={(e) =>
-          setForm({ ...form, exigenciaTecnicas: e.target.value })
-        }
-        required
-      /><br /><br />
+        <div>
+          <label>Prazo de Entrega:</label>
+          <input
+            className="input-prazo-entrega"
+            type="date"
+            value={form.prazoEntrega}
+            onChange={(e) =>
+              setForm({ ...form, prazoEntrega: e.target.value })
+            }
+            required
+          />
+        </div>
 
-      <textarea
-        placeholder="Documentação Obrigatória"
-        value={form.documentacaoObrigatoria}
-        onChange={(e) =>
-          setForm({ ...form, documentacaoObrigatoria: e.target.value })
-        }
-        required
-      /><br /><br />
+        <div>
+          <label>Data de Abertura:</label>
+          <input
+            className="input-data-abertura"
+            type="date"
+            value={form.dataDeAbertura}
+            onChange={(e) =>
+              setForm({ ...form, dataDeAbertura: e.target.value })
+            }
+            required
+          />
+        </div>
 
-      <input
-        type="number"
-        placeholder="Valor Estimado (R$)"
-        value={form.valorEstimado}
-        onChange={(e) =>
-          setForm({ ...form, valorEstimado: e.target.value })
-        }
-        required
-      /><br /><br />
+        <div>
+          <label>Exigências Técnicas:</label>
+          <input
+            className="input-exigencias-tecnicas"
+            value={form.exigenciaTecnicas}
+            onChange={(e) =>
+              setForm({ ...form, exigenciaTecnicas: e.target.value })
+            }
+            required
+          />
+        </div>
 
-      <button type="submit">Cadastrar Edital</button>
+        <div className="linha-completa">
+          <label>Documentação Obrigatória:</label>
+          <input
+            className="input-documentacao-obrigatoria"
+            value={form.documentacaoObrigatoria}
+            onChange={(e) =>
+              setForm({ ...form, documentacaoObrigatoria: e.target.value })
+            }
+            required
+          />
+        </div>
+
+        <div>
+          <label>Valor Estimado:</label>
+          <input
+            className="input-valor-estimado"
+            type="number"
+            value={form.valorEstimado}
+            onChange={(e) =>
+              setForm({ ...form, valorEstimado: e.target.value })
+            }
+            required
+          />
+        </div>
+      </div>
+
+      <button type="submit" className="botao-salvar">
+        Salvar Modificações
+      </button>
     </form>
   );
 }

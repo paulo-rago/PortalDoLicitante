@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import Dashboards from "./pages/Dashboards";
-import ListarEditais from "./pages/ListarEditais";
+import ListarProcessos from "./pages/ListarProcessos";
 import ListarPregoes from "./pages/ListarPregoes";
 import EditarEdital from "./pages/EditarEdital";
 import ExcluirEdital from "./pages/ExcluirEdital";
@@ -27,7 +27,7 @@ function LayoutComNavbar() {
         <Route path="/" element={<LoginPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/Dashboards" element={<Dashboards />} />
-        <Route path="/listar-editais" element={<ListarEditais />} />
+        <Route path="/listar-processos" element={<ListarProcessos />} />
         <Route path="/listar-pregoes" element={<ListarPregoes />} />
         <Route path="/editar-edital/:id" element={<EditarEdital />} />
         <Route path="/excluir-edital/:id" element={<ExcluirEdital />} />
