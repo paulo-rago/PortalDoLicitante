@@ -1,0 +1,102 @@
+
+.formulario-lote-form {
+  background-color: #a8a8a8;
+  border-radius: 20px;
+  padding: 40px;
+  width: 100%;
+  max-width: 1000px;
+  margin: 40px auto;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  font-family: 'Kumbh Sans', sans-serif;
+  color: black;
+}
+
+.formulario-lote-title {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.formulario-lote-label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.formulario-lote-input,
+.formulario-lote-select {
+  padding: 12px;
+  border: none;
+  border-radius: 30px;
+  font-size: 14px;
+  background-color: white;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+}
+
+.formulario-lote-btn-cadastrar,
+.formulario-lote-btn-nova-empresa,
+.formulario-lote-btn-salvar-empresa {
+  display: block;
+  margin: 30px auto 0;
+  padding: 12px 24px;
+  background-color: #0087C1;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.formulario-lote-btn-nova-empresa {
+  display: inline-block;
+  margin: 0 0 0 10px;
+  padding: 8px 18px;
+  font-size: 15px;
+  border-radius: 20px;
+}
+
+.formulario-lote-btn-cadastrar:hover,
+.formulario-lote-btn-nova-empresa:hover,
+.formulario-lote-btn-salvar-empresa:hover {
+  background-color: #0070a3;
+}
+
+.formulario-lote-msg {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.formulario-lote-bloco-nova-empresa {
+  background-color: #eeeeee;
+  border-radius: 12px;
+  padding: 30px;
+  width: 80%;
+  margin: 30px auto 0 auto;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.formulario-lote-bloco-nova-empresa input,
+.formulario-lote-bloco-nova-empresa select {
+  width: 100%;
+  max-width: 500px;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: none;
+  border-radius: 25px;
+  font-size: 14px;
+  background-color: white;
+}
+
+.formulario-lote-subtitle {
+  margin-bottom: 15px;
+  font-size: 18px;
+  font-weight: bold;
+}

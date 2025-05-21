@@ -26,7 +26,6 @@ function CadastroCompleto() {
 
       {etapa === 2 && editalId && (
         <>
-          <h2>Cadastro de Pregão</h2>
           <FormularioPregao
             editalId={editalId}
             onSubmitSuccess={(idPregao) => {

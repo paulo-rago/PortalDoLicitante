@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import "../styles/FormularioLote.css";
 
 function FormularioLote({ editalId, pregaoId }) {
   const [empresas, setEmpresas] = useState([]);
@@ -106,11 +107,13 @@ if (!response.ok) {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>Cadastrar Lote</h2>
+    <form className="formulario-lote-form" onSubmit={handleSubmit}>
+      <h2 className="formulario-lote-title">Cadastrar Lote</h2>
 
-      <label>Empresa Participante:</label><br />
+      <label className="formulario-lote-label" htmlFor="formulario-lote-empresa">Empresa Participante:</label><br />
       <select
+        className="formulario-lote-select"
+        id="formulario-lote-empresa"
         value={lote.fkIdEmpresa}
         onChange={(e) => setLote({ ...lote, fkIdEmpresa: e.target.value })}
       >
@@ -121,33 +124,35 @@ if (!response.ok) {
           </option>
         ))}
       </select>
-      <button type="button" onClick={() => setExibirFormularioEmpresa(true)}>+ Nova empresa</button>
+      <button className="formulario-lote-btn-nova-empresa" type="button" onClick={() => setExibirFormularioEmpresa(true)}>+ Nova empresa</button>
       <br /><br />
 
       {exibirFormularioEmpresa && (
-        <div style={{ border: "1px solid #ccc", padding: 10, marginBottom: 20 }}>
-          <h4>Nova Empresa</h4>
-          <input placeholder="Nome" value={novaEmpresa.nome}
+        <div className="formulario-lote-bloco-nova-empresa">
+          <h4 className="formulario-lote-subtitle">Nova Empresa</h4>
+          <input className="formulario-lote-input" placeholder="Nome" value={novaEmpresa.nome}
             onChange={(e) => setNovaEmpresa({ ...novaEmpresa, nome: e.target.value })} /><br />
-          <input placeholder="CNPJ" value={novaEmpresa.cnpj}
+          <input className="formulario-lote-input" placeholder="CNPJ" value={novaEmpresa.cnpj}
             onChange={(e) => setNovaEmpresa({ ...novaEmpresa, cnpj: e.target.value })} /><br />
-          <input placeholder="Telefone" value={novaEmpresa.telefone}
+          <input className="formulario-lote-input" placeholder="Telefone" value={novaEmpresa.telefone}
             onChange={(e) => setNovaEmpresa({ ...novaEmpresa, telefone: e.target.value })} /><br />
-          <input placeholder="CEP" value={novaEmpresa.cep}
+          <input className="formulario-lote-input" placeholder="CEP" value={novaEmpresa.cep}
             onChange={(e) => setNovaEmpresa({ ...novaEmpresa, cep: e.target.value })} /><br />
-          <input placeholder="Rua" value={novaEmpresa.rua}
+          <input className="formulario-lote-input" placeholder="Rua" value={novaEmpresa.rua}
             onChange={(e) => setNovaEmpresa({ ...novaEmpresa, rua: e.target.value })} /><br />
-          <input placeholder="Número" value={novaEmpresa.numero}
+          <input className="formulario-lote-input" placeholder="Número" value={novaEmpresa.numero}
             onChange={(e) => setNovaEmpresa({ ...novaEmpresa, numero: e.target.value })} /><br />
-          <input placeholder="Bairro" value={novaEmpresa.bairro}
+          <input className="formulario-lote-input" placeholder="Bairro" value={novaEmpresa.bairro}
             onChange={(e) => setNovaEmpresa({ ...novaEmpresa, bairro: e.target.value })} /><br />
-          <label>Estado (UF):</label><br />
+          <label className="formulario-lote-label" htmlFor="formulario-lote-estado">Estado (UF):</label><br />
                 <select
-                value={novaEmpresa.estado}
-                onChange={(e) =>
-                    setNovaEmpresa({ ...novaEmpresa, estado: e.target.value })
-                }
-                required
+                  className="formulario-lote-select"
+                  id="formulario-lote-estado"
+                  value={novaEmpresa.estado}
+                  onChange={(e) =>
+                      setNovaEmpresa({ ...novaEmpresa, estado: e.target.value })
+                  }
+                  required
                 >
                 <option value="">Selecione o estado</option>
                 <option value="AC">Acre</option>
@@ -179,61 +184,82 @@ if (!response.ok) {
                 <option value="TO">Tocantins</option>
                 </select><br /><br />
 
-          <button type="button" onClick={handleCadastroEmpresa}>Salvar Empresa</button>
+          <button className="formulario-lote-btn-salvar-empresa" type="button" onClick={handleCadastroEmpresa}>Salvar Empresa</button>
         </div>
       )}
 
       <input
+        className="formulario-lote-input"
         placeholder="Número do Lote"
         value={lote.numeroLote}
         onChange={(e) => setLote({ ...lote, numeroLote: e.target.value })}
         required
+        name="numeroLote"
+        id="formulario-lote-numero"
       /><br /><br />
 
       <input
+        className="formulario-lote-input"
         placeholder="Objeto do Lote"
         value={lote.objetoDoLote}
         onChange={(e) => setLote({ ...lote, objetoDoLote: e.target.value })}
         required
+        name="objetoDoLote"
+        id="formulario-lote-objeto"
       /><br /><br />
 
       <input
+        className="formulario-lote-input"
         placeholder="Quantidade"
         value={lote.quantidade}
         onChange={(e) => setLote({ ...lote, quantidade: e.target.value })}
         required
+        name="quantidade"
+        id="formulario-lote-quantidade"
       /><br /><br />
 
       <input
+        className="formulario-lote-input"
         placeholder="Modelo do Veículo"
         value={lote.modelo_veiculo}
         onChange={(e) => setLote({ ...lote, modelo_veiculo: e.target.value })}
         required
+        name="modelo_veiculo"
+        id="formulario-lote-modelo-veiculo"
       /><br /><br />
 
       <input
+        className="formulario-lote-input"
         placeholder="Ano de Fabricação"
         value={lote.ano_fabricacao}
         onChange={(e) => setLote({ ...lote, ano_fabricacao: e.target.value })}
         required
+        name="ano_fabricacao"
+        id="formulario-lote-ano-fabricacao"
       /><br /><br />
 
       <input
+        className="formulario-lote-input"
         placeholder="Tipo de Veículo"
         value={lote.tipo_veiculo}
         onChange={(e) => setLote({ ...lote, tipo_veiculo: e.target.value })}
         required
+        name="tipo_veiculo"
+        id="formulario-lote-tipo-veiculo"
       /><br /><br />
 
       <input
+        className="formulario-lote-input"
         type="number"
         placeholder="Valor do Arremate (opcional)"
         value={lote.valorArremate}
         onChange={(e) => setLote({ ...lote, valorArremate: e.target.value })}
+        name="valorArremate"
+        id="formulario-lote-valor-arremate"
       /><br /><br />
 
-      <button type="submit">Cadastrar Lote</button>
-      <p>{mensagem}</p>
+      <button className="formulario-lote-btn-cadastrar" type="submit">Cadastrar Lote</button>
+      <p className="formulario-lote-msg">{mensagem}</p>
     </form>
   );
 }

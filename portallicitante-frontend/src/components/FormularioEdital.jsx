@@ -183,18 +183,6 @@ function FormularioEdital({ onSubmitSuccess }) {
           />
         </div>
 
-        <div className="linha-completa">
-          <label>Documentação Obrigatória:</label>
-          <input
-            className="input-documentacao-obrigatoria"
-            value={form.documentacaoObrigatoria}
-            onChange={(e) =>
-              setForm({ ...form, documentacaoObrigatoria: e.target.value })
-            }
-            required
-          />
-        </div>
-
         <div>
           <label>Valor Estimado:</label>
           <input
@@ -203,6 +191,18 @@ function FormularioEdital({ onSubmitSuccess }) {
             value={form.valorEstimado}
             onChange={(e) =>
               setForm({ ...form, valorEstimado: e.target.value })
+            }
+            required
+          />
+        </div>
+
+        <div className="linha-completa">
+          <label>Documentação Obrigatória:</label>
+          <input
+            className="input-documentacao-obrigatoria"
+            value={form.documentacaoObrigatoria}
+            onChange={(e) =>
+              setForm({ ...form, documentacaoObrigatoria: e.target.value })
             }
             required
           />
