@@ -1,3 +1,8 @@
+.container-formulario-edital h1{
+  color: aliceblue;
+}
+
+
 .form-edital {
   background-color: #a8a8a8;
   border-radius: 20px;
@@ -7,12 +12,7 @@
   margin: 40px auto;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   font-family: 'Kumbh Sans', sans-serif;
-  color: black;
-}
-
-.form-edital h2 {
-  text-align: center;
-  margin-bottom: 25px;
+  color: black ;
 }
 
 .form-edital label {

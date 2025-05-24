@@ -61,63 +61,87 @@ function EditarEdital() {
   };
 
   return (
-    <div className="container-edital">
+    <div className="container-editar-edital">
       <h1>Editar Edital</h1>
-      <form onSubmit={handleSubmit}>
-        <label>Número da Licitação:</label>
-        <input
-          placeholder="Número da Licitação"
-          value={form.numeroLicitacao}
-          onChange={(e) => setForm({ ...form, numeroLicitacao: e.target.value })}
-        /><br /><br />
+      <form className="form-editar-edital" onSubmit={handleSubmit}>
+        <div className="form-grid">
+          <div>
+            <label>N° da Licitação:</label>
+            <input
+              className="input-numero-licitacao"
+              value={form.numeroLicitacao}
+              onChange={(e) => setForm({ ...form, numeroLicitacao: e.target.value })}
+            /><br /><br />
+          </div>
 
-        <label>Órgão Responsável:</label>
-        <select
-          value={form.fkOrgaoPublicoId}
-          onChange={(e) => setForm({ ...form, fkOrgaoPublicoId: e.target.value })}
-        >
-          <option value="">Selecione</option>
-          {orgaos.map((orgao) => (
-            <option key={orgao.idOrgaoPublico} value={orgao.idOrgaoPublico}>
-              {orgao.nomeOrgao}
-            </option>
-          ))}
-        </select><br /><br />
+          <div>
+            <label>Órgão Responsável:</label>
+            <select
+              className="input-orgao-responsavel"
+              value={form.fkOrgaoPublicoId}
+              onChange={(e) => setForm({ ...form, fkOrgaoPublicoId: e.target.value })}
+            >
+              <option value="">Selecione</option>
+              {orgaos.map((orgao) => (
+                <option key={orgao.idOrgaoPublico} value={orgao.idOrgaoPublico}>
+                  {orgao.nomeOrgao}
+                </option>
+              ))}
+            </select><br /><br />
+          </div>
 
-        <label>Data de Abertura:</label>
-        <input
-          type="date"
-          value={form.dataDeAbertura}
-          onChange={(e) => setForm({ ...form, dataDeAbertura: e.target.value })}
-        /><br /><br />
+          <div>
+            <label>Prazo de Entrega:</label>
+            <input
+              className="input-prazo-entrega"
+              type="date"
+              value={form.prazoEntrega}
+              onChange={(e) => setForm({ ...form, prazoEntrega: e.target.value })}
+            /><br /><br />
+          </div>
 
-        <label>Prazo de Entrega:</label>
-        <input
-          type="date"
-          value={form.prazoEntrega}
-          onChange={(e) => setForm({ ...form, prazoEntrega: e.target.value })}
-        /><br /><br />
+          <div>
+            <label>Data de Abertura:</label>
+            <input
+              className="input-data-abertura"
+              type="date"
+              value={form.dataDeAbertura}
+              onChange={(e) => setForm({ ...form, dataDeAbertura: e.target.value })}
+            /><br /><br />
+          </div>
 
-        <label>Exigências Técnicas:</label>
-        <textarea
-          value={form.exigenciaTecnicas}
-          onChange={(e) => setForm({ ...form, exigenciaTecnicas: e.target.value })}
-        /><br /><br />
+          <div>
+            <label>Exigências Técnicas:</label>
+            <input
+              className="input-exigencias-tecnicas"
+              value={form.exigenciaTecnicas}
+              onChange={(e) => setForm({ ...form, exigenciaTecnicas: e.target.value })}
+            /><br /><br />
+          </div>
 
-        <label>Documentação Obrigatória:</label>
-        <textarea
-          value={form.documentacaoObrigatoria}
-          onChange={(e) => setForm({ ...form, documentacaoObrigatoria: e.target.value })}
-        /><br /><br />
+          <div>
+            <label>Valor Estimado:</label>
+            <input
+              className="input-valor-estimado"
+              type="number"
+              value={form.valorEstimado}
+              onChange={(e) => setForm({ ...form, valorEstimado: e.target.value })}
+            /><br /><br />
+          </div>
 
-        <label>Valor Estimado:</label>
-        <input
-          type="number"
-          value={form.valorEstimado}
-          onChange={(e) => setForm({ ...form, valorEstimado: e.target.value })}
-        /><br /><br />
+          <div className="linha-completa">
+            <label>Documentação Obrigatória:</label>
+            <input
+              className="input-documentacao-obrigatoria"
+              value={form.documentacaoObrigatoria}
+              onChange={(e) => setForm({ ...form, documentacaoObrigatoria: e.target.value })}
+            /><br /><br />
+          </div>
 
-        <button type="submit">Salvar alterações</button>
+          
+        </div>
+
+        <button className="botao-salvar-alteracoes" type="submit">Salvar alterações</button>
       </form>
     </div>
   );

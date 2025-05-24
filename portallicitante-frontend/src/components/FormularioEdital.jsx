@@ -83,7 +83,7 @@ function FormularioEdital({ onSubmitSuccess }) {
   };
 
   return (
-    <div>
+    <div className="container-formulario-edital">
       <h1>Cadastrar Edital</h1>
       <form className="form-edital" onSubmit={handleSubmit}>
       <div className="form-grid">
