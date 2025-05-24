@@ -124,6 +124,7 @@ function EditarEdital() {
             <input
               className="input-valor-estimado"
               type="number"
+              min="0"  
               value={form.valorEstimado}
               onChange={(e) => setForm({ ...form, valorEstimado: e.target.value })}
             /><br /><br />

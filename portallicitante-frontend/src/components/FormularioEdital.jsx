@@ -188,10 +188,9 @@ function FormularioEdital({ onSubmitSuccess }) {
           <input
             className="input-valor-estimado"
             type="number"
+            min="0"  
             value={form.valorEstimado}
-            onChange={(e) =>
-              setForm({ ...form, valorEstimado: e.target.value })
-            }
+            onChange={(e) => setForm({ ...form, valorEstimado: e.target.value })}
             required
           />
         </div>
