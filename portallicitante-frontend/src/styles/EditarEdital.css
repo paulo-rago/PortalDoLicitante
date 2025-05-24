@@ -1,0 +1,49 @@
+.container-edital {
+  max-width: 600px;
+  margin: 0 auto;
+  font-family: Arial, sans-serif;
+}
+
+.container-edital h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.container-edital form {
+  display: flex;
+  flex-direction: column;
+}
+
+.container-edital input,
+.container-edital select,
+.container-edital textarea {
+  width: 100%;
+  padding: 8px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.container-edital label {
+  margin-top: 10px;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.container-edital button {
+  margin-top: 20px;
+  padding: 10px;
+  font-size: 16px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.container-edital button:hover {
+  background-color: #45a049;
+}
+
+label, h1 {
+    color: white;
+}

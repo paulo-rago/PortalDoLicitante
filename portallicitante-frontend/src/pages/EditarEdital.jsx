@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import "../styles/EditarEdital.css";
 
 function EditarEdital() {
   const { id } = useParams(); // Pega o ID da URL
@@ -60,9 +61,10 @@ function EditarEdital() {
   };
 
   return (
-    <div style={{ maxWidth: 600, margin: "0 auto" }}>
-      <h2>Editar Edital</h2>
+    <div className="container-edital">
+      <h1>Editar Edital</h1>
       <form onSubmit={handleSubmit}>
+        <label>Número da Licitação:</label>
         <input
           placeholder="Número da Licitação"
           value={form.numeroLicitacao}

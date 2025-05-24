@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import "../styles/ExcluirEdital.css";
 
 function ExcluirEdital() {
   const { id } = useParams();
@@ -36,15 +37,15 @@ function ExcluirEdital() {
   if (!edital) return <p>Carregando edital...</p>;
 
   return (
-    <div style={{ maxWidth: 600, margin: "0 auto", textAlign: "center", padding: 30 }}>
+    <div className = 'container_excluir_edital'>
       <h2>Confirmar Exclusão</h2>
       <p>Você realmente deseja excluir o edital <strong>{edital.numeroLicitacao}</strong>?</p>
-      <p style={{ color: "red" }}>Esta ação não poderá ser desfeita!</p>
+      <p className="aviso">Esta ação não poderá ser desfeita!</p>
 
-      <button onClick={confirmarExclusao} style={{ marginRight: 10, background: "red", color: "white" }}>
+      <button onClick={confirmarExclusao} className="button-excluir-edital">
         Sim, excluir
       </button>
-      <button onClick={() => navigate("/listar-editais")}>Cancelar</button>
+      <button onClick={() => navigate("/listar-processos")}>Cancelar</button>
     </div>
   );
 }
