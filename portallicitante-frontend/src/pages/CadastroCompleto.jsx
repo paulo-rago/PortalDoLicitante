@@ -38,7 +38,6 @@ function CadastroCompleto() {
 
       {etapa === 3 && editalId && pregaoId && (
         <>
-          <h2>Cadastro de Lote</h2>
           <FormularioLote editalId={editalId} pregaoId={pregaoId} />
         </>
       )}
