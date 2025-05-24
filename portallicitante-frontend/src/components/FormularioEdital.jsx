@@ -187,10 +187,22 @@ function FormularioEdital({ onSubmitSuccess }) {
           <label>Valor Estimado:</label>
           <input
             className="input-valor-estimado"
-            type="number"
-            min="0"  
-            value={form.valorEstimado}
-            onChange={(e) => setForm({ ...form, valorEstimado: e.target.value })}
+            type="text"
+            value={form.valorEstimado ? 
+              new Intl.NumberFormat('pt-BR', {
+                style: 'currency',
+                currency: 'BRL'
+              }).format(form.valorEstimado) : 'R$ 0,00'}
+            onChange={(e) => {
+              const rawValue = e.target.value.replace(/\D/g, '');
+              const numericValue = rawValue ? parseFloat(rawValue) / 100 : 0;
+              setForm({ ...form, valorEstimado: numericValue });
+            }}
+            onBlur={() => {
+              if (form.valorEstimado < 0) {
+                setForm({ ...form, valorEstimado: 0 });
+              }
+            }}
             required
           />
         </div>
