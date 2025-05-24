@@ -83,9 +83,9 @@ function FormularioEdital({ onSubmitSuccess }) {
   };
 
   return (
-    <form className="form-edital" onSubmit={handleSubmit}>
-      <h2>Cadastrar Edital</h2>
-
+    <div>
+      <h1>Cadastrar Edital</h1>
+      <form className="form-edital" onSubmit={handleSubmit}>
       <div className="form-grid">
         <div>
           <label>Nº da Licitação:</label>
@@ -208,11 +208,11 @@ function FormularioEdital({ onSubmitSuccess }) {
           />
         </div>
       </div>
-
       <button type="submit" className="botao-salvar">
         Salvar Modificações
       </button>
-    </form>
+      </form>
+    </div>
   );
 }
 
