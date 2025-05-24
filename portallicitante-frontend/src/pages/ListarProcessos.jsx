@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "../styles/ListarProcessos.css"; // Adicione o caminho correto para o CSS
 
 function ListarProcessos() {
   const [editais, setEditais] = useState([]);

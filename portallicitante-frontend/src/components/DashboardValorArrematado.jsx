@@ -25,30 +25,45 @@ const DashboardValorArrematado = () => {
   }, []);
 
   return (
-    <div>
+    <>
       <h2 className='valor_arrematado_h2' style={{ color: 'white' }}>Valor Arrematado por Ano - AutoVrio</h2>
-      <ResponsiveContainer width="100%" height={400}>
-        <BarChart
-          data={dados}
-          margin={{
-            top: 20,
-            right: 30,
-            left: 20,
-            bottom: 20,
-            borderRadius: 0
-          }}
-          style={{ background: '#fff', borderRadius: '30px' }}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="ano" />
-          <YAxis />
-          <Tooltip />
-          <Legend />
-          <Bar dataKey="totalArrematado" name="Valor Arrematado (R$)" fill="#0087C1" radius={[30, 30, 30, 30]} />
-        </BarChart>
-      </ResponsiveContainer>
-    </div>
+      <div
+        style={{
+          width: '100%',
+          maxWidth: '500px',
+          height: '350px',
+          backgroundColor: '#ffffff',
+          borderRadius: '30px',
+          padding: '30px',
+          boxShadow: '0 4px 15px rgba(0,0,0,0.2)',
+          textAlign: 'center',
+          position: 'relative'
+        }}
+      >
+        <ResponsiveContainer width="100%" height={320}>
+          <BarChart
+            data={dados}
+            margin={{
+              top: 20,
+              right: 30,
+              left: 20,
+              bottom: 20,
+              borderRadius: 0
+            }}
+            style={{ background: '#fff', borderRadius: '30px' }}
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="ano" />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            <Bar dataKey="totalArrematado" name="Valor Arrematado (R$)" fill="#0087C1" radius={[30, 30, 30, 30]} />
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
+    </>
   );
 };
 
 export default DashboardValorArrematado;
+//

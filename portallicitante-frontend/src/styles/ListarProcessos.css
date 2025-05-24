@@ -1,0 +1,97 @@
+
+
+.processos-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  background: #444;
+}
+
+
+.processos-card {
+  background: #444;
+  border-radius: 18px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+  padding: 18px 24px 24px 24px;
+  margin-top: 32px;
+  min-width: 420px;
+  max-width: 420px;
+  border: 4px solid #666;
+}
+
+
+.processos-title {
+  text-align: center;
+  margin-bottom: 12px;
+  font-size: 1.3rem;
+  color: #fff;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+
+.processos-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 8px;
+  background: transparent;
+}
+
+
+.processos-table th, .processos-table td {
+  padding: 8px 10px;
+  text-align: left;
+}
+
+
+.processos-table th {
+  background: #444;
+  color: #fff;
+  font-weight: 600;
+  border: none;
+}
+
+
+.processos-table tr {
+  background: #222831;
+  border-radius: 10px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+}
+
+.processos-table tr td {
+  color: #fff;
+  font-size: 1rem;
+  border: none;
+}
+
+
+.analista-nome {
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+  gap: 6px;
+}
+
+
+.status-badge {
+  display: inline-block;
+  padding: 6px 22px;
+  border-radius: 16px;
+  font-weight: 600;
+  color: #fff;
+  font-size: 1rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.10);
+  margin-left: 2px;
+}
+
+
+.status-ativo {
+  background: #21c521;
+}
+.status-suspenso {
+  background: #d32f2f;
+}
+.status-concluido {
+  background: #1976d2;
+}

@@ -23,5 +23,12 @@ public class DashboardController {
         List<ValorPorAnoDTO> dados = service.getValoresPorAno(empresa);
         return ResponseEntity.ok(dados);
     }
+
+    @GetMapping("/taxa-sucesso/{empresa}")
+    public ResponseEntity<?> getTaxaSucesso(@PathVariable String empresa) {
+        return service.getTaxaSucesso(empresa)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
 }
 
