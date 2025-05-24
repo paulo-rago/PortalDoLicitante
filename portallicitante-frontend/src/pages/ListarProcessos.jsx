@@ -23,9 +23,8 @@ function ListarProcessos() {
   }, []);
 
   return (
-    <div style={{ maxWidth: "90%", margin: "0 auto", padding: "20px" }}>
-      <h2>Editais Cadastrados</h2>
-      <table border="1" cellPadding="10" cellSpacing="0" style={{ width: "100%", borderCollapse: "collapse" }}>
+    <div className="listar-processos-container">
+      <table className="listar-processos-table">
         <thead>
           <tr>
             <th>ID</th>
@@ -42,7 +41,7 @@ function ListarProcessos() {
         <tbody>
           {editais.length === 0 ? (
             <tr>
-              <td colSpan="9" style={{ textAlign: "center" }}>Nenhum edital cadastrado.</td>
+              <td colSpan="9">Nenhum edital cadastrado.</td>
             </tr>
           ) : (
             editais.map((edital) => (
@@ -57,13 +56,13 @@ function ListarProcessos() {
                 <td>{edital.valorEstimado}</td>
                 <td>
                   <button
-                    style={{ marginRight: 10 }}
+                    className="listar-processos-btn"
                     onClick={() => navigate(`/editar-edital/${edital.id}`)}
                   >
                     Editar
                   </button>
-                  <button
-                  style={{ marginRight: 10 }}
+                  <button 
+                    className="listar-processos-btn"                  
                     onClick={() => navigate(`/excluir-edital/${edital.id}`)}
                   >
                     Excluir
