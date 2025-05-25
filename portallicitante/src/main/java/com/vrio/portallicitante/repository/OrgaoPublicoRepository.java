@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +21,7 @@ public class OrgaoPublicoRepository {
         this.dataSource = dataSource;
     }
 
-    public void salvar(OrgaoPublico orgao) {
+    public int salvar(OrgaoPublico orgao) {
         String sql = """
             INSERT INTO Orgao_Publico (
                 CNPJ, nome_orgao, rua, bairro, cep, numero, estado, municipio
@@ -28,7 +29,7 @@ public class OrgaoPublicoRepository {
         """;
 
         try (Connection conn = dataSource.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, orgao.getCnpj());
             stmt.setString(2, orgao.getNomeOrgao());
             stmt.setString(3, orgao.getRua());
@@ -38,10 +39,23 @@ public class OrgaoPublicoRepository {
             stmt.setString(7, orgao.getEstado());
             stmt.setString(8, orgao.getMunicipio());
 
-            stmt.executeUpdate();
+            int affectedRows = stmt.executeUpdate();
+
+            if (affectedRows == 0) {
+                throw new SQLException("Erro ao inserir Órgão Responsável, nenhuma linha afetada.");
+            }
+
+            try (ResultSet rs = stmt.getGeneratedKeys()) {
+                if (rs.next()) {
+                    return rs.getInt(1);
+                } else {
+                    throw new SQLException("Erro ao obter ID do Órgão gerado.");
+                }
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return -1;
     }
 
     public void atualizar(OrgaoPublico orgao) {

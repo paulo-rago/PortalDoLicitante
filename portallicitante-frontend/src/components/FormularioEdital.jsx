@@ -37,6 +37,10 @@ function FormularioEdital({ onSubmitSuccess }) {
   }, []);
 
   const handleCadastroOrgao = () => {
+    if (!novoOrgao.estado) {
+      alert("Selecione um Estado (UF) para o órgão.");
+      return;
+    }
     fetch("http://localhost:8080/orgaos", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -114,6 +118,29 @@ function FormularioEdital({ onSubmitSuccess }) {
     }
   };
 
+  function formatarCNPJ(valor) {
+    return valor
+      .replace(/\D/g, '') // remove não dígitos
+      .replace(/^(\d{2})(\d)/, '$1.$2')
+      .replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3')
+      .replace(/\.(\d{3})(\d)/, '.$1/$2')
+      .replace(/(\d{4})(\d)/, '$1-$2')
+      .slice(0, 18);
+  }
+
+  function formatarCEP(valor) {
+    return valor
+      .replace(/\D/g, '') // remove não dígitos
+      .replace(/^(\d{5})(\d)/, '$1-$2')
+      .slice(0, 9);
+  }
+
+  const estadosBrasileiros = [
+    "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA",
+    "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN",
+    "RS", "RO", "RR", "SC", "SP", "SE", "TO"
+  ];
+
   return (
     <div className="container-formulario-edital">
       <h1>Cadastrar Edital</h1>
@@ -162,14 +189,72 @@ function FormularioEdital({ onSubmitSuccess }) {
             {mostrarNovoOrgao && (
               <div className="bloco-novo-orgao">
                 <h4>Novo Órgão Público</h4>
-                <input className="input-nome-orgao" placeholder="Nome" value={novoOrgao.nomeOrgao} onChange={(e) => setNovoOrgao({ ...novoOrgao, nomeOrgao: e.target.value })} />
-                <input className="input-cnpj-orgao" placeholder="CNPJ" value={novoOrgao.cnpj} onChange={(e) => setNovoOrgao({ ...novoOrgao, cnpj: e.target.value })} />
-                <input className="input-rua-orgao" placeholder="Rua" value={novoOrgao.rua} onChange={(e) => setNovoOrgao({ ...novoOrgao, rua: e.target.value })} />
-                <input className="input-bairro-orgao" placeholder="Bairro" value={novoOrgao.bairro} onChange={(e) => setNovoOrgao({ ...novoOrgao, bairro: e.target.value })} />
-                <input className="input-cep-orgao" placeholder="CEP" value={novoOrgao.cep} onChange={(e) => setNovoOrgao({ ...novoOrgao, cep: e.target.value })} />
-                <input className="input-numero-orgao" placeholder="Número" value={novoOrgao.numero} onChange={(e) => setNovoOrgao({ ...novoOrgao, numero: e.target.value })} />
-                <input className="input-estado-orgao" placeholder="Estado (UF)" value={novoOrgao.estado} onChange={(e) => setNovoOrgao({ ...novoOrgao, estado: e.target.value })} />
-                <input className="input-municipio-orgao" placeholder="Município" value={novoOrgao.municipio} onChange={(e) => setNovoOrgao({ ...novoOrgao, municipio: e.target.value })} />
+                <input 
+                  lassName="input-nome-orgao" 
+                  placeholder="Nome" 
+                  value={novoOrgao.nomeOrgao} 
+                  onChange={(e) => setNovoOrgao({ ...novoOrgao, nomeOrgao: e.target.value })} 
+                />
+
+                <input
+                  className="input-cnpj-orgao"
+                  placeholder="CNPJ (ex: 12.345.678/0001-19)"
+                  value={novoOrgao.cnpj}
+                  onChange={(e) => {
+                    const valorFormatado = formatarCNPJ(e.target.value);
+                    setNovoOrgao({ ...novoOrgao, cnpj: valorFormatado });
+                  }}
+                />
+
+                <input 
+                  className="input-rua-orgao" 
+                  placeholder="Rua" 
+                  value={novoOrgao.rua} 
+                  onChange={(e) => setNovoOrgao({ ...novoOrgao, rua: e.target.value })} 
+                />
+
+                <input 
+                  className="input-bairro-orgao" 
+                  placeholder="Bairro" 
+                  value={novoOrgao.bairro} 
+                  onChange={(e) => setNovoOrgao({ ...novoOrgao, bairro: e.target.value })} 
+                />
+
+                <input
+                  className="input-cep-orgao"
+                  placeholder="CEP (ex: 12345-678)"
+                  value={novoOrgao.cep}
+                  onChange={(e) => {
+                    const valorFormatado = formatarCEP(e.target.value);
+                    setNovoOrgao({ ...novoOrgao, cep: valorFormatado });
+                  }}
+                />
+
+                <input 
+                  className="input-numero-orgao" 
+                  placeholder="Número" 
+                  value={novoOrgao.numero} 
+                  onChange={(e) => setNovoOrgao({ ...novoOrgao, numero: e.target.value })} 
+                />
+
+                <select
+                  className="input-estado-orgao"
+                  value={novoOrgao.estado}
+                  onChange={(e) => setNovoOrgao({ ...novoOrgao, estado: e.target.value })}
+                >
+                  <option value="">Selecione o Estado (UF)</option>
+                  {estadosBrasileiros.map((uf) => (
+                    <option key={uf} value={uf}>{uf}</option>
+                  ))}
+                </select>
+
+                <input 
+                  className="input-municipio-orgao" 
+                  placeholder="Município" 
+                  value={novoOrgao.municipio} 
+                  onChange={(e) => setNovoOrgao({ ...novoOrgao, municipio: e.target.value })} 
+                />
+
                 <button type="button" className="botao-salvar" onClick={handleCadastroOrgao}>
                   Salvar órgão
                 </button>
