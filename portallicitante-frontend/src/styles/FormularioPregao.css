@@ -11,12 +11,14 @@
   color: black;
 }
 
-.formulario-pregao-title {
-  text-align: center;
-  margin-bottom: 25px;
+.container-formulario-pregao h1 { 
+  color: aliceblue;
+  text-align: left; /* Alinha à esquerda */
+  margin-bottom: 20px;
+  margin-left: 20px; /* Ajuste conforme necessário */
 }
 
-.formulario-pregao-label {
+.formulario-pregao-form label {
   font-weight: bold;
   display: block;
   margin-bottom: 6px;
