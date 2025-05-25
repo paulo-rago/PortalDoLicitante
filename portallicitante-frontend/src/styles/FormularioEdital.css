@@ -2,7 +2,6 @@
   color: aliceblue;
 }
 
-
 .form-edital {
   background-color: #a8a8a8;
   border-radius: 20px;
@@ -111,4 +110,13 @@
 
 .botao-mais-orgao:hover {
   background-color: #0070a3;
+}
+
+.error {
+  border: 1px solid #ff4444;
+}
+.error-message {
+  color: #ff4444;
+  font-size: 0.8rem;
+  margin-top: 4px;
 }
