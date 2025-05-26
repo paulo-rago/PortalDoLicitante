@@ -1,3 +1,6 @@
+.container-formulario-lote h1 {
+  color: aliceblue;
+}
 
 .formulario-lote-form {
   background-color: #a8a8a8;
@@ -9,17 +12,6 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   font-family: 'Kumbh Sans', sans-serif;
   color: black;
-}
-
-.formulario-lote-title {
-  text-align: center;
-  margin-bottom: 25px;
-}
-
-.formulario-lote-label {
-  font-weight: bold;
-  display: block;
-  margin-bottom: 6px;
 }
 
 .formulario-lote-input,
@@ -99,4 +91,55 @@
   margin-bottom: 15px;
   font-size: 18px;
   font-weight: bold;
+}
+
+/* organização das divs - Flax-box */
+
+.formulario-lote-form {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.left-column,
+.right-column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.box-1,
+.box-2 {
+  display: flex;
+  gap: 1rem;
+}
+
+.item-1,
+.item-2,
+.item-5,
+.item-6 {
+  flex: 1;
+}
+
+.formulario-lote-input,
+.formulario-lote-select {
+  width: 100%;
+  padding: 0.5rem;
+  border-radius: 10px;
+  border: none;
+}
+
+.formulario-lote-btn-cadastrar {
+  background-color: #00a6de;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 20px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  align-self: center; /* centraliza dentro do form */
+  margin: 30px auto 0 auto; /* centraliza horizontalmente e afasta do topo */
+  display: block;
 }
