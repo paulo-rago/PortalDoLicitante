@@ -178,7 +178,7 @@ if (!response.ok) {
 
             <div className="box-2">
               <div className="item-5">
-                <label>Valor do Arremate (opcional)</label>
+                <label>Valor do Arremate</label>
                   <input
                     className="formulario-lote-input"
                     type="number"
@@ -200,29 +200,31 @@ if (!response.ok) {
                 />
               </div>  
             </div>
-            <div className="box-3">
               <div className="item-7">
                 <label>Empresa Participante</label>
-                <select
-                  className="formulario-lote-select"
-                  id="formulario-lote-empresa"
-                  value={lote.fkIdEmpresa}
-                  onChange={(e) => setLote({ ...lote, fkIdEmpresa: e.target.value })}
-                >
-                  <option value="">Selecione uma empresa (opcional)</option>
-                  {empresas.map((empresa) => (
-                    <option key={empresa.idEmpresa} value={empresa.idEmpresa}>
-                      {empresa.nome}
-                    </option>
-                  ))}
-                </select>
-
-                <button 
-                  className="formulario-lote-btn-nova-empresa" 
-                  type="button" 
-                  onClick={() => setExibirFormularioEmpresa(!exibirFormularioEmpresa)}>+
+                <div className="empresa-participante-row">
+                  <select
+                    className="formulario-lote-select"
+                    id="formulario-lote-empresa"
+                    value={lote.fkIdEmpresa}
+                    onChange={(e) => setLote({ ...lote, fkIdEmpresa: e.target.value })}
+                  >
+                    <option value="">Selecione uma empresa (opcional)</option>
+                    {empresas.map((empresa) => (
+                      <option key={empresa.idEmpresa} value={empresa.idEmpresa}>
+                        {empresa.nome}
+                      </option>
+                    ))}
+                  </select>
+                  <button
+                    className="formulario-lote-btn-nova-empresa"
+                    type="button"
+                    onClick={() => setExibirFormularioEmpresa(!exibirFormularioEmpresa)}
+                  >
+                    +
                   </button>
-                
+                </div>
+
                 {exibirFormularioEmpresa && (
                   <div className="formulario-lote-bloco-nova-empresa">
                     <h4 className="formulario-lote-subtitle">Nova Empresa</h4>
@@ -284,7 +286,6 @@ if (!response.ok) {
                     </div>
                   </div>
                 )}
-              </div>
             </div>
           </div>
         </form>
