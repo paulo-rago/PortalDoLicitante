@@ -242,7 +242,6 @@ if (!response.ok) {
                       onChange={(e) => setNovaEmpresa({ ...novaEmpresa, numero: e.target.value })} /><br />
                     <input className="formulario-lote-input" placeholder="Bairro" value={novaEmpresa.bairro}
                       onChange={(e) => setNovaEmpresa({ ...novaEmpresa, bairro: e.target.value })} /><br />
-                    <label className="formulario-lote-label" htmlFor="formulario-lote-estado">Estado (UF)</label><br />
                           <select
                             className="formulario-lote-select"
                             id="formulario-lote-estado"
@@ -280,10 +279,8 @@ if (!response.ok) {
                           <option value="SP">São Paulo</option>
                           <option value="SE">Sergipe</option>
                           <option value="TO">Tocantins</option>
-                          </select><br /><br />
-                    <div className="item-8">
+                          </select>
                     <button className="formulario-lote-btn-salvar-empresa" type="button" onClick={handleCadastroEmpresa}>Salvar Empresa</button>
-                    </div>
                   </div>
                 )}
             </div>

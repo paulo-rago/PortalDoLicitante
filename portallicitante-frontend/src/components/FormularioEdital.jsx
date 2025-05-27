@@ -180,9 +180,7 @@ function FormularioEdital({ onSubmitSuccess }) {
                 type="button"
                 className="botao-mais-orgao"
                 onClick={() => setMostrarNovoOrgao(!mostrarNovoOrgao)}
-                title="Adicionar novo órgão"
-              >
-                +
+                title="Adicionar novo órgão">+
               </button>
             </div>
 
