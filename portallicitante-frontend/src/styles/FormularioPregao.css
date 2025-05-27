@@ -2,7 +2,7 @@
 .container-formulario-pregao-2 {
   background-color: #a8a8a8;
   border-radius: 20px;
-  padding: 40px;
+  padding: 70px 80px 30px 80px; /* top right bottom left */
   width: 100%;
   max-width: 1000px;
   margin: 40px auto;
@@ -37,7 +37,7 @@
 
 .formulario-pregao-btn {
   display: block;
-  margin: 30px auto 0;
+  margin: 60px auto 0;
   padding: 12px 24px;
   background-color: #0087C1;
   color: white;
@@ -63,14 +63,14 @@
 .formulario-pregao-form {
   display: flex;
   justify-content: space-between;
-  gap: 2rem;
+  gap: 4rem;
 }
 
 .left-container,
 .right-container {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 20px;
   flex: 1;
 }
 
