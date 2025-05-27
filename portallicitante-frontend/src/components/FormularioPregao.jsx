@@ -58,78 +58,91 @@ if (!response.ok) {
   };
 
   return (
-    <div className="container-formulario-pregao">
+    <div className="container-formulario-pregao-1">
       <h1>Cadastrar Pregão</h1>
-      <form className="formulario-pregao-form" onSubmit={handleSubmit}>
-        <label>N° do Pregão:</label>
-        <input
-          className="formulario-pregao-input formulario-pregao-numero"
-          type="text"
-          value={pregao.numeroPregao}
-          onChange={(e) => setPregao({ ...pregao, numeroPregao: e.target.value })}
-          required
-          name="numeroPregao"
-          id="formulario-pregao-numero"
-        /><br /><br />
+      <div className="container-formulario-pregao-2">
+        <form className="formulario-pregao-form" onSubmit={handleSubmit}>
+          <div className="left-container">
+            <div className="item-1">
+              <label>N° do Pregão</label>
+              <input
+                className="formulario-pregao-input formulario-pregao-numero"
+                type="text"
+                value={pregao.numeroPregao}
+                onChange={(e) => setPregao({ ...pregao, numeroPregao: e.target.value })}
+                required
+                name="numeroPregao"
+                id="formulario-pregao-numero"
+              />
+            </div>
+            <div className="item-2">
+              <label>Modalidade</label>
+              <input
+                className="formulario-pregao-input formulario-pregao-modalidade"
+                type="text"
+                value={pregao.modalidade}
+                onChange={(e) => setPregao({ ...pregao, modalidade: e.target.value })}
+                required
+                name="modalidadePregao"
+                id="formulario-pregao-modalidade"
+              />
+            </div>
+            <div className="item-3">
+              <label>Horário de Abertura</label>
+              <input
+                className="formulario-pregao-input formulario-pregao-horario"
+                type="time"
+                value={pregao.horarioAbertura}
+                onChange={(e) => setPregao({ ...pregao, horarioAbertura: e.target.value })}
+                required
+                name="horarioAbertura"
+                id="formulario-pregao-horario"
+              />
+            </div>
+          </div>
 
-        <label>Status do Pregão:</label>
-        <input
-          className="formulario-pregao-input formulario-pregao-status"
-          type="text"
-          value={pregao.statusPregao}
-          onChange={(e) => setPregao({ ...pregao, statusPregao: e.target.value })}
-          required
-          name="statusPregao"
-          id="formulario-pregao-status"
-        /><br /><br />
-
-        <label>Modelo do Pregão:</label>
-        <input
-          className="formulario-pregao-input formulario-pregao-modelo"
-          type="text"
-          value={pregao.modeloPregao}
-          onChange={(e) => setPregao({ ...pregao, modeloPregao: e.target.value })}
-          required
-          name="modeloPregao"
-          id="formulario-pregao-modelo"
-        /><br /><br />
-
-        <label>Modalidade:</label>
-        <input
-          className="formulario-pregao-input formulario-pregao-modalidade"
-          type="text"
-          value={pregao.modalidade}
-          onChange={(e) => setPregao({ ...pregao, modalidade: e.target.value })}
-          required
-          name="modalidadePregao"
-          id="formulario-pregao-modalidade"
-        /><br /><br />
-
-        <label>Horário de Abertura:</label><br />
-        <input
-          className="formulario-pregao-input formulario-pregao-horario"
-          type="time"
-          value={pregao.horarioAbertura}
-          onChange={(e) => setPregao({ ...pregao, horarioAbertura: e.target.value })}
-          required
-          name="horarioAbertura"
-          id="formulario-pregao-horario"
-        /><br /><br />
-
-        <label>Data de Encerramento:</label>
-        <input
-          className="formulario-pregao-input formulario-pregao-data-encerramento"
-          type="date"
-          value={pregao.dataEncerramento}
-          onChange={(e) => setPregao({ ...pregao, dataEncerramento: e.target.value })}
-          required
-          name="dataEncerramento"
-          id="formulario-pregao-data-encerramento"
-        /><br /><br />
-
+          <div className="right-container">
+            <div className="item-4">
+              <label>Status do Pregão</label>
+              <input
+                className="formulario-pregao-input formulario-pregao-status"
+                type="text"
+                value={pregao.statusPregao}
+                onChange={(e) => setPregao({ ...pregao, statusPregao: e.target.value })}
+                required
+                name="statusPregao"
+                id="formulario-pregao-status"
+              />
+            </div>
+            <div className="item-5">
+              <label>Modelo do Pregão</label>
+              <input
+                className="formulario-pregao-input formulario-pregao-modelo"
+                type="text"
+                value={pregao.modeloPregao}
+                onChange={(e) => setPregao({ ...pregao, modeloPregao: e.target.value })}
+                required
+                name="modeloPregao"
+                id="formulario-pregao-modelo"
+              />
+            </div>
+            <div className="item-6">
+              <label>Data de Encerramento</label>
+              <input
+                className="formulario-pregao-input formulario-pregao-data-encerramento"
+                type="date"
+                value={pregao.dataEncerramento}
+                onChange={(e) => setPregao({ ...pregao, dataEncerramento: e.target.value })}
+                required
+                name="dataEncerramento"
+                id="formulario-pregao-data-encerramento"
+              />
+            </div>
+          </div>
+        </form>
         <button className="formulario-pregao-btn" type="submit">Cadastrar</button>
         <p className="formulario-pregao-msg">{mensagem}</p>
-      </form>
+      </div>
     </div>
   );
 }

@@ -1,5 +1,5 @@
 
-.formulario-pregao-form {
+.container-formulario-pregao-2 {
   background-color: #a8a8a8;
   border-radius: 20px;
   padding: 40px;
@@ -11,7 +11,7 @@
   color: black;
 }
 
-.container-formulario-pregao h1 { 
+.container-formulario-pregao-1 h1 { 
   color: aliceblue;
   text-align: left; /* Alinha à esquerda */
   margin-bottom: 20px;
@@ -22,6 +22,7 @@
   font-weight: bold;
   display: block;
   margin-bottom: 6px;
+  color: rgba(17, 13, 9, 1);
 }
 
 .formulario-pregao-input {
@@ -56,4 +57,24 @@
   margin-top: 20px;
   font-size: 16px;
   font-weight: bold;
+}
+
+/* organização das divs flex-box */
+.formulario-pregao-form {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.left-container,
+.right-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  flex: 1;
+}
+
+.formulario-pregao-form > .left-container,
+.formulario-pregao-form > .right-container {
+  width: 45%;
 }
