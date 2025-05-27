@@ -14,4 +14,5 @@ public class Funcionario {
     private String emailCorporativo;
     private String status;
     private String senha;
+    private String caminhoFoto;
 }

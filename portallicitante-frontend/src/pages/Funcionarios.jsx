@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import FuncionarioCard from "../components/FuncionarioCard";
-import "../styles/Funcionarios.css"; // Importando o CSS para estilização
+import "../styles/Funcionarios.css";
 
 function Funcionarios() {
   const [funcionarios, setFuncionarios] = useState([]);
@@ -16,7 +16,10 @@ function Funcionarios() {
 
   return (
     <div className="pagina-funcionarios">
-      <button className="botao-cadastrar-funcionario" onClick={() => navigate('/cadastro-funcionario')}>
+      <button
+        className="botao-cadastrar-funcionario"
+        onClick={() => navigate('/cadastro-funcionario')}
+      >
         Cadastrar Funcionário
       </button>
       <div className="lista-funcionarios">
@@ -27,7 +30,8 @@ function Funcionarios() {
             cpf={f.cpf}
             status={f.status}
             email={f.emailCorporativo}
-            onEditar={() => navigate(`/funcionarios/editar/${f.idFuncionario}`)} // ✅
+            caminhoFoto={f.caminhoFoto} // 🔥 Agora tá certo!
+            onEditar={() => navigate(`/funcionarios/editar/${f.idFuncionario}`)}
           />
         ))}
       </div>

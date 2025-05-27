@@ -7,11 +7,13 @@ import java.util.Optional;
 
 public interface FuncionarioService {
 
-    void cadastrar(Funcionario funcionario);
+    Funcionario cadastrar(Funcionario funcionario);
 
     void atualizar(Funcionario funcionario);
 
     void deletar(int id);
+
+    void atualizarFoto(int idFuncionario, String caminhoFoto);
 
     List<Funcionario> listarTodos();
 

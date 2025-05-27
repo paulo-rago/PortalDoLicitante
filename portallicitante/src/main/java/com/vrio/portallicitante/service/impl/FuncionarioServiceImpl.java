@@ -20,11 +20,13 @@ public class FuncionarioServiceImpl implements FuncionarioService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Override
     @Transactional
-    public void cadastrar(Funcionario funcionario) {
+    public Funcionario cadastrar(Funcionario funcionario) {
         funcionario.setSenha(passwordEncoder.encode(funcionario.getSenha()));
-        funcionarioRepository.salvar(funcionario);
+        return funcionarioRepository.salvar(funcionario);
     }
+
 
     @Override
     @Transactional
@@ -42,6 +44,12 @@ public class FuncionarioServiceImpl implements FuncionarioService {
     public List<Funcionario> listarTodos() {
         return funcionarioRepository.listarTodos();
     }
+
+    @Override
+    public void atualizarFoto(int idFuncionario, String caminhoFoto) {
+        funcionarioRepository.atualizarFoto(idFuncionario, caminhoFoto);
+    }
+
 
     @Override
     public Optional<Funcionario> autenticar(String cpf, String senha) {

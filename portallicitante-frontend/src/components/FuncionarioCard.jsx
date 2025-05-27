@@ -1,10 +1,17 @@
-import React from "react";
 import "../styles/FuncionarioCard.css";
 
-function FuncionarioCard({ nome, cpf, status, email, onEditar }) {
+
+function FuncionarioCard({ id, nome, cpf, status, email, onEditar, caminhoFoto }) {
+  console.log("Funcionario recebido no Card:", { caminhoFoto });
+  const urlImagem = caminhoFoto
+    ? `http://localhost:8080/funcionarios/foto/${caminhoFoto}`
+    : "https://via.placeholder.com/150";
+
   return (
     <div className="funcionario-card">
-      <div className="imagem-placeholder" />
+      <div className="imagem-container">
+        <img src={urlImagem} alt={`Foto de ${nome}`} className="foto-perfil" />
+      </div>
       <h3 className="nome-funcionario">{nome}</h3>
       <p className="cpf"><strong>CPF:</strong> {cpf}</p>
       <p className="status"><strong>Status:</strong> {status}</p>

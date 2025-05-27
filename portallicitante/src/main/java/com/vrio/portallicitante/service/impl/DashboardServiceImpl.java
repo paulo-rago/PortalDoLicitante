@@ -1,7 +1,6 @@
 package com.vrio.portallicitante.service.impl;
 
-import com.vrio.portallicitante.dto.TaxaSucessoDTO;
-import com.vrio.portallicitante.dto.ValorPorAnoDTO;
+import com.vrio.portallicitante.dto.*;
 import com.vrio.portallicitante.repository.DashboardRepository;
 import com.vrio.portallicitante.service.DashboardService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +22,31 @@ public class DashboardServiceImpl implements DashboardService {
     @Override
     public Optional<TaxaSucessoDTO> getTaxaSucesso(String nomeEmpresa) {
         return repository.buscarTaxaSucesso(nomeEmpresa);
+    }
+
+    @Override
+    public Optional<DashboardKPIDTO> getKpiProcessos() {
+        return repository.buscarKpiProcessos();
+    }
+
+    @Override
+    public List<EvolucaoPregoesPorMesDTO> getEvolucaoPregoesPorMes() {
+        return repository.buscarEvolucaoPregoesPorMes();
+    }
+
+    @Override
+    public List<PregoesPorOrgaoDTO> getPregoesPorOrgao() {
+        return repository.buscarPregoesPorOrgao();
+    }
+
+    @Override
+    public List<PregoesPorStatusDTO> getPregoesPorStatus() {
+        return repository.buscarPregoesPorStatus();
+    }
+
+    @Override
+    public List<PodioAnalistasDTO> getPodioAnalistas() {
+        return repository.buscarPodioAnalistas();
     }
 }
 

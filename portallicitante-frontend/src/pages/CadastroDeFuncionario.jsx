@@ -11,11 +11,12 @@ function CadastrarFuncionario() {
     senha: ""
   });
 
+  const [foto, setFoto] = useState(null); // Foto de perfil
   const [mensagem, setMensagem] = useState("");
-  const [isSupervisor, setIsSupervisor] = useState(null); // null = ainda carregando
+  const [isSupervisor, setIsSupervisor] = useState(null);
   const navigate = useNavigate();
 
-  // Verificar se o usuário é supervisor
+  // Verificar se é supervisor
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) {
@@ -31,7 +32,7 @@ function CadastrarFuncionario() {
       .then(response => response.ok ? response.json() : false)
       .then(data => {
         if (!data) {
-          navigate("/"); // não é supervisor, redireciona
+          navigate("/");
         } else {
           setIsSupervisor(true);
         }
@@ -54,17 +55,30 @@ function CadastrarFuncionario() {
     e.preventDefault();
 
     try {
-      const resposta = await fetch("http://localhost:8080/funcionarios", {
+      const token = localStorage.getItem("token");
+      const formDataEnvio = new FormData();
+
+      formDataEnvio.append(
+        "dados",
+        new Blob([JSON.stringify(formData)], { type: "application/json" })
+      );
+
+      if (foto) {
+        formDataEnvio.append("file", foto);
+      }
+
+      const resposta = await fetch("http://localhost:8080/funcionarios/cadastrar-com-foto", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`
+          Authorization: `Bearer ${token}`
         },
-        body: JSON.stringify(formData)
+        body: formDataEnvio
       });
 
       if (!resposta.ok) throw new Error("Erro ao cadastrar funcionário.");
 
+      const funcionario = await resposta.json();
+      console.log(funcionario);
       setMensagem("Funcionário cadastrado com sucesso ✅");
       setTimeout(() => navigate("/funcionarios"), 1500);
     } catch (err) {
@@ -73,18 +87,52 @@ function CadastrarFuncionario() {
     }
   };
 
-  // Evita mostrar o conteúdo até saber se é supervisor
   if (isSupervisor === null) return <p>Verificando permissões...</p>;
 
   return (
     <div className="pagina-cadastro-funcionario">
       <h2>Cadastrar Funcionário</h2>
       <form className="form-funcionario" onSubmit={handleSubmit}>
-        <input name="nomeFuncionario" placeholder="Nome" onChange={handleChange} required />
-        <input name="cpf" placeholder="CPF" onChange={handleChange} required />
-        <input name="emailCorporativo" placeholder="Email Corporativo" onChange={handleChange} required />
-        <input name="status" placeholder="Status" onChange={handleChange} required />
-        <input name="senha" type="password" placeholder="Senha" onChange={handleChange} required />
+        <input
+          name="nomeFuncionario"
+          placeholder="Nome"
+          onChange={handleChange}
+          required
+        />
+        <input
+          name="cpf"
+          placeholder="CPF"
+          onChange={handleChange}
+          required
+        />
+        <input
+          name="emailCorporativo"
+          placeholder="Email Corporativo"
+          onChange={handleChange}
+          required
+        />
+        <input
+          name="status"
+          placeholder="Status"
+          onChange={handleChange}
+          required
+        />
+        <input
+          name="senha"
+          type="password"
+          placeholder="Senha"
+          onChange={handleChange}
+          required
+        />
+
+        {/* Upload de Foto */}
+        <label>Foto de Perfil:</label>
+        <input
+          type="file"
+          accept="image/*"
+          onChange={(e) => setFoto(e.target.files[0])}
+        />
+
         <button type="submit">Cadastrar</button>
       </form>
       {mensagem && <p>{mensagem}</p>}

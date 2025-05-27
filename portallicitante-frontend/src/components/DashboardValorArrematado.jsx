@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import axios from 'axios';
-import '../styles/DashboardValorArrematado.css'; // Adicione o caminho correto para o CSS
+import '../styles/DashboardValorArrematado.css';
+import '../styles/Dashboards.css';
 
 const DashboardValorArrematado = () => {
   const [dados, setDados] = useState([]);
@@ -25,43 +26,27 @@ const DashboardValorArrematado = () => {
   }, []);
 
   return (
-    <>
-      <h2 className='valor_arrematado_h2' style={{ color: 'white' }}>Valor Arrematado por Ano - AutoVrio</h2>
-      <div
-        style={{
-          width: '100%',
-          maxWidth: '500px',
-          height: '350px',
-          backgroundColor: '#ffffff',
-          borderRadius: '30px',
-          padding: '30px',
-          boxShadow: '0 4px 15px rgba(0,0,0,0.2)',
-          textAlign: 'center',
-          position: 'relative'
-        }}
-      >
-        <ResponsiveContainer width="100%" height={320}>
-          <BarChart
-            data={dados}
-            margin={{
-              top: 20,
-              right: 30,
-              left: 20,
-              bottom: 20,
-              borderRadius: 0
-            }}
-            style={{ background: '#fff', borderRadius: '30px' }}
-          >
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="ano" />
-            <YAxis />
-            <Tooltip />
-            <Legend />
-            <Bar dataKey="totalArrematado" name="Valor Arrematado (R$)" fill="#0087C1" radius={[30, 30, 30, 30]} />
-          </BarChart>
-        </ResponsiveContainer>
-      </div>
-    </>
+    <div className="dashboard-card">
+      <h2 className='dashboard-card-title'>Valor Arrematado por Ano - AutoVrio</h2>
+      <ResponsiveContainer width="100%" height={320}>
+        <BarChart
+          data={dados}
+          margin={{
+            top: 20,
+            right: 30,
+            left: 20,
+            bottom: 20
+          }}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="ano" />
+          <YAxis />
+          <Tooltip />
+          <Legend />
+          <Bar dataKey="totalArrematado" name="Valor Arrematado (R$)" fill="#0087C1" radius={[20, 20, 0, 0]} />
+        </BarChart>
+      </ResponsiveContainer>
+    </div>
   );
 };
 
