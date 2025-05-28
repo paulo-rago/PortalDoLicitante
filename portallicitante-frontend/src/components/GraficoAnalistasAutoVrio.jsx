@@ -95,7 +95,7 @@ function GraficoAnalistasAutoVrio() {
             fontFamily: 'inherit',
           }}
         >
-          Analistas com Pregões vinculados à AutoVrio
+          Analistas que mais arremataram processos para AutoVrio
         </h2>
         <div style={{
           background: '#f7fafd',
@@ -171,7 +171,9 @@ function GraficoAnalistasAutoVrio() {
               }}
             >
               <img
-                src={analista.caminhoFoto}
+                src={analista.caminhoFoto
+                  ? `http://localhost:8080/funcionarios/foto/${analista.caminhoFoto}`
+                  : 'https://via.placeholder.com/150'}
                 alt={analista.analista}
                 style={{
                   width: '120px',

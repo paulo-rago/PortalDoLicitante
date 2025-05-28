@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import "../styles/CadastrarFuncionario.css";
@@ -13,6 +14,7 @@ function EditarInformacoesFunc() {
     status: "",
     senha: ""
   });
+  const [foto, setFoto] = useState(null);
 
   const [isSupervisor, setIsSupervisor] = useState(null);
   const [mensagem, setMensagem] = useState("");
@@ -55,17 +57,23 @@ function EditarInformacoesFunc() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      const token = localStorage.getItem("token");
+      const formDataEnvio = new FormData();
+      formDataEnvio.append(
+        "dados",
+        new Blob([JSON.stringify(formData)], { type: "application/json" })
+      );
+      if (foto) {
+        formDataEnvio.append("file", foto);
+      }
       const resp = await fetch(`http://localhost:8080/funcionarios/${id}`, {
         method: "PUT",
         headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`
+          Authorization: `Bearer ${token}`
         },
-        body: JSON.stringify(formData)
+        body: formDataEnvio
       });
-
       if (!resp.ok) throw new Error("Erro ao atualizar funcionário.");
-
       setMensagem("Informações atualizadas com sucesso ✅");
       setTimeout(() => navigate("/funcionarios"), 1500);
     } catch {
@@ -78,7 +86,7 @@ function EditarInformacoesFunc() {
   return (
     <div className="pagina-cadastro-funcionario">
       <h2>Editar Informações do Funcionário</h2>
-      <form className="form-funcionario" onSubmit={handleSubmit}>
+      <form className="form-funcionario" onSubmit={handleSubmit} encType="multipart/form-data">
         <label>
           Nome atual: <strong>{formData.nomeFuncionario}</strong>
           <input name="nomeFuncionario" value={formData.nomeFuncionario} onChange={handleChange} required />
@@ -104,6 +112,13 @@ function EditarInformacoesFunc() {
           <input type="password" name="senha" value={formData.senha} onChange={handleChange} required />
         </label>
 
+        {/* Upload de Foto */}
+        <label>Foto de Perfil:</label>
+        <input
+          type="file"
+          accept="image/*"
+          onChange={e => setFoto(e.target.files[0])}
+        />
         <button type="submit">Salvar Alterações</button>
       </form>
 

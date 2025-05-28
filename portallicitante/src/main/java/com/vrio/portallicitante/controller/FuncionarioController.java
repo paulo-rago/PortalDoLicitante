@@ -73,12 +73,42 @@ public class FuncionarioController {
     }
 
     // ✅ ATUALIZAR
-    @PutMapping("/{id}")
-    public ResponseEntity<?> atualizar(@PathVariable int id, @RequestBody Funcionario funcionario) {
-        funcionario.setIdFuncionario(id);
-        funcionarioService.atualizar(funcionario);
-        return ResponseEntity.ok("Funcionário atualizado com sucesso.");
+    @PutMapping(value = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<?> atualizar(
+            @PathVariable int id,
+            @RequestPart("dados") Funcionario funcionario,
+            @RequestPart(value = "file", required = false) MultipartFile file) {
+
+        try {
+            funcionario.setIdFuncionario(id);
+            funcionarioService.atualizar(funcionario); // Atualiza dados no banco
+
+            if (file != null && !file.isEmpty()) {
+                String nomeArquivo = "foto_" + id + "_" + file.getOriginalFilename();
+
+                // Diretório absoluto
+                String diretorioUpload = System.getProperty("user.dir") + File.separator + "uploads";
+                File diretorio = new File(diretorioUpload);
+                if (!diretorio.exists()) {
+                    diretorio.mkdirs();
+                }
+
+                // Caminho completo do arquivo
+                String caminhoCompleto = diretorioUpload + File.separator + nomeArquivo;
+                file.transferTo(new File(caminhoCompleto)); // Salva arquivo
+
+                // Atualiza no banco o nome da nova foto
+                funcionarioService.atualizarFoto(id, nomeArquivo);
+            }
+
+            return ResponseEntity.ok("Funcionário atualizado com sucesso.");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).body("Erro ao atualizar funcionário com foto.");
+        }
     }
+
 
     // ✅ DELETAR
     @DeleteMapping("/{id}")
