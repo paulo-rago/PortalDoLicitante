@@ -1,8 +1,7 @@
-
 .container-formulario-pregao-2 {
   background-color: #a8a8a8;
   border-radius: 20px;
-  padding: 70px 80px 30px 80px; /* top right bottom left */
+  padding: 70px 80px 30px 80px;
   width: 100%;
   max-width: 1000px;
   margin: 40px auto;
@@ -13,9 +12,31 @@
 
 .container-formulario-pregao-1 h1 { 
   color: aliceblue;
-  text-align: left; /* Alinha à esquerda */
+  text-align: left;
   margin-bottom: 20px;
-  margin-left: 20px; /* Ajuste conforme necessário */
+  margin-left: 20px;
+}
+
+.formulario-pregao-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.formulario-pregao-inputs-wrapper {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  gap: 4rem;
+}
+
+.left-container,
+.right-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  flex: 1;
 }
 
 .formulario-pregao-form label {
@@ -36,16 +57,16 @@
 }
 
 .formulario-pregao-btn {
-  display: block;
-  margin: 60px auto 0;
-  padding: 12px 24px;
+  margin-top: 25px;
+  padding: 22px 48px;
   background-color: #0087C1;
   color: white;
-  font-size: 16px;
+  font-size: 22px;
   font-weight: bold;
   border: none;
-  border-radius: 25px;
+  border-radius: 36px;
   cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 .formulario-pregao-btn:hover {
@@ -54,27 +75,7 @@
 
 .formulario-pregao-msg {
   text-align: center;
-  margin-top: 20px;
+  margin-top: 10px;
   font-size: 16px;
   font-weight: bold;
-}
-
-/* organização das divs flex-box */
-.formulario-pregao-form {
-  display: flex;
-  justify-content: space-between;
-  gap: 4rem;
-}
-
-.left-container,
-.right-container {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  flex: 1;
-}
-
-.formulario-pregao-form > .left-container,
-.formulario-pregao-form > .right-container {
-  width: 45%;
 }
