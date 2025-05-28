@@ -5,6 +5,8 @@ import com.vrio.portallicitante.repository.EmpresaRepository;
 import com.vrio.portallicitante.service.EmpresaService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class EmpresaServiceImpl implements EmpresaService {
 
@@ -27,5 +29,10 @@ public class EmpresaServiceImpl implements EmpresaService {
     @Override
     public void deletar(int id) {
         repository.deletar(id);
+    }
+
+    @Override
+    public List<Empresa> listarTodos() {
+        return repository.listarTodos();
     }
 }

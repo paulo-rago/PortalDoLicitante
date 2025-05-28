@@ -50,11 +50,11 @@
 }
 
 .dashboards-container {
-  padding: 2.5rem 2vw 2vw 2vw;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-bottom: 100px;
 }
 
 .dashboards-title {

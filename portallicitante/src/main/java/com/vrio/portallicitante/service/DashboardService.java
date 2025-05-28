@@ -18,6 +18,6 @@ public interface DashboardService {
 
     List<PregoesPorStatusDTO> getPregoesPorStatus();
 
-    List<PodioAnalistasDTO> getPodioAnalistas();
+    List<PodioAnalistasDTO> getAnalistasComPregoesDeAutoVrio();
 }
 

@@ -5,6 +5,8 @@ import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Repository
 public class EmpresaRepository {
@@ -99,4 +101,34 @@ public class EmpresaRepository {
             e.printStackTrace();
         }
     }
+
+    public List<Empresa> listarTodos() {
+        String sql = "SELECT * FROM Empresa";
+        List<Empresa> empresas = new ArrayList<>();
+
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                Empresa empresa = new Empresa();
+                empresa.setIdEmpresa(rs.getInt("id_empresa"));
+                empresa.setCnpj(rs.getString("CNPJ_empresa"));
+                empresa.setTelefone(rs.getString("telefone_empresa"));
+                empresa.setCep(rs.getString("cep"));
+                empresa.setRua(rs.getString("rua"));
+                empresa.setBairro(rs.getString("bairro"));
+                empresa.setNumero(rs.getString("numero"));
+                empresa.setEstado(rs.getString("estado"));
+                empresa.setNome(rs.getString("nome"));
+                empresas.add(empresa);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao listar empresas: " + e.getMessage(), e);
+        }
+
+        return empresas;
+    }
+
 }

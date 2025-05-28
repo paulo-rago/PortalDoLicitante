@@ -45,8 +45,8 @@ public class DashboardServiceImpl implements DashboardService {
     }
 
     @Override
-    public List<PodioAnalistasDTO> getPodioAnalistas() {
-        return repository.buscarPodioAnalistas();
+    public List<PodioAnalistasDTO> getAnalistasComPregoesDeAutoVrio() {
+        return repository.buscarAnalistasComPregoesDeAutoVrio();
     }
 }
 

@@ -180,19 +180,19 @@ public class DashboardRepository {
         return lista;
     }
 
-    public List<PodioAnalistasDTO> buscarPodioAnalistas() {
+    public List<PodioAnalistasDTO> buscarAnalistasComPregoesDeAutoVrio() {
         String sql = """
         SELECT 
             f.nome_funcionario AS analista,
+            f.foto_perfil AS caminhoFoto,
             COUNT(DISTINCT p.id_pregao) AS total_pregoes
         FROM pregao p
         INNER JOIN lote l ON l.fk_Pregao_id_pregao = p.id_pregao
         INNER JOIN empresa e ON l.fk_Empresa_id_empresa = e.id_empresa
         INNER JOIN funcionario f ON p.fk_analista_de_licitacao_id_funcionario = f.id_funcionario
         WHERE e.nome = 'AutoVrio'
-        GROUP BY f.nome_funcionario
-        ORDER BY total_pregoes DESC
-        LIMIT 4;
+        GROUP BY f.nome_funcionario, f.foto_perfil
+        ORDER BY total_pregoes DESC;
     """;
 
         List<PodioAnalistasDTO> lista = new ArrayList<>();
@@ -204,7 +204,8 @@ public class DashboardRepository {
             while (rs.next()) {
                 lista.add(new PodioAnalistasDTO(
                         rs.getString("analista"),
-                        rs.getInt("total_pregoes")
+                        rs.getInt("total_pregoes"),
+                        rs.getString("caminhoFoto")
                 ));
             }
 
@@ -214,7 +215,5 @@ public class DashboardRepository {
 
         return lista;
     }
-
-
 
 }

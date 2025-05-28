@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/empresas")
 public class EmpresaController {
@@ -44,6 +46,16 @@ public class EmpresaController {
             return ResponseEntity.ok("Empresa removida com sucesso.");
         } catch (Exception e) {
             return ResponseEntity.status(400).body("Erro ao deletar empresa: " + e.getMessage());
+        }
+    }
+
+    @GetMapping
+    public ResponseEntity<?> listarTodas() {
+        try {
+            List<Empresa> empresas = empresaService.listarTodos();
+            return ResponseEntity.ok(empresas);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Erro ao listar empresas: " + e.getMessage());
         }
     }
 }

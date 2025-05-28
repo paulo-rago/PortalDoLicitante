@@ -10,4 +10,5 @@ import lombok.NoArgsConstructor;
 public class PodioAnalistasDTO {
     private String analista;
     private int totalPregoes;
+    private String caminhoFoto;
 }

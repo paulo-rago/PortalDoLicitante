@@ -52,9 +52,9 @@ public class DashboardController {
         return service.getPregoesPorStatus();
     }
 
-    @GetMapping("/podio-analistas")
-    public List<PodioAnalistasDTO> getPodioAnalistas() {
-        return service.getPodioAnalistas();
+    @GetMapping("/analistas-pregoes-autovrio")
+    public List<PodioAnalistasDTO> getAnalistasComPregoesDeAutoVrio() {
+        return service.getAnalistasComPregoesDeAutoVrio();
     }
 
 }
