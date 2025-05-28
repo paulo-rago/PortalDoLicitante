@@ -5,9 +5,7 @@ import Dashboards from "./pages/Dashboards";
 import ListarProcessos from "./pages/ListarProcessos";
 import ListarPregoes from "./pages/ListarPregoes";
 import EditarEdital from "./pages/EditarEdital";
-import ExcluirEdital from "./pages/ExcluirEdital";
 import EditarPregao from "./pages/EditarPregao";
-import ExcluirPregao from "./pages/ExcluirPregao";
 import ListarLotes from "./pages/ListarLotes";
 import Navbar from "./components/Navbar";
 import CadastroCompleto from "./pages/CadastroCompleto";
@@ -30,9 +28,7 @@ function LayoutComNavbar() {
         <Route path="/listar-processos" element={<ListarProcessos />} />
         <Route path="/listar-pregoes" element={<ListarPregoes />} />
         <Route path="/editar-edital/:id" element={<EditarEdital />} />
-        <Route path="/excluir-edital/:id" element={<ExcluirEdital />} />
         <Route path="/editar-pregao/:id" element={<EditarPregao />} />
-        <Route path="/excluir-pregao/:id" element={<ExcluirPregao />} />
         <Route path="/listar-lotes/:idPregao" element={<ListarLotes />} />
         <Route path="/cadastro-completo" element={<CadastroCompleto />} />
         <Route path="/funcionarios" element={<Funcionarios />} />

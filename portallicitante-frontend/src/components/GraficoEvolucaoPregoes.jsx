@@ -35,7 +35,7 @@ function GraficoEvolucaoPregoes() {
 
   return (
     <div className="dashboard-card">
-      <h2 className="dashboard-card-title">Evolução dos Pregões por Mês</h2>
+      <h2 className="dashboard-card-title">Evolução dos Processos por Mês</h2>
       <ResponsiveContainer width="100%" height={300}>
         <LineChart data={dados} margin={{ top: 20, right: 30, left: 0, bottom: 0 }}>
           <CartesianGrid stroke="#e0e0e0" />

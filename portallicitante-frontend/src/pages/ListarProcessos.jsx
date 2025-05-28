@@ -2,10 +2,13 @@
 
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "../styles/ListarProcessos.css"; // Adicione o caminho correto para o CSS
+import "../styles/ListarProcessos.css";
+import ModalDeletar from "../components/ModalDeletar";
 
 function ListarProcessos() {
   const [editais, setEditais] = useState([]);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [editalParaDeletar, setEditalParaDeletar] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -22,8 +25,48 @@ function ListarProcessos() {
       .catch(err => console.error("Erro ao buscar editais:", err));
   }, []);
 
+  const handleOpenModal = (edital) => {
+    setEditalParaDeletar(edital);
+    setModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setModalOpen(false);
+    setEditalParaDeletar(null);
+  };
+
+  const handleConfirmDelete = async () => {
+    if (!editalParaDeletar || !editalParaDeletar.id) {
+      console.error("ID do edital para deletar está indefinido:", editalParaDeletar);
+      alert("Erro: ID do edital não encontrado.");
+      handleCloseModal();
+      return;
+    }
+
+    console.log("ID enviado para deleção:", editalParaDeletar.id); // <-- Aqui
+
+    try {
+      console.log("Deletando edital com id:", editalParaDeletar.id);
+      const resp = await fetch(`http://localhost:8080/editais/${editalParaDeletar.id}`, {
+        method: "DELETE",
+      });
+      if (!resp.ok) throw new Error("Erro ao deletar edital");
+      setEditais(editais.filter(e => e.id !== editalParaDeletar.id));
+      handleCloseModal();
+    } catch (err) {
+      alert("Erro ao deletar edital.");
+      handleCloseModal();
+    }
+  };
+
   return (
     <div className="listar-processos-container">
+      <ModalDeletar
+        open={modalOpen}
+        onClose={handleCloseModal}
+        onConfirm={handleConfirmDelete}
+        nome={editalParaDeletar ? `edital ${editalParaDeletar.numeroLicitacao}` : ""}
+      />
       <table className="listar-processos-table">
         <thead>
           <tr>
@@ -61,9 +104,10 @@ function ListarProcessos() {
                   >
                     Editar
                   </button>
-                  <button 
-                    className="listar-processos-btn"                  
-                    onClick={() => navigate(`/excluir-edital/${edital.id}`)}
+                  <button
+                    className="listar-processos-btn"
+                    style={{ background: '#c10000', color: '#fff', marginLeft: 8 }}
+                    onClick={() => handleOpenModal(edital)}
                   >
                     Excluir
                   </button>

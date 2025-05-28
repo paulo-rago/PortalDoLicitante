@@ -113,8 +113,28 @@ function GraficoAnalistasAutoVrio() {
                 contentStyle={{ borderRadius: 8, fontSize: 14, boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }}
                 labelStyle={{ fontWeight: 600, color: '#0087C1' }}
               />
-              <Legend wrapperStyle={{ fontWeight: 600, fontSize: 14 }} />
-              <Scatter name="Total de Pregões" data={dados} fill="#0087C1" />
+              <Legend wrapperStyle={{ fontWeight: 600, fontSize: 14 }} />              <Scatter 
+                name="Total de Pregões" 
+                data={dados} 
+                fill="#0087C1"
+                shape={(props) => {
+                  const { cx, cy, payload } = props;
+                  // Use the analyst's photo as the scatter point
+                  return (
+                    <image                      x={cx - 25}
+                      y={cy - 25}
+                      width={50}
+                      height={50}                      href={payload.caminhoFoto
+                        ? `http://localhost:8080/funcionarios/foto/${payload.caminhoFoto}`
+                        : 'https://via.placeholder.com/50'}
+                      style={{ 
+                        borderRadius: '50%',
+                        clipPath: 'circle(50%)'
+                      }}
+                    />
+                  );
+                }}
+              />
             </ScatterChart>
           </ResponsiveContainer>
         </div>

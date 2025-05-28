@@ -90,10 +90,10 @@ public class DashboardRepository {
     public List<EvolucaoPregoesPorMesDTO> buscarEvolucaoPregoesPorMes() {
         String sql = """
         SELECT 
-            YEAR(horario_abertura) AS ano,
-            MONTH(horario_abertura) AS mes,
-            COUNT(*) AS total_pregoes
-        FROM pregao
+            YEAR(data_de_abertura) AS ano,
+            MONTH(data_de_abertura) AS mes,
+            COUNT(*) AS total_editais
+        FROM edital_de_licitacao
         GROUP BY ano, mes
         ORDER BY ano, mes;
     """;
@@ -108,7 +108,7 @@ public class DashboardRepository {
                 lista.add(new EvolucaoPregoesPorMesDTO(
                         rs.getInt("ano"),
                         rs.getInt("mes"),
-                        rs.getInt("total_pregoes")
+                        rs.getInt("total_editais")
                 ));
             }
 
@@ -118,6 +118,7 @@ public class DashboardRepository {
 
         return lista;
     }
+
 
     public List<PregoesPorOrgaoDTO> buscarPregoesPorOrgao() {
         String sql = """

@@ -73,10 +73,15 @@ function EditarInformacoesFunc() {
         },
         body: formDataEnvio
       });
-      if (!resp.ok) throw new Error("Erro ao atualizar funcionário.");
+      if (!resp.ok) {
+        const errorText = await resp.text();
+        console.error("Erro ao atualizar funcionário:", errorText);
+        throw new Error("Erro ao atualizar funcionário.");
+      }
       setMensagem("Informações atualizadas com sucesso ✅");
       setTimeout(() => navigate("/funcionarios"), 1500);
-    } catch {
+    } catch (err) {
+      console.error("Erro ao salvar alterações:", err);
       setMensagem("Erro ao salvar alterações ❌");
     }
   };
