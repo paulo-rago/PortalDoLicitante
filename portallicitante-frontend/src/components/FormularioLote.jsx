@@ -285,9 +285,9 @@ if (!response.ok) {
                 )}
             </div>
           </div>
-        </form>
-        <button className="formulario-lote-btn-cadastrar" type="submit">Cadastrar Lote</button>
+          <button className="formulario-lote-btn-cadastrar" type="submit">Cadastrar Lote</button>
           <p className="formulario-lote-msg">{mensagem}</p>
+        </form>
       </div>
     </div>
   );

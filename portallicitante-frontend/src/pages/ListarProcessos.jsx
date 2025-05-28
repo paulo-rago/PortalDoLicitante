@@ -29,7 +29,7 @@ function ListarProcessos() {
           <tr>
             <th>ID</th>
             <th>Número</th>
-            <th>Órgão Responsável (ID)</th>
+            <th>Órgão Responsável</th>
             <th>Data de Abertura</th>
             <th>Prazo de Entrega</th>
             <th>Exigências Técnicas</th>

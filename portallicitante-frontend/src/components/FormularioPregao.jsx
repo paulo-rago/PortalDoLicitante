@@ -139,9 +139,9 @@ if (!response.ok) {
               />
             </div>
           </div>
+          <button className="formulario-pregao-btn" type="submit">Cadastrar</button>
+          <p className="formulario-pregao-msg">{mensagem}</p>
         </form>
-        <button className="formulario-pregao-btn" type="submit">Cadastrar</button>
-        <p className="formulario-pregao-msg">{mensagem}</p>
       </div>
     </div>
   );
