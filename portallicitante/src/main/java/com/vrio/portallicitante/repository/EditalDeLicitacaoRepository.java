@@ -109,7 +109,21 @@ public class EditalDeLicitacaoRepository {
 
     public List<EditalDeLicitacao> listarTodos() {
         List<EditalDeLicitacao> lista = new ArrayList<>();
-        String sql = "SELECT * FROM Edital_de_Licitacao";
+
+        String sql = """
+        SELECT 
+            e.id_licitacao,
+            e.numero_licitacao,
+            e.data_de_abertura,
+            e.prazo_entrega,
+            e.exigencia_tecnicas,
+            e.documentacao_obrigatoria,
+            e.valor_estimado,
+            e.fk_Orgao_Publico_id_orgao_publico,
+            o.nome_orgao
+        FROM Edital_de_Licitacao e
+        JOIN Orgao_Publico o ON e.fk_Orgao_Publico_id_orgao_publico = o.id_orgao_publico
+    """;
 
         try (Connection conn = dataSource.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql);
@@ -119,7 +133,6 @@ public class EditalDeLicitacaoRepository {
                 EditalDeLicitacao edital = new EditalDeLicitacao();
                 edital.setId(rs.getInt("id_licitacao"));
                 edital.setNumeroLicitacao(rs.getString("numero_licitacao"));
-                edital.setOrgaoResponsavel(rs.getString("orgao_responsavel"));
 
                 java.sql.Date dataAbertura = rs.getDate("data_de_abertura");
                 if (dataAbertura != null) {
@@ -135,6 +148,7 @@ public class EditalDeLicitacaoRepository {
                 edital.setDocumentacaoObrigatoria(rs.getString("documentacao_obrigatoria"));
                 edital.setValorEstimado(rs.getBigDecimal("valor_estimado"));
                 edital.setFkOrgaoPublicoId(rs.getInt("fk_Orgao_Publico_id_orgao_publico"));
+                edital.setNomeOrgaoResponsavel(rs.getString("nome_orgao"));
 
                 lista.add(edital);
             }

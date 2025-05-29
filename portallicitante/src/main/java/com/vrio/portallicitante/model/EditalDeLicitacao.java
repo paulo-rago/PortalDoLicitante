@@ -19,4 +19,7 @@ public class EditalDeLicitacao {
     private String documentacaoObrigatoria;
     private BigDecimal  valorEstimado;
     private int fkOrgaoPublicoId;
+
+    private String nomeOrgaoResponsavel;
+
 }

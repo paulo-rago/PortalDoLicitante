@@ -3,10 +3,8 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from "react-route
 import LoginPage from "./pages/LoginPage";
 import Dashboards from "./pages/Dashboards";
 import ListarProcessos from "./pages/ListarProcessos";
-import ListarPregoes from "./pages/ListarPregoes";
 import EditarEdital from "./pages/EditarEdital";
 import EditarPregao from "./pages/EditarPregao";
-import ListarLotes from "./pages/ListarLotes";
 import Navbar from "./components/Navbar";
 import CadastroCompleto from "./pages/CadastroCompleto";
 import Funcionarios from "./pages/Funcionarios";
@@ -26,10 +24,8 @@ function LayoutComNavbar() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/Dashboards" element={<Dashboards />} />
         <Route path="/listar-processos" element={<ListarProcessos />} />
-        <Route path="/listar-pregoes" element={<ListarPregoes />} />
         <Route path="/editar-edital/:id" element={<EditarEdital />} />
         <Route path="/editar-pregao/:id" element={<EditarPregao />} />
-        <Route path="/listar-lotes/:idPregao" element={<ListarLotes />} />
         <Route path="/cadastro-completo" element={<CadastroCompleto />} />
         <Route path="/funcionarios" element={<Funcionarios />} />
         <Route path="/cadastro-funcionario" element={<CadastroDeFuncionario />} />

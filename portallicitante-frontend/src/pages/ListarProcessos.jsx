@@ -1,5 +1,3 @@
-// src/pages/ListarProcessos.jsx
-
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/ListarProcessos.css";
@@ -7,6 +5,7 @@ import ModalDeletar from "../components/ModalDeletar";
 
 function ListarProcessos() {
   const [editais, setEditais] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
   const [editalParaDeletar, setEditalParaDeletar] = useState(null);
   const navigate = useNavigate();
@@ -15,14 +14,17 @@ function ListarProcessos() {
     fetch("http://localhost:8080/editais")
       .then(res => res.json())
       .then(data => {
-        console.log("Editais recebidos:", data);
         if (Array.isArray(data)) {
           setEditais(data);
         } else {
           console.error("Resposta inesperada:", data);
         }
+        setIsLoading(false);
       })
-      .catch(err => console.error("Erro ao buscar editais:", err));
+      .catch(err => {
+        console.error("Erro ao buscar editais:", err);
+        setIsLoading(false);
+      });
   }, []);
 
   const handleOpenModal = (edital) => {
@@ -43,10 +45,7 @@ function ListarProcessos() {
       return;
     }
 
-    console.log("ID enviado para deleção:", editalParaDeletar.id); // <-- Aqui
-
     try {
-      console.log("Deletando edital com id:", editalParaDeletar.id);
       const resp = await fetch(`http://localhost:8080/editais/${editalParaDeletar.id}`, {
         method: "DELETE",
       });
@@ -82,7 +81,11 @@ function ListarProcessos() {
           </tr>
         </thead>
         <tbody>
-          {editais.length === 0 ? (
+          {isLoading ? (
+            <tr>
+              <td colSpan="9">Carregando editais...</td>
+            </tr>
+          ) : editais.length === 0 ? (
             <tr>
               <td colSpan="9">Nenhum edital cadastrado.</td>
             </tr>
@@ -91,7 +94,7 @@ function ListarProcessos() {
               <tr key={edital.id}>
                 <td>{edital.id}</td>
                 <td>{edital.numeroLicitacao}</td>
-                <td>{edital.orgaoResponsavel}</td>
+                <td>{edital.nomeOrgaoResponsavel}</td>
                 <td>{edital.dataDeAbertura}</td>
                 <td>{edital.prazoEntrega}</td>
                 <td>{edital.exigenciaTecnicas}</td>
