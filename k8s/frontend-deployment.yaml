@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: portal-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: portal-frontend
+  template:
+    metadata:
+      labels:
+        app: portal-frontend
+    spec:
+      containers:
+        - name: portal-frontend
+          image: paulorago/portal-frontend
+          ports:
+            - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: portal-frontend
+spec:
+  selector:
+    app: portal-frontend
+  ports:
+    - port: 80
+      targetPort: 80
+  type: LoadBalancer
