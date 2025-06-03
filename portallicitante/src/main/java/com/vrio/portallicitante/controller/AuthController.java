@@ -9,6 +9,7 @@ import com.vrio.portallicitante.service.FuncionarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.Optional;
 
@@ -26,7 +27,15 @@ public class AuthController {
     private AnalistaDeLicitacaoService analistaDeLicitacaoService;
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody AuthRequestDTO request) {
+    public ResponseEntity<?> login(@RequestBody AuthRequestDTO request, HttpServletRequest httpRequest) {
+        System.out.println("Received login request with method: " + httpRequest.getMethod());
+        System.out.println("Request headers: ");
+        java.util.Enumeration<String> headerNames = httpRequest.getHeaderNames();
+        while (headerNames.hasMoreElements()) {
+            String headerName = headerNames.nextElement();
+            System.out.println(headerName + ": " + httpRequest.getHeader(headerName));
+        }
+        
         Optional<Funcionario> usuario = funcionarioService.autenticar(request.getCpf(), request.getSenha());
 
         if (usuario.isPresent()) {

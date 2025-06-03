@@ -1,0 +1,275 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql-init-scripts
+data:
+  init.sql: |
+    -- MySQL dump 10.13  Distrib 8.0.19, for Win64 (x86_64)
+    --
+    -- Host: localhost    Database: bd_portal_do_licitante_novo
+    -- ------------------------------------------------------
+    -- Server version	9.2.0
+
+    /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+    /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+    /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+    /*!50503 SET NAMES utf8mb4 */;
+    /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+    /*!40103 SET TIME_ZONE='+00:00' */;
+    /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+    /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+    /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+    /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+    CREATE DATABASE IF NOT EXISTS bd_portal_do_licitante_novo;
+    USE bd_portal_do_licitante_novo;
+
+    --
+    -- Table structure for table `funcionario`
+    --
+
+    DROP TABLE IF EXISTS `funcionario`;
+    /*!40101 SET @saved_cs_client     = @@character_set_client */;
+    /*!50503 SET character_set_client = utf8mb4 */;
+    CREATE TABLE `funcionario` (
+      `id_funcionario` int NOT NULL AUTO_INCREMENT,
+      `nome_funcionario` varchar(100) DEFAULT NULL,
+      `CPF` varchar(14) DEFAULT NULL,
+      `email_corporativo` varchar(100) DEFAULT NULL,
+      `status` varchar(20) DEFAULT NULL,
+      `senha` varchar(255) DEFAULT NULL,
+      `foto_perfil` varchar(255) DEFAULT NULL,
+      PRIMARY KEY (`id_funcionario`),
+      UNIQUE KEY `CPF` (`CPF`)
+    ) ENGINE=InnoDB AUTO_INCREMENT=72 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+    --
+    -- Table structure for table `analista_de_licitacao`
+    --
+
+    DROP TABLE IF EXISTS `analista_de_licitacao`;
+    CREATE TABLE `analista_de_licitacao` (
+      `fk_Funcionario_id_funcionario` int NOT NULL,
+      `supervisor` int DEFAULT NULL,
+      PRIMARY KEY (`fk_Funcionario_id_funcionario`),
+      KEY `fk_supervisor_autorelacao` (`supervisor`),
+      CONSTRAINT `analista_de_licitacao_ibfk_1` FOREIGN KEY (`fk_Funcionario_id_funcionario`) REFERENCES `funcionario` (`id_funcionario`),
+      CONSTRAINT `fk_supervisor_autorelacao` FOREIGN KEY (`supervisor`) REFERENCES `analista_de_licitacao` (`fk_Funcionario_id_funcionario`)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+    --
+    -- Table structure for table `empresa`
+    --
+
+    DROP TABLE IF EXISTS `empresa`;
+    CREATE TABLE `empresa` (
+      `id_empresa` int NOT NULL AUTO_INCREMENT,
+      `CNPJ_empresa` varchar(20) DEFAULT NULL,
+      `telefone_empresa` varchar(20) DEFAULT NULL,
+      `cep` varchar(10) DEFAULT NULL,
+      `rua` varchar(100) DEFAULT NULL,
+      `bairro` varchar(50) DEFAULT NULL,
+      `numero` varchar(10) DEFAULT NULL,
+      `estado` varchar(2) DEFAULT NULL,
+      `nome` varchar(100) DEFAULT NULL,
+      PRIMARY KEY (`id_empresa`),
+      UNIQUE KEY `CNPJ_empresa` (`CNPJ_empresa`)
+    ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+    --
+    -- Table structure for table `orgao_publico`
+    --
+
+    DROP TABLE IF EXISTS `orgao_publico`;
+    CREATE TABLE `orgao_publico` (
+      `id_orgao_publico` int NOT NULL AUTO_INCREMENT,
+      `CNPJ` varchar(20) DEFAULT NULL,
+      `nome_orgao` varchar(100) DEFAULT NULL,
+      `rua` varchar(100) DEFAULT NULL,
+      `bairro` varchar(50) DEFAULT NULL,
+      `cep` varchar(10) DEFAULT NULL,
+      `numero` varchar(10) DEFAULT NULL,
+      `estado` varchar(2) DEFAULT NULL,
+      `municipio` varchar(50) DEFAULT NULL,
+      PRIMARY KEY (`id_orgao_publico`),
+      UNIQUE KEY `CNPJ` (`CNPJ`)
+    ) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+    --
+    -- Table structure for table `edital_de_licitacao`
+    --
+
+    DROP TABLE IF EXISTS `edital_de_licitacao`;
+    CREATE TABLE `edital_de_licitacao` (
+      `id_licitacao` int NOT NULL AUTO_INCREMENT,
+      `numero_licitacao` varchar(50) DEFAULT NULL,
+      `orgao_responsavel` varchar(100) DEFAULT NULL,
+      `data_de_abertura` date DEFAULT NULL,
+      `prazo_entrega` date DEFAULT NULL,
+      `exigencia_tecnicas` text,
+      `documentacao_obrigatoria` text,
+      `valor_estimado` decimal(12,2) DEFAULT NULL,
+      `fk_Orgao_Publico_id_orgao_publico` int NOT NULL,
+      PRIMARY KEY (`id_licitacao`),
+      KEY `fk_Orgao_Publico_id_orgao_publico` (`fk_Orgao_Publico_id_orgao_publico`),
+      CONSTRAINT `edital_de_licitacao_ibfk_1` FOREIGN KEY (`fk_Orgao_Publico_id_orgao_publico`) REFERENCES `orgao_publico` (`id_orgao_publico`)
+    ) ENGINE=InnoDB AUTO_INCREMENT=86 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+    --
+    -- Table structure for table `pregao`
+    --
+
+    DROP TABLE IF EXISTS `pregao`;
+    CREATE TABLE `pregao` (
+      `id_pregao` int NOT NULL AUTO_INCREMENT,
+      `numero_pregao` varchar(50) DEFAULT NULL,
+      `status_pregao` varchar(20) DEFAULT NULL,
+      `modelo_pregao` varchar(30) DEFAULT NULL,
+      `modalidade` varchar(30) DEFAULT NULL,
+      `horario_abertura` time DEFAULT NULL,
+      `data_encerramento` date DEFAULT NULL,
+      `fk_Edital_de_Licitacao_id_licitacao` int NOT NULL,
+      `fk_analista_de_licitacao_id_funcionario` int NOT NULL,
+      PRIMARY KEY (`id_pregao`),
+      KEY `fk_Edital_de_Licitacao_id_licitacao` (`fk_Edital_de_Licitacao_id_licitacao`),
+      KEY `fk_analista_de_licitacao_id_funcionario` (`fk_analista_de_licitacao_id_funcionario`),
+      CONSTRAINT `pregao_ibfk_1` FOREIGN KEY (`fk_Edital_de_Licitacao_id_licitacao`) REFERENCES `edital_de_licitacao` (`id_licitacao`),
+      CONSTRAINT `pregao_ibfk_2` FOREIGN KEY (`fk_analista_de_licitacao_id_funcionario`) REFERENCES `analista_de_licitacao` (`fk_Funcionario_id_funcionario`)
+    ) ENGINE=InnoDB AUTO_INCREMENT=124 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+    --
+    -- Table structure for table `lote`
+    --
+
+    DROP TABLE IF EXISTS `lote`;
+    CREATE TABLE `lote` (
+      `id_lote` int NOT NULL AUTO_INCREMENT,
+      `quantidade` int DEFAULT NULL,
+      `numero_lote` varchar(50) DEFAULT NULL,
+      `objeto` varchar(100) DEFAULT NULL,
+      `modelo_veiculo` varchar(50) DEFAULT NULL,
+      `ano_fabricacao_veiculo` varchar(4) DEFAULT NULL,
+      `tipo_veiculo` varchar(50) DEFAULT NULL,
+      `fk_Empresa_id_empresa` int DEFAULT NULL,
+      `fk_Edital_de_Licitacao_id_licitacao` int DEFAULT NULL,
+      `fk_Pregao_id_pregao` int DEFAULT NULL,
+      `valor_arremate` decimal(15,2) DEFAULT NULL,
+      PRIMARY KEY (`id_lote`),
+      KEY `fk_Empresa_id_empresa` (`fk_Empresa_id_empresa`),
+      KEY `fk_Edital_de_Licitacao_id_licitacao` (`fk_Edital_de_Licitacao_id_licitacao`),
+      KEY `fk_Pregao_id_pregao` (`fk_Pregao_id_pregao`),
+      CONSTRAINT `lote_ibfk_1` FOREIGN KEY (`fk_Empresa_id_empresa`) REFERENCES `empresa` (`id_empresa`),
+      CONSTRAINT `lote_ibfk_2` FOREIGN KEY (`fk_Edital_de_Licitacao_id_licitacao`) REFERENCES `edital_de_licitacao` (`id_licitacao`),
+      CONSTRAINT `lote_ibfk_3` FOREIGN KEY (`fk_Pregao_id_pregao`) REFERENCES `pregao` (`id_pregao`)
+    ) ENGINE=InnoDB AUTO_INCREMENT=71 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+    --
+    -- Table structure for table `telefone`
+    --
+
+    DROP TABLE IF EXISTS `telefone`;
+    CREATE TABLE `telefone` (
+      `id_telefone` int NOT NULL AUTO_INCREMENT,
+      `numero` varchar(20) DEFAULT NULL,
+      `fk_Funcionario_id_funcionario` int NOT NULL,
+      PRIMARY KEY (`id_telefone`),
+      KEY `fk_Funcionario_id_funcionario` (`fk_Funcionario_id_funcionario`),
+      CONSTRAINT `telefone_ibfk_1` FOREIGN KEY (`fk_Funcionario_id_funcionario`) REFERENCES `funcionario` (`id_funcionario`)
+    ) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+    -- Insert initial data
+
+    -- Funcionários
+    INSERT INTO `funcionario` VALUES 
+    (1,'João Silva','12345678977','joao@empresa.com','ATIVO','$2a$10$RLEi81dfqJOVxeXbRduBL.QsnjJtHUGcxV6eEyhXgNHDv/qTUHwCS','foto_1_Captura de tela 2024-08-03 120705.png'),
+    (2,'Paulo Rago','12345678970','paulo@empresa.com','ATIVO','$2a$10$IuxWUrRhrHN6oUJ7SxiDOe1gcUxxzX.1kq5v4qNrpfAGASB7C4BtC','foto_2_Captura de tela 2025-03-13 084346.png'),
+    (70,'Max Torres','101.451.110-10','max@empresa.com','ATIVO','$2a$10$rnHpXah4mO.081nUWQZ7beajJ9W47wRVhh8zp/JfMD.3WcxZeaGK.','foto_70_Gemini_Generated_Image_4kipej4kipej4kip.png'),
+    (71,'Pietra Garcia','12345678922','pietra@empresa.com','ATIVO','$2a$10$U5XzaBGkLYNNFfnqIu1NxuVCp5/55POBoOUB0rKA3y1iVxypw/sTq','foto_71_Gemini_Generated_Image_rmq7q7rmq7q7rmq7.png');
+
+    -- Analistas
+    INSERT INTO `analista_de_licitacao` VALUES (1,NULL),(70,NULL),(71,NULL),(2,2);
+
+    -- Empresas
+    INSERT INTO `empresa` VALUES 
+    (1,'12345678000100','81999990000','50000-000','Rua AutoVrio','Centro','100','PE','AutoVrio'),
+    (2,'sdgfasdfdfg','dfssdf','dfdsf','dsfdsf','dsff','sdfsdf','PE','Cesar'),
+    (3,'98765432000100','81999991111','50000-002','Rua Concorrente','Bairro B','200','PE','Empresa Concorrente');
+
+    -- Órgãos Públicos
+    INSERT INTO `orgao_publico` VALUES 
+    (1,'12.345.678/0001-99','Secretaria de Obras','Av. Central','Centro','12345-678','123','PE','Recife'),
+    (2,'12345678000190','Prefeitura Recife','Rua A','Centro','50000-000','100','PE','Recife'),
+    (3,'98765432000190','Prefeitura Olinda','Rua B','Bairro B','50000-001','200','PE','Olinda');
+
+    -- Telefones
+    INSERT INTO `telefone` VALUES (1,'81999990001',1),(2,'81999990002',2);
+
+    -- Triggers
+    DELIMITER //
+
+    CREATE TRIGGER `after_funcionario_insert` AFTER INSERT ON `funcionario` FOR EACH ROW
+    BEGIN
+        INSERT INTO analista_de_licitacao (fk_funcionario_id_funcionario)
+        VALUES (NEW.id_funcionario);
+    END //
+
+    CREATE TRIGGER `trg_delete_analista_before_funcionario` BEFORE DELETE ON `funcionario` FOR EACH ROW
+    BEGIN
+        DELETE FROM analista_de_licitacao
+        WHERE fk_Funcionario_id_funcionario = OLD.id_funcionario;
+    END //
+
+    CREATE TRIGGER `trg_delete_pregao_before_edital` BEFORE DELETE ON `edital_de_licitacao` FOR EACH ROW
+    BEGIN
+      DELETE FROM pregao WHERE fk_Edital_de_Licitacao_id_licitacao = OLD.id_licitacao;
+    END //
+
+    CREATE TRIGGER `trg_delete_lote_before_pregao` BEFORE DELETE ON `pregao` FOR EACH ROW
+    BEGIN
+      DELETE FROM lote WHERE fk_Pregao_id_pregao = OLD.id_pregao;
+    END //
+
+    DELIMITER ;
+
+    -- Stored Procedures
+    DELIMITER //
+
+    CREATE PROCEDURE `get_taxa_sucesso_licitacoes`(
+        IN nome_empresa VARCHAR(100)
+    )
+    BEGIN
+        DECLARE total_participados INT;
+        DECLARE total_vencidos INT;
+
+        SELECT COUNT(DISTINCT p.id_pregao)
+        INTO total_participados
+        FROM pregao p
+        JOIN lote l ON l.fk_Pregao_id_pregao = p.id_pregao;
+
+        SELECT COUNT(DISTINCT p.id_pregao)
+        INTO total_vencidos
+        FROM pregao p
+        JOIN lote l ON l.fk_Pregao_id_pregao = p.id_pregao
+        JOIN empresa e ON l.fk_Empresa_id_empresa = e.id_empresa
+        WHERE e.nome = nome_empresa;
+
+        SELECT 
+            total_participados AS total_pregoes_participados,
+            total_vencidos AS total_pregoes_vencidos,
+            ROUND((total_vencidos / total_participados) * 100, 2) AS taxa_sucesso_percentual;
+    END //
+
+    CREATE PROCEDURE `get_valor_arrematado_por_ano`(IN nome_empresa VARCHAR(100))
+    BEGIN
+        SELECT 
+            YEAR(p.data_encerramento) AS ano,
+            SUM(l.valor_arremate) AS total_arrematado
+        FROM lote l
+        JOIN empresa e ON l.fk_Empresa_id_empresa = e.id_empresa
+        JOIN pregao p ON l.fk_Pregao_id_pregao = p.id_pregao
+        WHERE e.nome = nome_empresa
+        GROUP BY ano
+        ORDER BY ano;
+    END //
+
+    DELIMITER ; 

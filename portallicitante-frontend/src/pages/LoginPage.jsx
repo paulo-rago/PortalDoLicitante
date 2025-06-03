@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/LoginPage.css";
-import logo from "../assets/logovrio.png"; 
+import logo from "../assets/logovrio.png";
+import api from '../services/api';
 
 function LoginPage() {
   const [cpf, setCpf] = useState("");
@@ -9,24 +10,17 @@ function LoginPage() {
   const [mensagem, setMensagem] = useState("");
 
   const navigate = useNavigate();
-
   const fazerLogin = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:8080/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ cpf, senha }),
+      const response = await api.post("/auth/login", {
+        cpf,
+        senha
       });
-
-      if (!response.ok) {
+        if (response.status !== 200) {
         throw new Error("CPF ou senha inválidos.");
-      }
-
-      const data = await response.json();
+      }const data = response.data;
       localStorage.setItem("token", data.token);
       localStorage.setItem("nomeFuncionario", data.nomeFuncionario); // 👈 Adicione esta linha
       setMensagem("Login realizado com sucesso ✅");
